@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>In Each Other's Care Adult Family Home | Vancouver, WA</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --forest:#1E3A2F;
+  --forest-mid:#2C5440;
+  --moss:#4A7C59;
+  --mint:#C8E6C9;
+  --mint-pale:#EDF7EE;
+  --gold:#D4A853;
+  --gold-pale:#FBF4E6;
+  --blush:#F2ECE4;
+  --ink:#111B14;
+  --body:#374840;
+  --sub:#5E7368;
+  --border:#D6E4D9;
+  --white:#FFFFFF;
+  --fd:'Playfair Display',Georgia,serif;
+  --fb:'Inter',system-ui,sans-serif;
+  --r:16px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--white);color:var(--body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+
+/* ── FLOATING NAV ── */
+nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:300;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.8);border-radius:100px;padding:0 10px 0 20px;display:flex;align-items:center;gap:8px;height:58px;box-shadow:0 8px 32px rgba(30,58,47,.12);width:calc(100% - 48px);max-width:960px;transition:all .3s}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:auto}
+.nl-icon{width:32px;height:32px;background:var(--forest);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.nl-name{font-family:var(--fd);font-size:1rem;font-weight:700;color:var(--forest);white-space:nowrap}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
+.nav-links a{text-decoration:none;font-size:.82rem;font-weight:500;color:var(--body);padding:7px 14px;border-radius:100px;transition:background .2s,color .2s}
+.nav-links a:hover{background:var(--mint-pale);color:var(--forest)}
+.nav-cta{background:var(--forest)!important;color:var(--white)!important;padding:9px 20px!important;border-radius:100px!important;font-weight:600!important;font-size:.82rem!important;white-space:nowrap;transition:background .2s!important}
+.nav-cta:hover{background:var(--forest-mid)!important}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;background:var(--forest);border:none;padding:10px 12px;border-radius:100px;margin-left:4px}
+.hamburger span{display:block;width:18px;height:1.5px;background:#fff;border-radius:2px}
+.mob-overlay{display:none;position:fixed;inset:0;background:rgba(17,27,20,.55);z-index:280;backdrop-filter:blur(4px)}
+.mob-overlay.open{display:block}
+.mob-drawer{position:fixed;top:0;right:-100%;width:80%;max-width:320px;height:100vh;background:var(--white);z-index:290;padding:80px 32px 40px;display:flex;flex-direction:column;gap:4px;transition:right .35s cubic-bezier(.4,0,.2,1);box-shadow:-8px 0 40px rgba(0,0,0,.12)}
+.mob-drawer.open{right:0}
+.mob-drawer a{display:block;padding:14px 0;font-size:1rem;font-weight:500;color:var(--body);text-decoration:none;border-bottom:1px solid var(--border);transition:color .2s}
+.mob-drawer a:hover{color:var(--forest)}
+.mob-cta{margin-top:24px;background:var(--forest);color:var(--white)!important;text-align:center;border-radius:10px;padding:16px!important;border:none!important;font-weight:700!important;font-size:1rem!important}
+.mob-ph{color:var(--gold)!important;border:none!important;font-weight:600!important;font-size:1.1rem!important}
+.mob-close{position:absolute;top:20px;right:20px;background:none;border:1.5px solid var(--border);border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:1.1rem;color:var(--body);display:flex;align-items:center;justify-content:center}
+
+/* ── HERO ── */
+.hero{height:calc(100vh - 46px);max-height:calc(100vh - 46px);position:relative;overflow:hidden;display:flex;align-items:stretch}
+.hero-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;z-index:0}
+.hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to right,rgba(17,40,28,.55) 0%,rgba(17,40,28,.35) 50%,rgba(17,40,28,.08) 100%)}
+.hero-inner{position:relative;z-index:2;width:100%;height:100%;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:60px 72px 40px}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding-top:40px}
+.hero-right-stats{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;padding-top:40px}
+.stats-bento{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:340px}
+.stat-card{background:rgba(30,40,35,.2);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.2);border-radius:18px;padding:22px 26px;box-shadow:0 8px 32px rgba(0,0,0,.1)}
+.stat-n{font-family:var(--fd);font-size:2.2rem;font-weight:700;color:#fff;line-height:1;margin-bottom:6px}
+.stat-l{font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);font-size:.68rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;padding:7px 16px;border-radius:100px;margin-bottom:20px;width:fit-content;align-self:flex-start}
+.hero h1{font-family:var(--fd);font-size:clamp(2.4rem,4vw,3.8rem);font-weight:700;color:#fff;line-height:1.06;margin-bottom:16px}
+.hero h1 span{font-style:italic;color:var(--mint)}
+.hero-p{font-size:1rem;color:rgba(255,255,255,.72);line-height:1.75;max-width:420px;margin-bottom:32px;font-weight:300}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-gold{background:var(--gold);color:var(--ink);padding:16px 36px;border-radius:50px;font-weight:700;font-size:.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .3s cubic-bezier(.4,0,.2,1);letter-spacing:.02em;box-shadow:0 8px 32px rgba(212,168,83,.55),0 2px 8px rgba(0,0,0,.25);border:2px solid rgba(255,255,255,.3);cursor:pointer}
+.btn-gold:hover{background:#C49640;transform:translateY(-4px);box-shadow:0 16px 40px rgba(212,168,83,.5);letter-spacing:.04em}
+.btn-wh{background:rgba(255,255,255,.28);color:#fff;padding:15px 36px;border-radius:50px;border:2px solid rgba(255,255,255,.95);font-weight:700;font-size:.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .3s cubic-bezier(.4,0,.2,1);cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 8px 28px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.3);text-shadow:0 1px 4px rgba(0,0,0,.4)}
+.btn-wh:hover{border-color:#fff;background:rgba(255,255,255,.4);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.35);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+/* legacy trust-item / trust-div kept for mobile fallback but hidden on desktop */
+.hero-trust{display:none}
+.trust-item{text-align:center}
+.trust-n{font-family:var(--fd);font-size:1.9rem;font-weight:700;color:var(--mint);line-height:1}
+.trust-l{font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:4px}
+.trust-div{width:1px;height:36px;background:rgba(255,255,255,.15)}
+
+/* ── PROMISE STRIP ── */
+.promise{background:var(--gold-pale);border-top:3px solid var(--gold);border-bottom:3px solid var(--gold);padding:40px 24px}
+.promise-inner{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+.promise-item .pi{font-size:26px;margin-bottom:10px}
+.promise-item strong{display:block;font-size:.92rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+.promise-item p{font-size:.8rem;color:var(--sub);line-height:1.55}
+
+/* ── DOWNLOAD CARDS ── */
+.dl-sec{padding:80px 24px}
+.dl-wrap{display:grid;grid-template-columns:1.15fr 1fr;gap:48px;align-items:center}
+.dl-list{display:flex;flex-direction:column;gap:14px}
+.dl-card{display:flex;align-items:center;gap:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:18px 20px;text-decoration:none;transition:all .25s cubic-bezier(.4,0,.2,1)}
+.dl-card:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.32);transform:translateY(-3px)}
+.dl-card:active{transform:translateY(0) scale(.98)}
+.dl-ic{width:44px;height:44px;flex-shrink:0;background:var(--gold);color:var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px}
+.dl-text{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.dl-title{font-size:.96rem;font-weight:700;color:#fff}
+.dl-sub{font-size:.8rem;color:rgba(255,255,255,.6)}
+.dl-arrow{flex-shrink:0;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);font-size:.95rem;border:1px solid rgba(255,255,255,.18);transition:all .25s}
+.dl-card:hover .dl-arrow{background:var(--gold);color:var(--ink);border-color:var(--gold);transform:translateX(3px)}
+
+@media (max-width:760px){
+  .dl-sec{padding:64px 20px}
+  .dl-wrap{grid-template-columns:1fr;gap:32px;text-align:center}
+  .dl-wrap .lead{max-width:440px;margin:0 auto}
+  .dl-list{gap:12px}
+  .dl-card{text-align:left;padding:16px 16px}
+}
+@media (max-width:420px){
+  .dl-card{gap:12px;padding:14px 14px}
+  .dl-ic{width:40px;height:40px;font-size:16px}
+  .dl-title{font-size:.9rem}
+  .dl-sub{font-size:.76rem}
+  .dl-arrow{display:none}
+}
+
+/* ── SECTION BASE ── */
+.sec{padding:96px 24px}
+.wrap{max-width:1040px;margin:0 auto}
+.ew{font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--moss);margin-bottom:10px}
+.ew-wh{color:var(--mint)}
+.h2{font-family:var(--fd);font-size:clamp(2rem,4vw,2.9rem);font-weight:700;line-height:1.15;color:var(--ink);margin-bottom:18px}
+.h2-wh{color:#fff}
+.h2 i{font-style:italic;color:var(--moss)}
+.lead{font-size:1rem;color:var(--sub);line-height:1.82;max-width:560px}
+.lead-wh{color:rgba(255,255,255,.72)}
+
+/* ── ABOUT ── */
+.about-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:72px;align-items:center}
+.photo-stack{position:relative}
+.photo-stack .pm-wrap{position:relative;border-radius:20px;overflow:hidden;box-shadow:0 24px 64px rgba(30,58,47,.18)}
+.photo-stack .pm{width:100%;height:460px;object-fit:cover;display:block}
+.badge{position:absolute;top:20px;left:20px;display:inline-flex;align-items:center;gap:10px;background:var(--forest);color:#fff;padding:12px 18px;border-radius:12px;font-size:.82rem;font-weight:600;box-shadow:0 10px 28px rgba(0,0,0,.22);z-index:2}
+.badge-dot{width:8px;height:8px;background:var(--mint);border-radius:50%;flex-shrink:0;animation:pulse 2s ease-in-out infinite}
+.journey-card{display:flex;align-items:center;gap:16px;background:var(--forest);border-radius:16px;padding:16px;margin-top:-44px;margin-left:24px;margin-right:24px;position:relative;z-index:3;text-decoration:none;transition:background .2s,transform .2s;box-shadow:0 16px 36px rgba(17,27,20,.28)}
+.journey-card:hover{background:var(--forest-mid);transform:translateY(-3px)}
+.journey-card .jc-photo{width:64px;height:64px;border-radius:12px;object-fit:cover;flex-shrink:0;border:2px solid rgba(255,255,255,.25)}
+.journey-card .jc-text{flex:1;min-width:0}
+.journey-card .jc-text strong{display:block;font-family:var(--fd);font-size:1.05rem;font-weight:700;color:#fff}
+.journey-card .jc-text span{font-size:.78rem;color:rgba(255,255,255,.65)}
+.journey-card .jc-arrow{width:38px;height:38px;border-radius:50%;background:var(--gold);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;transition:transform .2s}
+.journey-card:hover .jc-arrow{transform:translateX(4px)}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.value-list{margin-top:36px;display:flex;flex-direction:column;gap:0}
+.vl-item{display:flex;gap:16px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--border)}
+.vl-item:last-child{border-bottom:none}
+.vl-num{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:var(--mint-pale);line-height:1;min-width:32px;border:2px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;height:32px;font-size:1rem;color:var(--moss)}
+.vl-body strong{display:block;font-size:.95rem;font-weight:600;color:var(--ink);margin-bottom:3px}
+.vl-body p{font-size:.85rem;color:var(--sub);line-height:1.65}
+
+/* ── SERVICES ── */
+.services-bg{background:var(--forest);position:relative;overflow:hidden}
+.services-bg::before{content:'';position:absolute;top:-180px;right:-180px;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(212,168,83,.12) 0%,transparent 70%);pointer-events:none}
+.services-bg::after{content:'';position:absolute;bottom:-160px;left:-160px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(200,230,201,.08) 0%,transparent 70%);pointer-events:none}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:52px;position:relative;align-items:start}
+.svc{background:var(--mint-pale);border-radius:18px;position:relative;transition:transform .3s cubic-bezier(.4,0,.2,1),box-shadow .3s;overflow:hidden}
+.svc:nth-child(3n+2){background:var(--white)}
+.svc:nth-child(3n+3){background:var(--gold-pale)}
+.svc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--moss));transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.4,0,.2,1);z-index:2}
+.svc:hover{transform:translateY(-7px);box-shadow:0 24px 48px rgba(0,0,0,.32)}
+.svc:hover::before{transform:scaleX(1)}
+.svc-num{font-family:var(--fd);font-style:italic;font-size:.85rem;font-weight:700;color:var(--moss);opacity:.55;letter-spacing:.06em;margin-bottom:18px}
+.svc-icon{width:44px;height:44px;background:var(--forest);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 22px rgba(30,58,47,.28);transition:transform .3s;font-size:20px;line-height:1;flex-shrink:0}
+.svc:hover .svc-icon{transform:scale(1.08) rotate(-4deg)}
+.svc h3{font-family:var(--fd);font-size:1.05rem;font-weight:700;color:var(--ink);line-height:1.3;margin:0}
+.svc-toggle{width:100%;display:flex;align-items:center;gap:14px;padding:20px 24px;background:none;border:none;cursor:pointer;text-align:left;font:inherit}
+.svc-toggle-text{flex:1;min-width:0}
+.svc-chevron{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .3s cubic-bezier(.4,0,.2,1),background .2s,border-color .2s;font-size:13px;color:var(--moss)}
+.svc.open .svc-chevron{transform:rotate(45deg);background:var(--forest);border-color:var(--forest);color:#fff}
+.svc-panel{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1)}
+.svc-panel p{padding:0 24px 24px 82px;font-size:.88rem}
+.svc.open .svc-panel{max-height:200px}
+.svc p{font-size:.85rem;color:var(--sub);line-height:1.75}
+
+/* ── GALLERY ── */
+.gal-bg{background:var(--blush)}
+.gtabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.gtab{background:#fff;border:1.5px solid var(--border);border-radius:100px;padding:8px 20px;font-family:var(--fb);font-size:.8rem;font-weight:600;color:var(--sub);cursor:pointer;transition:all .2s;letter-spacing:.02em}
+.gtab:hover,.gtab.active{background:var(--forest);border-color:var(--forest);color:#fff}
+
+/* ── DESKTOP GALLERY: 2 rows × 4 columns ── */
+.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:240px;gap:14px}
+.gi{border-radius:14px;overflow:hidden;position:relative;cursor:pointer;background:#ddd}
+.gi img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.gi:hover img{transform:scale(1.07)}
+.gi .gl{position:absolute;inset:0;background:linear-gradient(to top,rgba(17,27,20,.85) 0%,transparent 60%);opacity:0;transition:opacity .3s;display:flex;flex-direction:column;justify-content:flex-end;padding:18px}
+.gi:hover .gl{opacity:1}
+.gl-title{font-size:.85rem;font-weight:700;color:#fff;margin-bottom:3px}
+.gl-sub{font-size:.72rem;color:rgba(255,255,255,.65)}
+
+/* ── MOBILE SLIDER ── */
+.gal-slider-wrap{display:none;position:relative;overflow:hidden;border-radius:18px;touch-action:pan-y}
+.gal-slider-track{display:flex;transition:transform .42s cubic-bezier(.4,0,.2,1);will-change:transform}
+.gal-slide{flex:0 0 100%;position:relative;height:320px;cursor:pointer;overflow:hidden;border-radius:18px}
+.gal-slide img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.gal-slide .gl{position:absolute;inset:0;background:linear-gradient(to top,rgba(17,27,20,.85) 0%,transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:20px}
+.gal-slide .gl-title{font-size:.9rem;font-weight:700;color:#fff;margin-bottom:4px}
+.gal-slide .gl-sub{font-size:.75rem;color:rgba(255,255,255,.7)}
+/* slide nav arrows */
+.gal-arr{position:absolute;top:50%;transform:translateY(-50%);z-index:10;background:rgba(255,255,255,.18);backdrop-filter:blur(8px);border:1.5px solid rgba(255,255,255,.35);color:#fff;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;transition:background .2s}
+.gal-arr:hover{background:rgba(255,255,255,.35)}
+.gal-arr-prev{left:12px}
+.gal-arr-next{right:12px}
+/* dots */
+.gal-dots{display:flex;gap:7px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.gal-dot{width:8px;height:8px;border-radius:50%;background:var(--border);border:none;cursor:pointer;padding:0;transition:background .2s,transform .2s}
+.gal-dot.active{background:var(--forest);transform:scale(1.35)}
+/* slide counter badge */
+.gal-counter{position:absolute;top:14px;right:14px;background:rgba(17,27,20,.6);color:#fff;font-size:.7rem;font-weight:600;padding:4px 10px;border-radius:100px;letter-spacing:.04em;z-index:5}
+
+/* LIGHTBOX */
+.lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:999;align-items:center;justify-content:center;flex-direction:column;padding:24px}
+.lb.open{display:flex}
+.lb-box{position:relative;max-width:860px;width:100%;text-align:center}
+.lb-box img{max-height:75vh;max-width:100%;border-radius:14px;object-fit:contain;display:block;margin:0 auto}
+.lb-cap{color:rgba(255,255,255,.8);font-size:.95rem;margin-top:14px;font-weight:500}
+.lb-sub{color:rgba(255,255,255,.5);font-size:.78rem;margin-top:4px}
+.lb-x{position:absolute;top:-48px;right:0;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:1.1rem;cursor:pointer;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.lb-x:hover{background:rgba(255,255,255,.28)}
+.lb-detail{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.lb-badge{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;border-radius:100px}
+
+@media(max-width:700px){
+  .gal-grid{display:none}
+  .gal-slider-wrap{display:block}
+  .gtabs{gap:6px}
+  .gtab{padding:7px 14px;font-size:.75rem}
+}
+
+/* ── TESTIMONIALS ── */
+.testi-split{display:grid;grid-template-columns:.85fr 1.15fr;gap:0;margin-top:52px;border-radius:24px;overflow:hidden;box-shadow:0 24px 64px rgba(30,58,47,.14)}
+.testi-img{position:relative;min-height:560px}
+.testi-img img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
+.testi-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(17,27,20,.55) 0%,transparent 45%)}
+.testi-img-cap{position:absolute;left:28px;bottom:24px;z-index:1;color:#fff}
+.testi-img-cap strong{font-family:var(--fd);font-size:1.3rem;display:block}
+.testi-img-cap span{font-size:.78rem;color:rgba(255,255,255,.75)}
+.testi-panel{background:var(--white);padding:48px 48px;display:flex;flex-direction:column}
+.testi-slider{position:relative;flex:1;min-height:280px}
+.tc{position:absolute;inset:0;opacity:0;visibility:hidden;transform:translateX(16px);transition:opacity .45s ease,transform .45s ease;display:flex;flex-direction:column;justify-content:center}
+.tc.active{opacity:1;visibility:visible;transform:translateX(0);position:relative}
+.tc::before{content:'\201C';font-family:var(--fd);font-size:4.5rem;color:var(--mint);line-height:1;opacity:.8;margin-bottom:4px}
+.stars{color:var(--gold);font-size:.9rem;letter-spacing:2px;margin-bottom:14px}
+.tc blockquote{font-size:1.12rem;color:var(--body);line-height:1.78;margin-bottom:24px;font-style:italic;font-family:var(--fd)}
+.tc-author{display:flex;align-items:center;gap:12px}
+.tc-av{width:44px;height:44px;border-radius:50%;background:var(--mint-pale);border:2px solid var(--mint);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.tc-name{font-size:.85rem;font-weight:700;color:var(--ink)}
+.tc-role{font-size:.76rem;color:var(--sub)}
+.testi-nav{display:flex;align-items:center;gap:18px;margin-top:32px;padding-top:24px;border-top:1px solid var(--border)}
+.testi-dots{display:flex;gap:8px;margin-right:auto}
+.testi-dot{width:8px;height:8px;border-radius:50%;background:var(--border);border:none;cursor:pointer;padding:0;transition:background .2s,transform .2s}
+.testi-dot.active{background:var(--moss);transform:scale(1.3)}
+.testi-arrow{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--border);background:#fff;color:var(--forest);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-size:1rem}
+.testi-arrow:hover{background:var(--forest);border-color:var(--forest);color:#fff}
+@media(max-width:860px){.testi-split{grid-template-columns:1fr}.testi-img{min-height:260px}.testi-panel{padding:36px 28px}}
+
+/* ── PROCESS ── */
+.process-bg{background:var(--mint-pale)}
+.process-row{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:56px}
+.ps-card{background:#fff;border-radius:20px;padding:40px 32px;text-align:center;border:1px solid var(--border);transition:box-shadow .25s}
+.ps-card:hover{box-shadow:0 12px 40px rgba(30,58,47,.1)}
+.ps-n{width:60px;height:60px;background:var(--forest);color:#fff;border-radius:16px;font-family:var(--fd);font-size:1.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.ps-card h3{font-family:var(--fd);font-size:1.25rem;font-weight:700;color:var(--ink);margin-bottom:10px}
+.ps-card p{font-size:.875rem;color:var(--sub);line-height:1.75}
+.ps-link{display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-size:.82rem;font-weight:700;color:var(--forest);text-decoration:none;letter-spacing:.03em}
+.ps-link:hover{color:var(--moss)}
+
+/* ── AMENITIES ── */
+.loc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:52px}
+.loc-card{border-radius:18px;overflow:hidden;border:1px solid var(--border);background:#fff;transition:transform .3s,box-shadow .3s}
+.loc-card:hover{transform:translateY(-6px);box-shadow:0 20px 44px rgba(30,58,47,.16)}
+.loc-img{position:relative;height:180px;overflow:hidden}
+.loc-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.loc-card:hover .loc-img img{transform:scale(1.06)}
+.loc-tag{position:absolute;top:14px;left:14px;background:rgba(255,255,255,.92);color:var(--forest);font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:100px}
+.loc-body{padding:22px 22px 24px}
+.loc-body h3{font-family:var(--fd);font-size:1.15rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+.loc-body .loc-addr{font-size:.8rem;color:var(--sub);margin-bottom:14px;display:flex;gap:6px;align-items:flex-start;line-height:1.5}
+.loc-body .loc-phone{font-size:.82rem;font-weight:600;color:var(--moss);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.loc-body .loc-phone:hover{color:var(--forest)}
+.loc-card.loc-current{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold) inset}
+.am{display:flex;align-items:center;gap:14px;padding:18px 22px;background:var(--white);border-radius:12px;border:1.5px solid var(--border);font-size:.875rem;font-weight:600;color:var(--ink);transition:border-color .2s,box-shadow .2s}
+.am:hover{border-color:var(--moss);box-shadow:0 4px 16px rgba(74,124,89,.12)}
+.am-ic{font-size:22px;flex-shrink:0}
+
+/* ── CTA ── */
+.cta-sec{background:var(--forest);padding:88px 24px;text-align:center;position:relative;overflow:hidden}
+.cta-sec::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:rgba(200,230,201,.04);top:-200px;left:-150px;pointer-events:none}
+.cta-sec::after{content:'';position:absolute;width:400px;height:400px;border-radius:50%;background:rgba(200,230,201,.04);bottom:-150px;right:-100px;pointer-events:none}
+.cta-sec h2{font-family:var(--fd);font-size:clamp(2rem,5vw,3.2rem);font-weight:700;color:#fff;margin-bottom:16px;line-height:1.15;position:relative;z-index:1}
+.cta-sec h2 i{font-style:italic;color:var(--mint)}
+.cta-sec p{color:rgba(255,255,255,.7);font-size:1.05rem;margin-bottom:42px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.8;position:relative;z-index:1}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+.btn-gold-lg{background:var(--gold);color:var(--ink);padding:18px 38px;border-radius:12px;font-weight:700;font-size:1rem;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all .2s}
+.btn-gold-lg:hover{background:#C49640;transform:translateY(-2px);box-shadow:0 10px 32px rgba(212,168,83,.45)}
+.btn-wh-lg{background:transparent;color:#fff;padding:17px 38px;border-radius:12px;border:1.5px solid rgba(255,255,255,.4);font-weight:500;font-size:1rem;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all .2s}
+.btn-wh-lg:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+
+/* ── STEPS (path) ── */
+.path-bg{background:var(--forest);position:relative;overflow:hidden}
+.path-bg::before{content:'';position:absolute;top:-160px;left:-140px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(212,168,83,.12) 0%,transparent 70%);pointer-events:none}
+.path-bg::after{content:'';position:absolute;bottom:-180px;right:-160px;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(200,230,201,.08) 0%,transparent 70%);pointer-events:none}
+.path-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:60px;position:relative}
+.path-connector{position:absolute;top:38px;left:12.5%;right:12.5%;height:0;border-top:2px dashed rgba(255,255,255,.22);z-index:0}
+.path-node{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 14px}
+.path-circle{position:relative;width:76px;height:76px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 12px 30px rgba(0,0,0,.28);margin-bottom:24px;border:4px solid var(--forest);flex-shrink:0}
+.path-num{position:absolute;top:-8px;right:-8px;background:var(--forest);color:var(--mint);font-family:var(--fd);font-size:.68rem;font-weight:700;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid var(--gold)}
+.path-node h3{font-family:var(--fd);font-size:1.12rem;font-weight:700;color:#fff;margin-bottom:10px}
+.path-node p{font-size:.85rem;color:rgba(255,255,255,.66);line-height:1.75}
+@media (max-width:900px){
+  .path-row{grid-template-columns:1fr;gap:0;margin-top:40px;max-width:420px;margin-left:auto;margin-right:auto}
+  .path-connector{display:none}
+  .path-node{flex-direction:row;text-align:left;align-items:flex-start;gap:18px;padding:0 0 34px 0;position:relative}
+  .path-node:last-child{padding-bottom:0}
+  .path-node:not(:last-child)::before{content:'';position:absolute;left:27px;top:64px;bottom:2px;width:0;border-left:2px dashed rgba(255,255,255,.24)}
+  .path-circle{width:56px;height:56px;font-size:21px;margin-bottom:0;border-width:3px;flex-shrink:0}
+  .path-num{width:19px;height:19px;font-size:.58rem;top:-5px;right:-5px}
+  .path-text{flex:1;min-width:0;padding-top:4px}
+  .path-node h3{font-size:1rem;margin-bottom:6px;line-height:1.3}
+  .path-node p{font-size:.82rem;line-height:1.65}
+}
+
+/* ── PROMO (Apple glass) ── */
+.glass-bg{position:relative;overflow:hidden;background:var(--white)}
+.glass-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;opacity:.5}
+.glass-orb1{width:360px;height:360px;top:-120px;left:-100px;background:radial-gradient(circle,rgba(74,124,89,.16) 0%,transparent 72%)}
+.glass-orb2{width:380px;height:380px;bottom:-140px;right:-120px;background:radial-gradient(circle,rgba(212,168,83,.18) 0%,transparent 72%)}
+.glass-orb3{width:240px;height:240px;top:20%;right:12%;background:radial-gradient(circle,rgba(200,230,201,.3) 0%,transparent 75%)}
+.glass-wrap{position:relative;z-index:1;max-width:840px}
+.glass-panels{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:36px}
+.glass-panel{background:linear-gradient(165deg,var(--mint-pale) 0%,#fff 38%);border:1px solid var(--border);border-radius:22px;padding:0;position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.4,0,.2,1),box-shadow .35s,border-color .35s;box-shadow:0 4px 18px rgba(30,58,47,.07)}
+.glass-panel:nth-child(2){background:linear-gradient(165deg,var(--gold-pale) 0%,#fff 38%)}
+.glass-panel::after{content:'';position:absolute;top:-30px;right:-30px;width:150px;height:150px;background:radial-gradient(circle,rgba(74,124,89,.08) 0%,transparent 70%);pointer-events:none}
+.glass-panel:nth-child(2)::after{background:radial-gradient(circle,rgba(212,168,83,.1) 0%,transparent 70%)}
+.glass-panel:hover{transform:translateY(-6px);box-shadow:0 24px 48px rgba(30,58,47,.16);border-color:var(--moss)}
+.glass-panel:nth-child(2):hover{box-shadow:0 24px 48px rgba(212,168,83,.22);border-color:var(--gold)}
+.offer-ribbon{position:absolute;top:17px;right:-36px;background:var(--forest);color:#fff;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 40px;transform:rotate(40deg);box-shadow:0 3px 10px rgba(0,0,0,.22);z-index:2}
+.glass-panel:nth-child(2) .offer-ribbon{background:var(--gold);color:var(--ink)}
+.offer-top{padding:26px 24px 20px;position:relative;z-index:1}
+.glass-ic{width:46px;height:46px;border-radius:13px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;margin-bottom:16px;transition:transform .35s;box-shadow:0 6px 16px rgba(74,124,89,.18),inset 0 0 0 1px rgba(74,124,89,.12)}
+.glass-panel:nth-child(2) .glass-ic{box-shadow:0 6px 16px rgba(212,168,83,.22),inset 0 0 0 1px rgba(212,168,83,.18)}
+.glass-panel:hover .glass-ic{transform:scale(1.12) rotate(-6deg)}
+.glass-panel .gp-tag{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--moss);margin-bottom:9px}
+.glass-panel:nth-child(2) .gp-tag{color:#a9822f}
+.offer-amount{font-family:var(--fd);font-weight:700;font-size:2.3rem;line-height:1;color:var(--forest);display:flex;align-items:baseline;gap:7px}
+.offer-amount span{font-family:var(--fb);font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:#fff;box-shadow:inset 0 0 0 1px rgba(212,168,83,.35);padding:4px 10px;border-radius:100px}
+.offer-notch-row{position:relative;height:0}
+.offer-notch{position:absolute;top:-9px;width:18px;height:18px;border-radius:50%;background:var(--white);z-index:2}
+.offer-notch-l{left:-9px}
+.offer-notch-r{right:-9px}
+.offer-divider{border-top:1.5px dashed var(--border);margin:0 24px}
+.offer-bottom{padding:18px 24px 22px;position:relative;z-index:1}
+.glass-panel h3{font-family:var(--fd);font-size:1.08rem;font-weight:700;color:var(--ink);line-height:1.3;margin-bottom:7px}
+.glass-panel p{font-size:.8rem;color:var(--sub);line-height:1.6;margin-bottom:14px}
+.offer-cta{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;color:var(--forest);text-decoration:none;transition:gap .2s}
+.glass-panel:nth-child(2) .offer-cta{color:#a9822f}
+.offer-cta svg{width:13px;height:13px;transition:transform .2s}
+.glass-panel:hover .offer-cta{gap:10px}
+.glass-panel:hover .offer-cta svg{transform:translateX(2px)}
+@media (max-width:760px){
+  .glass-panels{grid-template-columns:1fr;gap:14px}
+}
+
+/* ── CONTACT ── */
+.contact-bg{background:var(--blush)}
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:72px;align-items:start;margin-top:56px}
+.ci-head{font-size:1rem;color:var(--sub);line-height:1.82;margin-bottom:32px}
+.cd{display:flex;gap:14px;align-items:flex-start;margin-bottom:24px}
+.cd-ic{width:44px;height:44px;background:var(--forest);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.cd-t strong{display:block;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--moss);margin-bottom:4px}
+.cd-t a,.cd-t span{color:var(--ink);text-decoration:none;font-weight:600;font-size:.95rem;line-height:1.5}
+.cd-t a:hover{color:var(--forest)}
+.form-card{background:#fff;border-radius:20px;padding:40px 36px;border:1px solid var(--border);box-shadow:0 8px 32px rgba(30,58,47,.08)}
+.form-card label{display:block;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sub);margin-bottom:6px}
+.form-card input,.form-card textarea,.form-card select{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:var(--fb);font-size:.95rem;background:#fff;color:var(--ink);margin-bottom:18px;outline:none;transition:border-color .2s,box-shadow .2s;appearance:none}
+.form-card input:focus,.form-card textarea:focus,.form-card select:focus{border-color:var(--forest);box-shadow:0 0 0 3px rgba(30,58,47,.08)}
+.form-card input.invalid,.form-card textarea.invalid,.form-card select.invalid{border-color:#e53935;box-shadow:0 0 0 3px rgba(229,57,53,.1)}
+.field-err{display:none;color:#e53935;font-size:.75rem;font-weight:600;margin-top:-14px;margin-bottom:12px}
+.field-err.show{display:block}
+.form-card textarea{height:108px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-card button{width:100%;padding:16px;background:var(--forest);color:#fff;border:none;border-radius:12px;font-family:var(--fb);font-size:.95rem;font-weight:700;cursor:pointer;transition:background .2s,transform .15s;letter-spacing:.03em;margin-top:2px}
+.form-card button:hover{background:var(--forest-mid);transform:translateY(-1px)}
+.fs{display:none;background:var(--mint-pale);border:2px solid var(--moss);border-radius:12px;padding:24px;margin-top:14px;color:var(--forest);font-weight:600;text-align:center;font-size:.95rem}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);padding:28px 24px}
+.ft-inner{max-width:1040px;margin:0 auto}
+.ft-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.ft-logo{font-family:var(--fd);font-size:1rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
+.ft-copy{font-size:.78rem;color:rgba(255,255,255,.35)}
+.ft-credit{font-size:.78rem;color:rgba(255,255,255,.35)}
+.ft-credit a{color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
+.ft-credit a:hover{color:rgba(255,255,255,.8)}
+@media(max-width:600px){.ft-bottom{justify-content:center;text-align:center}}
+
+/* ── REVEAL ── */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+.rv-l{opacity:0;transform:translateX(-28px);transition:opacity .6s ease,transform .6s ease}
+.rv-l.in{opacity:1;transform:none}
+.rv-r{opacity:0;transform:translateX(28px);transition:opacity .6s ease,transform .6s ease}
+.rv-r.in{opacity:1;transform:none}
+
+/* ── MOBILE STATS STRIP (hero only) ── */
+.mob-stats{display:none}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  nav{top:10px;padding:0 8px 0 16px;height:54px;border-radius:14px;width:calc(100% - 24px)}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .trust-bar{display:none}
+  .hero-right-stats{display:none}
+
+  /* Cinematic full-screen hero */
+  .hero{height:100svh;max-height:100svh}
+  .hero-bg-img{object-position:60% center}
+  .hero-overlay{background:linear-gradient(160deg,rgba(10,25,18,.0) 0%,rgba(10,25,18,.08) 30%,rgba(10,25,18,.55) 62%,rgba(10,25,18,.75) 100%)}
+  .hero-inner{grid-template-columns:1fr;align-items:flex-end;padding:0 0 0;gap:0;height:100%}
+  .hero-left{
+    padding:32px 24px 44px;
+    background:linear-gradient(to top,rgba(10,25,18,.82) 0%,rgba(10,25,18,.55) 60%,transparent 100%);
+    border-radius:28px 28px 0 0;
+    backdrop-filter:blur(0px);
+  }
+  .hero-tag{
+    align-self:flex-start;
+    margin-bottom:16px;
+    font-size:.68rem;
+    letter-spacing:.18em;
+    padding:6px 13px;
+    background:rgba(255,255,255,.08);
+    border-color:rgba(255,255,255,.15);
+  }
+  .hero h1{
+    font-size:clamp(2.9rem,12vw,3.6rem);
+    line-height:1.05;
+    margin-bottom:10px;
+    text-align:left;
+  }
+  .hero-p{
+    font-size:1rem;
+    margin-bottom:20px;
+    text-align:left;
+    max-width:100%;
+    line-height:1.65;
+    color:rgba(255,255,255,.55);
+  }
+
+  /* Mobile stats strip */
+  .mob-stats{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:14px;
+    padding:14px 16px;
+    margin-bottom:20px;
+  }
+  .mob-stat{text-align:center;flex:1}
+  .mob-stat-n{font-family:'Playfair Display',Georgia,serif;font-size:1.25rem;font-weight:700;color:#fff;line-height:1}
+  .mob-stat-l{font-size:.52rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:3px}
+  .mob-stat-div{width:1px;height:28px;background:rgba(255,255,255,.12);flex-shrink:0}
+
+  /* Buttons */
+  .hero-btns{flex-direction:column;gap:10px;width:100%}
+  .btn-gold{
+    width:100%;
+    justify-content:space-between;
+    padding:18px 22px;
+    font-size:.95rem;
+    border-radius:14px;
+    letter-spacing:.01em;
+  }
+  .btn-wh{display:none!important}
+  .promise-inner{grid-template-columns:1fr 1fr;gap:20px}
+  .about-grid{grid-template-columns:1fr;gap:44px}
+  .photo-stack .pm{height:320px}
+  .journey-card{margin-top:-36px;margin-left:16px;margin-right:16px;padding:12px}
+  .journey-card .jc-photo{width:52px;height:52px}
+  .svc-grid{grid-template-columns:1fr 1fr;gap:16px}
+  .gal-grid{grid-template-columns:1fr 1fr;grid-auto-rows:180px;gap:10px}
+  .testi-grid{grid-template-columns:1fr}
+  .process-row{grid-template-columns:1fr;gap:20px}
+  .loc-grid{grid-template-columns:1fr 1fr}
+  .contact-grid{grid-template-columns:1fr;gap:40px}
+}
+@media(max-width:540px){
+  .svc-grid{grid-template-columns:1fr}
+  .gal-grid{grid-template-columns:1fr}
+  .loc-grid{grid-template-columns:1fr}
+  .promise-inner{grid-template-columns:1fr 1fr}
+  .hero-btns,.cta-btns{flex-direction:column;align-items:stretch}
+  .cta-sec .cta-btns{align-items:center}
+  .form-row{grid-template-columns:1fr}
+  .form-card{padding:28px 22px}
+  .btn-wh{display:none!important}
+}
+/* ── TRUST BAR ── */
+.trust-bar{background:var(--forest);padding:14px 24px}
+.trust-bar-inner{max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap}
+.tb-item{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.85);font-size:.78rem;font-weight:600;letter-spacing:.04em}
+.tb-item span{font-size:16px}
+.tb-div{width:1px;height:18px;background:rgba(255,255,255,.2)}
+
+/* ── STAFF ── */
+.staff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:52px}
+.staff-card{background:#fff;border-radius:20px;overflow:hidden;border:1px solid var(--border);transition:transform .3s,box-shadow .3s;text-align:center}
+.staff-card:hover{transform:translateY(-6px);box-shadow:0 20px 44px rgba(30,58,47,.14)}
+.staff-img{width:100%;height:220px;object-fit:cover;object-position:top;display:block}
+.staff-body{padding:22px 20px 26px}
+.staff-name{font-family:var(--fd);font-size:1.15rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+.staff-role{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--moss);margin-bottom:12px}
+.staff-bio{font-size:.83rem;color:var(--sub);line-height:1.72}
+.staff-badge{display:inline-flex;align-items:center;gap:6px;background:var(--mint-pale);color:var(--forest);font-size:.7rem;font-weight:700;padding:5px 12px;border-radius:100px;margin-top:12px}
+.owner-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:64px;align-items:start}
+.owner-photo-wrap{position:relative;border-radius:20px;overflow:hidden;box-shadow:0 24px 64px rgba(30,58,47,.18)}
+.owner-photo-wrap img{width:100%;height:520px;object-fit:cover;display:block}
+.owner-play-btn{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;cursor:pointer;background:rgba(17,27,20,.18);transition:background .25s;border:none;padding:0}
+.owner-play-btn:hover{background:rgba(17,27,20,.32)}
+.owner-play-circle{width:78px;height:78px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(0,0,0,.25);transition:transform .25s}
+.owner-play-btn:hover .owner-play-circle{transform:scale(1.08)}
+.owner-play-circle svg{width:26px;height:26px;margin-left:3px}
+.owner-video-frame{position:absolute;inset:0;width:100%;height:100%;border:none;display:none}
+.owner-credentials{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px}
+.owner-cred{display:inline-flex;align-items:center;gap:7px;background:var(--mint-pale);color:var(--forest);font-size:.74rem;font-weight:700;padding:8px 14px;border-radius:100px}
+.owner-sig{margin-top:24px;font-family:var(--fd);font-size:1.3rem;font-weight:700;color:var(--forest)}
+.owner-sig span{display:block;font-family:var(--fb);font-size:.75rem;font-weight:600;color:var(--sub);letter-spacing:.04em;text-transform:uppercase;margin-top:4px}
+.owner-letter p{font-size:.97rem;color:var(--sub);line-height:1.85;margin-bottom:18px}
+.owner-letter p:last-child{margin-bottom:0}
+.owner-pullquote{border-left:3px solid var(--gold);padding-left:20px;margin:28px 0;font-family:var(--fd);font-size:1.15rem;font-style:italic;color:var(--ink);line-height:1.55}
+@media (max-width:860px){.owner-grid{grid-template-columns:1fr;gap:36px}.owner-photo-wrap img{height:380px}}
+
+/* ── COMPARISON ── */
+.compare-bg{background:var(--forest)}
+.compare-table{margin-top:52px;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.1)}
+.compare-row{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;align-items:center}
+.compare-row.header{background:rgba(255,255,255,.06)}
+.compare-row:not(.header){border-top:1px solid rgba(255,255,255,.07)}
+.compare-row:not(.header):hover{background:rgba(255,255,255,.03)}
+.compare-cell{padding:16px 20px;font-size:.85rem;color:rgba(255,255,255,.7);line-height:1.5}
+.compare-cell.label{font-weight:600;color:rgba(255,255,255,.9);font-size:.88rem}
+.compare-cell.col-head{font-family:var(--fd);font-size:1rem;font-weight:700;color:#fff;text-align:center}
+.compare-cell.col-head.highlight{color:var(--gold)}
+.compare-cell.center{text-align:center}
+.check{color:#6fcf97;font-size:1.1rem}
+.cross{color:rgba(255,255,255,.25);font-size:1.1rem}
+.compare-cell.highlight-col{background:rgba(212,168,83,.07)}
+
+/* ── FAQ ── */
+.faq-bg{background:var(--blush)}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:52px;align-items:start}
+.faq-item{background:#fff;border-radius:16px;border:1.5px solid var(--border);overflow:hidden;transition:border-color .2s}
+.faq-item.open{border-color:var(--moss)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;cursor:pointer;font-weight:600;font-size:.92rem;color:var(--ink);user-select:none}
+.faq-q .faq-icon{width:28px;height:28px;border-radius:50%;background:var(--mint-pale);color:var(--forest);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;transition:transform .3s,background .2s}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:var(--forest);color:#fff}
+.faq-a{display:none;padding:0 22px 20px;font-size:.875rem;color:var(--sub);line-height:1.8}
+.faq-item.open .faq-a{display:block}
+
+@media(max-width:860px){
+  .staff-grid{grid-template-columns:1fr 1fr}
+  .faq-grid{grid-template-columns:1fr}
+  .compare-row{grid-template-columns:1.2fr 1fr 1fr 1fr}
+  .compare-cell{padding:12px 14px;font-size:.78rem}
+}
+@media(max-width:540px){
+  .staff-grid{grid-template-columns:1fr}
+  .compare-row{grid-template-columns:1fr 1fr}
+  .compare-cell.hide-mob{display:none}
+}
+
+/* ── FLOATING CTA ── */
+.float-cta{position:fixed;bottom:28px;right:28px;z-index:400;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.float-btn{display:flex;align-items:center;gap:10px;background:var(--forest);color:#fff;text-decoration:none;padding:14px 22px;border-radius:100px;font-weight:700;font-size:.88rem;box-shadow:0 8px 32px rgba(30,58,47,.35);transition:all .25s;white-space:nowrap}
+.float-btn:hover{background:var(--forest-mid);transform:translateY(-3px);box-shadow:0 14px 40px rgba(30,58,47,.45)}
+.float-btn .fb-icon{width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+@media(max-width:540px){.float-btn span{display:none}.float-btn{padding:14px}.float-btn .fb-icon{width:28px;height:28px}}
+</style>
+</head>
+<body>
+
+<!-- FLOATING SCHEDULE BUTTON -->
+<div class="float-cta">
+  <a href="tel:+18013696018" class="float-btn">
+    <div class="fb-icon">📞</div>
+    <span>Call Us Now</span>
+  </a>
+</div>
+
+<!-- FLOATING NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="nl-icon">🕊️</div>
+    <span class="nl-name">In Each Other's Care AFH</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#staff">Our Team</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="tel:+18013696018" style="color:var(--forest);font-weight:700">📞 (801) 369-6018</a></li>
+    <li><a href="#contact" class="nav-cta">Schedule Tour</a></li>
+  </ul>
+  <button class="hamburger" id="ham" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mob-overlay" id="ov" onclick="closeMob()"></div>
+<div class="mob-drawer" id="drawer">
+  <button class="mob-close" onclick="closeMob()">✕</button>
+  <a href="#about" onclick="closeMob()">About Us</a>
+  <a href="#services" onclick="closeMob()">Care Services</a>
+  <a href="#staff" onclick="closeMob()">Our Team</a>
+  <a href="#gallery" onclick="closeMob()">Photo Gallery</a>
+  <a href="#faq" onclick="closeMob()">FAQ</a>
+  <a href="#testimonials" onclick="closeMob()">Family Stories</a>
+  <a href="#amenities" onclick="closeMob()">Locations</a>
+  <a href="tel:+18013696018" class="mob-ph">📞 (801) 369-6018</a>
+  <a href="#contact" class="mob-cta" onclick="closeMob()">Schedule a Free Tour</a>
+</div>
+
+<!-- HERO — full-bleed with bento stats -->
+<section class="hero">
+  <img class="hero-bg-img" src="https://raw.githubusercontent.com/Diwas524/diwas524.github.io/refs/heads/main/theme.png?w=1800&q=85" alt="Senior resident with caregiver walking together in a peaceful garden" loading="eager" />
+  <div class="hero-overlay"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-tag"><span style="width:7px;height:7px;border-radius:50%;background:#6fcf97;display:inline-block"></span> Currently Accepting Residents</div>
+      <h1>Creating Homes<br>Where Families<br><span>Can Return to Being Family Again</span></h1>
+      <p class="hero-p">Six residents. Round-the-clock care. A real home — not a hallway. In Each Other's Care is where families find peace, and seniors find joy again.</p>
+      <!-- Mobile stats strip -->
+      <div class="mob-stats">
+        <div class="mob-stat"><div class="mob-stat-n">6</div><div class="mob-stat-l">Residents</div></div>
+        <div class="mob-stat-div"></div>
+        <div class="mob-stat"><div class="mob-stat-n">24/7</div><div class="mob-stat-l">Care</div></div>
+        <div class="mob-stat-div"></div>
+        <div class="mob-stat"><div class="mob-stat-n">10+</div><div class="mob-stat-l">Yrs</div></div>
+        <div class="mob-stat-div"></div>
+        <div class="mob-stat"><div class="mob-stat-n">100%</div><div class="mob-stat-l">Licensed</div></div>
+      </div>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-gold">Schedule a Free Tour <span style="width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.18);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.85rem">→</span></a>
+        <a href="tel:+18013696018" class="btn-wh"><span style="width:26px;height:26px;border-radius:50%;background:#e75480;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg></span> Contact Us</a>
+      </div>
+    </div>
+    <div class="hero-right-stats">
+      <div class="stats-bento">
+        <div class="stat-card"><div class="stat-n">6</div><div class="stat-l">Max Residents</div></div>
+        <div class="stat-card"><div class="stat-n">24/7</div><div class="stat-l">Staffed Care</div></div>
+        <div class="stat-card"><div class="stat-n">10+</div><div class="stat-l">Yrs Serving Families</div></div>
+        <div class="stat-card"><div class="stat-n">100%</div><div class="stat-l">State Licensed</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-bar-inner">
+    <div class="tb-item"><span>✅</span> WA State Licensed · #WA-AFH-XXXXX</div>
+    <div class="tb-div"></div>
+    <div class="tb-item"><span>🏛️</span> DSHS Certified & Inspected</div>
+    <div class="tb-div"></div>
+    <div class="tb-item"><span>🩺</span> Licensed Caregivers On-Site 24/7</div>
+
+  </div>
+</div>
+
+<!-- PROMISE STRIP -->
+<div class="promise">
+  <div class="promise-inner">
+    <div class="promise-item rv"><div class="pi">🏡</div><strong>Home, Not a Facility</strong><p>Only 6 residents, real relationships, not rotations</p></div>
+    <div class="promise-item rv"><div class="pi">💛</div><strong>Family-First Culture</strong><p>You're kept informed, involved and at ease; always</p></div>
+    <div class="promise-item rv"><div class="pi">🌿</div><strong>Peaceful Setting</strong><p>Garden, sunlight, quiet, designed to restore calm</p></div>
+    <div class="promise-item rv"><div class="pi">🩺</div><strong>Expert Daily Care</strong><p>Licensed caregivers, personalized plans, 24/7 support</p></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="sec" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="photo-stack rv-l">
+        <div class="pm-wrap">
+          <img class="pm" src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9219.jpeg?w=900&q=70" alt="Caregiver walking with senior resident in peaceful garden" loading="lazy" />
+          <div class="badge"><span class="badge-dot"></span> Currently accepting new residents</div>
+        </div>
+        <a class="journey-card" href="http://diwaspandey.com.np/owner.html">
+          <img class="jc-photo" src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/Beautiful-2.JPG?w=200&q=100" alt="In Each Other's Care caregiver" />
+          <div class="jc-text"><strong>Meet the Owner (RN-BSN) </strong><span>A Lifetime of Caregiving</span></div>
+          <span class="jc-arrow">→</span>
+        </a>
+      </div>
+      <div class="rv-r">
+        <p class="ew">Our Story</p>
+        <h2 class="h2">Allowing Families to Become <i>Family Again</i></h2>
+        <p class="lead">At In Each Other's Care Adult Family Homes, we believe exceptional care requires continuous learning, accountability, and a commitment to best practices.</p>
+        <p class="lead" style="margin-top:14px">As proud members of the Adult Family Home Council, we stay connected to industry education, advocacy efforts, and evolving standards of care to better serve our residents and families.</p>
+        <p class="lead" style="margin-top:14px">We also utilize Synkwise electronic health records to support accurate documentation, medication management, care planning, communication, and regulatory compliance. This technology helps ensure our team remains informed and coordinated while allowing us to focus on what matters most - providing exceptional care.</p>
+        <!-- <div class="value-list">
+          <div class="vl-item">
+            <div class="vl-num">01</div>
+            <div class="vl-body"><strong>Known by Name, Not Room Number</strong><p>With only six residents, our caregivers know each person's stories, preferences, and moods. Deep bonds form, not just routines.</p></div>
+          </div>
+          <div class="vl-item">
+            <div class="vl-num">02</div>
+            <div class="vl-body"><strong>Families Stay Close & Informed</strong><p>We communicate proactively, routinely updates, open visits, and care plan meetings so you're never left wondering.</p></div>
+          </div>
+          <div class="vl-item">
+            <div class="vl-num">03</div>
+            <div class="vl-body"><strong>A Calming, Beautiful Environment</strong><p>Garden walks, sunlit rooms, home-cooked aromas, sensory peace that institutions simply can't replicate.</p></div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES — dark section -->
+<section class="sec services-bg" id="services">
+  <div class="wrap">
+    <div class="rv" style="text-align:center;max-width:580px;margin:0 auto 0">
+      <p class="ew ew-wh">What We Offer</p>
+      <h2 class="h2 h2-wh">Care Tailored to Every <i style="color:var(--mint)">Individual</i></h2>
+      <p class="lead lead-wh" style="margin:0 auto">Each resident receives a plan built around their exact needs, rhythms, and preferences. Care that fits, not care that's convenient.</p>
+    </div>
+    
+<div class="svc-grid rv">
+
+  <div class="svc">
+    <button class="svc-toggle" onclick="toggleSvc(this)">
+      <div class="svc-icon">👩‍⚕️</div>
+      <div class="svc-toggle-text"><h3>24/7 Certified Caregivers</h3></div>
+      <div class="svc-chevron">+</div>
+    </button>
+    <div class="svc-panel"><p>Dedicated, certified caregivers are available around the clock, providing attentive support, safety monitoring, and compassionate care day and night.</p></div>
+  </div>
+
+  <div class="svc">
+    <button class="svc-toggle" onclick="toggleSvc(this)">
+      <div class="svc-icon">📋</div>
+      <div class="svc-toggle-text"><h3>Individualized Care Plans</h3></div>
+      <div class="svc-chevron">+</div>
+    </button>
+    <div class="svc-panel"><p>Every resident receives a personalized care plan tailored to their medical needs, daily routines, preferences, and goals.</p></div>
+  </div>
+
+  <div class="svc">
+    <button class="svc-toggle" onclick="toggleSvc(this)">
+      <div class="svc-icon">🩷</div>
+      <div class="svc-toggle-text"><h3>Assisted Daily Living</h3></div>
+      <div class="svc-chevron">+</div>
+    </button>
+    <div class="svc-panel"><p>Compassionate assistance with bathing, dressing, grooming, toileting, transfers, and mobility while promoting independence and dignity.</p></div>
+  </div>
+
+  <div class="svc">
+    <button class="svc-toggle" onclick="toggleSvc(this)">
+      <div class="svc-icon">🧠</div>
+      <div class="svc-toggle-text"><h3>Memory Care</h3></div>
+      <div class="svc-chevron">+</div>
+    </button>
+    <div class="svc-panel"><p>Specialized support for residents living with Alzheimer's disease and other forms of dementia in a calm, familiar, and secure environment.</p></div>
+  </div>
+
+  <div class="svc">
+    <button class="svc-toggle" onclick="toggleSvc(this)">
+      <div class="svc-icon">🩹</div>
+      <div class="svc-toggle-text"><h3>Wound Care</h3></div>
+      <div class="svc-chevron">+</div>
+    </button>
+    <div class="svc-panel"><p>Professional wound monitoring and care focused on healing, infection prevention, comfort, and physician-directed treatment plans.</p></div>
+  </div>
+
+  <div class="svc">
+    <button class="svc-toggle" onclick="toggleSvc(this)">
+      <div class="svc-icon">⚕️</div>
+      <div class="svc-toggle-text"><h3>Catheter Care</h3></div>
+      <div class="svc-chevron">+</div>
+    </button>
+    <div class="svc-panel"><p>Respectful catheter management and monitoring to support hygiene, comfort, and overall well-being.</p></div>
+  </div>
+
+  <div class="svc">
+    <button class="svc-toggle" onclick="toggleSvc(this)">
+      <div class="svc-icon">🍲</div>
+      <div class="svc-toggle-text"><h3>Home-Cooked Meals</h3></div>
+      <div class="svc-chevron">+</div>
+    </button>
+    <div class="svc-panel"><p>Freshly prepared meals and snacks served daily, with accommodations for dietary restrictions and personal preferences.</p></div>
+  </div>
+      
+<div class="svc">
+    <button class="svc-toggle" onclick="toggleSvc(this)">
+      <div class="svc-icon">💊</div>
+      <div class="svc-toggle-text"><h3>Medication Management</h3></div>
+      <div class="svc-chevron">+</div>
+    </button>
+    <div class="svc-panel"><p>Licensed staff handle scheduling, administration, and physician coordination, no missed doses, no family worry.</p></div>
+  </div>
+
+  <div class="svc">
+    <button class="svc-toggle" onclick="toggleSvc(this)">
+      <div class="svc-icon">🎨</div>
+      <div class="svc-toggle-text"><h3>Activities & Enrichment</h3></div>
+      <div class="svc-chevron">+</div>
+    </button>
+    <div class="svc-panel"><p>Meaningful daily activities including music, crafts, games, gardening, exercise, and social engagement.</p></div>
+  </div>
+
+
+</div>
+
+
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="sec gal-bg" id="gallery">
+  <div class="wrap">
+    <div class="rv">
+      <p class="ew">Life at In Each Other's Care</p>
+      <h2 class="h2">Moments That Make a <i>Home</i></h2>
+      <p class="lead">Daily care, creative activities, birthday parties, garden mornings, real glimpses of life here.</p>
+    </div>
+    <div class="gallery-wrap rv" style="margin-top:40px">
+      <div class="gtabs">
+        <button class="gtab active" onclick="filterG('all',this)">All Moments</button>
+        <button class="gtab" onclick="filterG('care',this)">Daily Care</button>
+        <button class="gtab" onclick="filterG('activity',this)">Activities</button>
+        <button class="gtab" onclick="filterG('event',this)">Celebrations</button>
+        <button class="gtab" onclick="filterG('outdoor',this)">Outdoors</button>
+      </div>
+
+      <!-- DESKTOP GRID: shows 6 highlighted photos on "All", full category set on topic tabs -->
+      <div class="gal-grid" id="gg">
+        <div class="gi" data-cat="care"  data-title="Compassionate Daily Care" data-sub="Our caregivers with residents" data-detail="care" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9043.jpeg?w=900&q=80" alt="Caregiver with senior resident" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Compassionate Daily Care</div><div class="gl-sub">Our caregivers with residents</div></div>
+        </div>
+
+        <div class="gi" data-cat="care"  data-title="Compassionate Daily Care" data-sub="Our caregivers with residents" data-detail="care" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/interior/IMG_2814.JPG?w=900&q=80" alt="Caregiver with senior resident" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Compassionate Daily Care</div><div class="gl-sub">Our caregivers with residents</div></div>
+        </div>
+
+        <div class="gi" data-cat="care" data-title="Mealtime Together" data-sub="Residents enjoying dinner together" data-detail="care" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9051.jpeg?w=900&q=80" alt="Residents having dinner" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Mealtime Together</div><div class="gl-sub">Residents enjoying dinner together</div></div>
+        </div>
+
+        <div class="gi" data-cat="care" data-highlight="true" data-title="Compassionate Daily Care" data-sub="Our caregivers with residents" data-detail="care" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/daily_care/IMG_1931.JPG?w=900&q=80" alt="Caregiver with senior resident" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Compassionate Daily Care</div><div class="gl-sub">Our caregivers with residents</div></div>
+        </div>
+
+        <div class="gi" data-cat="care"  data-highlight="true" data-title="Compassionate Daily Care" data-sub="Our caregivers with residents" data-detail="care" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/daily_care/IMG_2906%20(1).JPG?w=900&q=80" alt="Caregiver with senior resident" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Compassionate Daily Care</div><div class="gl-sub">Our caregivers with residents</div></div>
+        </div>
+
+        <div class="gi" data-cat="care" data-highlight="true" data-title="Compassionate Daily Care" data-sub="Our caregivers with residents" data-detail="care" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/daily_care/IMG_4794.JPG?w=900&q=80" alt="Caregiver with senior resident" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Compassionate Daily Care</div><div class="gl-sub">Our caregivers with residents</div></div>
+        </div>
+        
+
+        
+
+        <div class="gi" data-cat="activity" data-highlight="true" data-title="Creative Activities" data-sub="Residents decorating cakes together" data-detail="activity" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9048.jpeg?w=900&q=80" alt="Residents coloring and decorating cakes" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Creative Activities</div><div class="gl-sub">Residents decorating cakes together</div></div>
+        </div>
+
+        <div class="gi" data-cat="activity"  data-title="Creative Activities" data-sub="Residents decorating cakes together" data-detail="activity" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/interior/image000000%20(2).JPG?w=900&q=80" alt="Residents coloring and decorating cakes" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Creative Activities</div><div class="gl-sub"></div></div>
+        </div>
+
+        <div class="gi" data-cat="activity"  data-title="Creative Activities" data-sub="Residents decorating cakes together" data-detail="activity" onclick="lb(this)">
+          <img src="http://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/interior/IMG_1189.JPG?w=900&q=80" alt="Residents coloring and decorating cakes" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Creative Activities</div><div class="gl-sub"></div></div>
+        </div>
+
+        <div class="gi" data-cat="activity"  data-highlight="true" data-title="Creative Activities" data-sub="Residents decorating cakes together" data-detail="activity" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/activities/image000000.JPG?w=900&q=80" alt="Residents coloring and decorating cakes" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Creative Activities</div><div class="gl-sub"></div></div>
+        </div>
+
+        <div class="gi" data-cat="activity"  data-title="Creative Activities" data-sub="Residents decorating cakes together" data-detail="activity" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/activities/IMG_1174.JPG?w=900&q=80" alt="Residents coloring and decorating cakes" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Creative Activities</div><div class="gl-sub"></div></div>
+        </div>
+
+        <div class="gi" data-cat="activity" data-highlight="true" data-title="Creative Activities" data-sub="Residents decorating cakes together" data-detail="activity" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/activities/IMG_5160.JPG?w=900&q=80" alt="Residents coloring and decorating cakes" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Creative Activities</div><div class="gl-sub"></div></div>
+        </div>
+
+        
+        <div class="gi" data-cat="event" data-title="Festival Celebrations" data-sub="Every festival is special here" data-detail="event" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9045.jpeg?w=900&q=80" alt="Festival celebration" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Festival Celebrations</div><div class="gl-sub">Every festival is special here</div></div>
+        </div>
+
+        <div class="gi" data-cat="event" data-title="Festival Celebrations" data-sub="Every festival is special here" data-detail="event" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/interior/Resized_20220704_122141.JPG?w=900&q=80" alt="Festival celebration" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Festival Celebrations</div><div class="gl-sub">Every festival is special here</div></div>
+        </div>
+
+        <div class="gi" data-cat="event" data-title="Festival Celebrations" data-sub="Every festival is special here" data-detail="event" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/interior/IMG_2131.JPG?w=900&q=80" alt="Festival celebration" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Festival Celebrations</div><div class="gl-sub">Every festival is special here</div></div>
+        </div>
+
+        <div class="gi" data-cat="event" data-highlight="true" data-title="Birthdays With Family" data-sub="Celebrating birthdays together" data-detail="event" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9046.jpeg?w=900&q=80" alt="Celebrating birthday with family" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Birthdays With Family</div><div class="gl-sub">Celebrating birthdays together</div></div>
+        </div>
+        <div class="gi" data-cat="event" data-title="Christmas With Family" data-sub="Holiday visits with loved ones" data-detail="event" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9049.jpeg?w=900&q=80" alt="Resident with family on Christmas" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Christmas With Family</div><div class="gl-sub">Holiday visits with loved ones</div></div>
+        </div>
+        <div class="gi" data-cat="event" data-title="Festivals With Family" data-sub="Families joining in the celebration" data-detail="event" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9052.jpeg?w=900&q=80" alt="Residents with family on festival" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Festivals With Family</div><div class="gl-sub">Families joining in the celebration</div></div>
+        </div>
+        <div class="gi" data-cat="event"  data-title="Christmas Celebrations" data-sub="Every Christmas is a party here" data-detail="event" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/c1.jpg?w=900&q=80" alt="All residents on Christmas" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Christmas Celebrations</div><div class="gl-sub">Every Christmas is a party here</div></div>
+        </div>
+
+        <div class="gi" data-cat="outdoor"  data-title="Morning Walks" data-sub="Neighborhood strolls daily" data-detail="outdoor" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9050.jpeg?w=900&q=80" alt="Residents with caregivers on morning walk" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Morning Walks</div><div class="gl-sub">Neighborhood strolls daily</div></div>
+        </div>
+        <div class="gi" data-cat="outdoor"  data-highlight="true" data-title="Out & About" data-sub="Residents enjoying time outside" data-detail="outdoor" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/mw.jpg?w=900&q=80" alt="Residents out on a walk" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Out & About</div><div class="gl-sub">Residents enjoying time outside</div></div>
+        </div>
+        <div class="gi" data-cat="outdoor"  data-title="Our Home" data-sub="A warm, welcoming home with flowers" data-detail="outdoor" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/p1.jpg?w=900&q=80" alt="View of the AFH from outside with flowers" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Our Home</div><div class="gl-sub">A warm, welcoming home with flowers</div></div>
+        </div>
+        <div class="gi" data-cat="outdoor"  data-highlight="true" data-title="Out & About" data-sub="Residents enjoying time outside" data-detail="outdoor" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/activities/IMG_3731.JPG?w=900&q=80" alt="Residents out on a movie" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Out & About</div><div class="gl-sub">Residents enjoying time watching movie</div></div>
+        </div>
+
+        <div class="gi" data-cat="outdoor"  data-title="Relaxing Together" data-sub="Quiet, comfortable moments at home" data-detail="care" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/sitting.jpeg?w=900&q=80" alt="Sitting area outside the AFH" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Relaxing Together</div><div class="gl-sub">Quiet, comfortable moments at home</div></div>
+        </div>
+
+        <div class="gi" data-cat="outdoor"  data-title="Out & About" data-sub="Residents enjoying time outside" data-detail="outdoor" onclick="lb(this)">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/activities/IMG_1764.JPG?w=900&q=80" alt="Residents out on a movie" loading="lazy"/>
+          <div class="gl"><div class="gl-title">Out & About</div><div class="gl-sub">Residents enjoying time watching movie</div></div>
+        </div>
+
+      </div>
+
+      <!-- MOBILE: single-image slider, one at a time -->
+      <div class="gal-slider-wrap" id="galSlider">
+        <div class="gal-slider-track" id="galTrack">
+          <div class="gal-slide" data-title="Compassionate Daily Care" data-sub="Our caregivers with residents" data-cat="care" data-highlight="true" onclick="lbSlide(this)">
+            <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9043.jpeg?w=800&q=80" alt="Caregiver with senior resident" loading="lazy"/>
+            <div class="gl"><div class="gl-title">Compassionate Daily Care</div><div class="gl-sub">Tap to learn more</div></div>
+          </div>
+          <div class="gal-slide" data-title="Mealtime Together" data-sub="Residents enjoying dinner together" data-cat="care" onclick="lbSlide(this)">
+            <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9051.jpeg?w=800&q=80" alt="Residents having dinner" loading="lazy"/>
+            <div class="gl"><div class="gl-title">Mealtime Together</div><div class="gl-sub">Tap to learn more</div></div>
+          </div>
+          <div class="gal-slide" data-title="Relaxing Together" data-sub="Quiet, comfortable moments at home" data-cat="care" data-highlight="true" onclick="lbSlide(this)">
+            <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/sitting.jpeg?w=800&q=80" alt="Sitting area outside the AFH" loading="lazy"/>
+            <div class="gl"><div class="gl-title">Relaxing Together</div><div class="gl-sub">Tap to learn more</div></div>
+          </div>
+          <div class="gal-slide" data-title="Creative Activities" data-sub="Residents decorating cakes together" data-cat="activity" data-highlight="true" onclick="lbSlide(this)">
+            <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9048.jpeg?w=800&q=80" alt="Residents coloring and decorating cakes" loading="lazy"/>
+            <div class="gl"><div class="gl-title">Creative Activities</div><div class="gl-sub">Tap to learn more</div></div>
+          </div>
+          <div class="gal-slide" data-title="Birthday Decorations" data-sub="Getting the room ready to celebrate" data-cat="activity" onclick="lbSlide(this)">
+            <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9044.jpeg?w=800&q=80" alt="Birthday room decoration" loading="lazy"/>
+            <div class="gl"><div class="gl-title">Birthday Decorations</div><div class="gl-sub">Tap to learn more</div></div>
+          </div>
+          <div class="gal-slide" data-title="Festival Celebrations" data-sub="Every festival is special here" data-cat="event" onclick="lbSlide(this)">
+            <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9045.jpeg?w=800&q=80" alt="Festival celebration" loading="lazy"/>
+            <div class="gl"><div class="gl-title">Festival Celebrations</div><div class="gl-sub">Tap to learn more</div></div>
+          </div>
+          <div class="gal-slide" data-title="Birthdays With Family" data-sub="Celebrating birthdays together" data-cat="event" onclick="lbSlide(this)">
+            <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9046.jpeg?w=800&q=80" alt="Celebrating birthday with family" loading="lazy"/>
+            <div class="gl"><div class="gl-title">Birthdays With Family</div><div class="gl-sub">Tap to learn more</div></div>
+          </div>
+          <div class="gal-slide" data-title="Christmas With Family" data-sub="Holiday visits with loved ones" data-cat="event" onclick="lbSlide(this)">
+            <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9049.jpeg?w=800&q=80" alt="Resident with family on Christmas" loading="lazy"/>
+            <div class="gl"><div class="gl-title">Christmas With Family</div><div class="gl-sub">Tap to learn more</div></div>
+          </div>
+          <div class="gal-slide" data-title="Festivals With Family" data-sub="Families joining in the celebration" data-cat="event" onclick="lbSlide(this)">
+            <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9052.jpeg?w=800&q=80" alt="Residents with family on festival" loading="lazy"/>
+            <div class="gl"><div class="gl-title">Festivals With Family</div><div class="gl-sub">Tap to learn more</div></div>
+          </div>
+          <div class="gal-slide" data-title="Christmas Celebrations" data-sub="Every Christmas is a party here" data-cat="event" data-highlight="true" onclick="lbSlide(this)">
+            <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/c1.jpg?w=800&q=80" alt="All residents on Christmas" loading="lazy"/>
+            <div class="gl"><div class="gl-title">Christmas Celebrations</div><div class="gl-sub">Tap to learn more</div></div>
+          </div>
+          <div class="gal-slide" data-title="Morning Walks" data-sub="Neighborhood strolls daily" data-cat="outdoor" data-highlight="true" onclick="lbSlide(this)">
+            <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9050.jpeg?w=800&q=80" alt="Residents with caregivers on morning walk" loading="lazy"/>
+            <div class="gl"><div class="gl-title">Morning Walks</div><div class="gl-sub">Tap to learn more</div></div>
+          </div>
+          <div class="gal-slide" data-title="Out & About" data-sub="Residents enjoying time outside" data-cat="outdoor" data-highlight="true" onclick="lbSlide(this)">
+            <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/mw.jpg?w=800&q=80" alt="Residents out on a walk" loading="lazy"/>
+            <div class="gl"><div class="gl-title">Out & About</div><div class="gl-sub">Tap to learn more</div></div>
+          </div>
+          <div class="gal-slide" data-title="Our Home" data-sub="A warm, welcoming home with flowers" data-cat="outdoor" onclick="lbSlide(this)">
+            <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/p1.jpg?w=800&q=80" alt="View of the AFH from outside with flowers" loading="lazy"/>
+            <div class="gl"><div class="gl-title">Our Home</div><div class="gl-sub">Tap to learn more</div></div>
+          </div>
+        </div>
+        <button class="gal-arr gal-arr-prev" id="galPrev" aria-label="Previous slide">‹</button>
+        <button class="gal-arr gal-arr-next" id="galNext" aria-label="Next slide">›</button>
+        <div class="gal-counter" id="galCounter">1 / 13</div>
+      </div>
+      <div class="gal-dots" id="galDots" style="display:none"></div>
+
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOADS / TAKE A CLOSER LOOK -->
+<section class="sec dl-sec" id="downloads" style="background:var(--forest)">
+  <div class="wrap dl-wrap">
+    <div class="rv">
+      <p class="ew ew-wh">Plan Your Visit</p>
+      <h2 class="h2 h2-wh">Take a Closer <i style="color:var(--gold)">Look</i></h2>
+      <p class="lead lead-wh">Download our community brochure for a full overview of floor plans, pricing, and amenities, or grab this week's dining menu to see what's cooking at In Each Other's Care.</p>
+    </div>
+    <div class="rv dl-list">
+      <a href="#" class="dl-card">
+        <span class="dl-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg></span>
+        <span class="dl-text">
+          <span class="dl-title">Download Brochure</span>
+          <span class="dl-sub">Floor plans, pricing &amp; amenities</span>
+        </span>
+        <span class="dl-arrow">→</span>
+      </a>
+      <a href="#" class="dl-card">
+        <span class="dl-ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v6a2 2 0 1 1-4 0V2"/><path d="M6 8v14"/><path d="M18 2c-1.2 1.4-1.5 3-1.5 5 0 1.6.7 2.6 1.5 3.2V22"/></svg></span>
+        <span class="dl-text">
+          <span class="dl-title">Download Weekly Menu</span>
+          <span class="dl-sub">This week's home-style dining</span>
+        </span>
+        <span class="dl-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lbox" onclick="closeLb()">
+  <div class="lb-box" onclick="event.stopPropagation()">
+    <button class="lb-x" onclick="closeLb()">✕</button>
+    <img id="lbimg" src="" alt=""/>
+    <div class="lb-cap" id="lbcap"></div>
+    <div class="lb-sub" id="lbsub"></div>
+    <div class="lb-detail" id="lbdetail"></div>
+  </div>
+</div>
+
+<!-- MEET THE OWNER -->
+<section class="sec" id="owner" style="background:var(--blush)">
+  <div class="wrap">
+    <div class="owner-grid">
+      <div class="rv-l">
+        <div class="owner-photo-wrap" id="ownerVideoWrap">
+          <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_6020.JPG?w=900&q=90" alt="Tami, RN BSN, Owner and Administrator" loading="lazy"/>
+          <button class="owner-play-btn" id="ownerPlayBtn" aria-label="Play video">
+            <span class="owner-play-circle">
+              <svg viewBox="0 0 24 24" fill="#1E3A2F"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+          </button>
+          <iframe class="owner-video-frame" id="ownerVideoFrame" src="" title="Tami's story video" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; encrypted-media; picture-in-picture; web-share"></iframe>
+        </div>
+        <div class="owner-credentials">
+          <span class="owner-cred">🎓 RN, BSN</span>
+          <span class="owner-cred">👶 15 Years NICU</span>
+          <span class="owner-cred">🏡 6 Years AFH Provider</span>
+        </div>
+      </div>
+      <div class="rv-r">
+        <p class="ew">From Our Owner</p>
+        <h2 class="h2">A Lifetime Spent <i>Caring for Others</i></h2>
+        <p class="lead">My name is Tami, and caring for others has been a part of my life for as long as I can remember. I grew up in an Adult Family Home owned and operated by my mother, where I learned early on that caregiving is about much more than meeting physical needs.</p>
+        <p class="lead" style="margin-top:14px">Today, I combine my nursing background with a lifetime of caregiving experience to provide thoughtful, personalized care for each resident entrusted to us.</p>
+        <a href="http://diwaspandey.com.np/owner.html" class="btn-gold" style="margin-top:28px">Read Tami's Full Story →</a>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STAFF -->
+<section class="sec" id="staff" style="background:var(--white)">
+  <div class="wrap">
+    <div class="rv" style="text-align:center;max-width:560px;margin:0 auto">
+      <p class="ew">The People Behind the Care</p>
+      <h2 class="h2">Meet Our <i>Caregiving Team</i></h2>
+      <p class="lead" style="margin:0 auto">Every person who walks through our door is greeted by someone who genuinely cares. Here are the dedicated individuals who make In Each Other's Care feel like home.</p>
+    </div>
+    <div class="staff-grid">
+      
+      <div class="staff-card rv">
+        <img class="staff-img" src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/carlos1.JPG?w=600&q=80" alt="James Reyes, Lead Caregiver"/>
+        <div class="staff-body">
+          <div class="staff-name">Carlos Serpa</div>
+          <div class="staff-role">Co-Owner & Operations</div>
+          <p class="staff-bio">With more than 20 years of leadership in corporate finance and operations, Carlos helps ensure our homes provide exceptional care through strong leadership, thoughtful organization, and a personal touch. Known for his warm smile and welcoming spirit, he is actively involved helping create a caring environment where residents feel valued and families feel supported.</p>
+          <span class="staff-badge">🏡 Operations Director</span>
+        </div>
+      </div>
+      <div class="staff-card rv">
+        <img class="staff-img" src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_7646.JPG?w=600&q=80" alt="Linda Park, Care Coordinator"/>
+        <div class="staff-body">
+          <div class="staff-name">Maddie</div>
+          <div class="staff-role">Activities Coordinator</div>
+          <p class="staff-bio">Maddie brings creativity, energy, and a passion for enriching daily life to our homes. As our Activities Coordinator, she plans engaging programs that encourage connection, purpose, and joy, creating meaningful experiences that residents look forward to each day.
+</p>
+          <span class="staff-badge">🎨 Recreation & Activities Coordinator</span>
+        </div>
+      </div>
+<div class="staff-card rv">
+        <img class="staff-img" src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/10000395554.jpeg?w=600&q=80" alt="Tami Serpa, Home Director"/>
+        <div class="staff-body">
+          <div class="staff-name">Nicole</div>
+          <div class="staff-role">AFH Manager</div>
+          <p class="staff-bio">With over 15 years of caregiving experience, 9 years in resident care management, and 5 years with Parkside, Nicole is a key part of our team. Known for her organization and reliability, she helps keep daily operations running smoothly while ensuring residents receive consistent, compassionate care and support.</p>
+          <span class="staff-badge">👩‍⚕️ Resident Care Manager</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- TESTIMONIALS -->
+<section class="sec" id="testimonials" style="background:var(--blush)">
+  <div class="wrap">
+    <div class="rv" style="text-align:center;max-width:560px;margin:0 auto">
+      <p class="ew">Family Voices</p>
+      <h2 class="h2">What Our Families <i>Say</i></h2>
+    </div>
+    <div class="testi-split rv">
+      <div class="testi-img">
+        <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_9054.jpeg?w=900&q=80" alt="Resident and family member sharing a warm moment at In Each Other's Care" loading="lazy"/>
+        <div class="testi-img-cap"><strong>Real families.</strong><span>Real stories from In Each Other's Care</span></div>
+      </div>
+      <div class="testi-panel">
+        <div class="testi-slider">
+          <div class="tc active">
+            <div class="stars">★★★★★</div>
+            <blockquote>"Moving my mother felt impossible, until we found In Each Other's Care. She is happier, calmer, and better cared for than anywhere we visited. We finally stopped worrying."</blockquote>
+            <div class="tc-author"><div class="tc-av">👩</div><div><div class="tc-name">Sandra L.</div><div class="tc-role">Daughter of resident, 2+ years</div></div></div>
+          </div>
+          <div class="tc">
+            <div class="stars">★★★★★</div>
+            <blockquote>"The staff knows my dad by name, knows his stories, and treats him like actual family. The meals, garden walks, activities, he is truly living, not just being cared for."</blockquote>
+            <div class="tc-author"><div class="tc-av">👨</div><div><div class="tc-name">Marcus T.</div><div class="tc-role">Son of resident, 18 months</div></div></div>
+          </div>
+          <div class="tc">
+            <div class="stars">★★★★★</div>
+            <blockquote>"We tried other homes. Nothing compares. The personal attention, proactive communication, and genuine warmth, In Each Other's Care is something truly rare and special."</blockquote>
+            <div class="tc-author"><div class="tc-av">👫</div><div><div class="tc-name">Patricia & George R.</div><div class="tc-role">Family of resident</div></div></div>
+          </div>
+          <div class="tc">
+            <div class="stars">★★★★★</div>
+            <blockquote>"My grandmother has dementia and we were terrified. The memory care team gave her structure, safety, and most importantly, real joy every single day. We are so grateful."</blockquote>
+            <div class="tc-author"><div class="tc-av">👧</div><div><div class="tc-name">Jenna K.</div><div class="tc-role">Granddaughter of resident</div></div></div>
+          </div>
+        </div>
+        <div class="testi-nav">
+          <div class="testi-dots" id="testiDots"></div>
+          <button class="testi-arrow" onclick="testiMove(-1)" aria-label="Previous testimonial">←</button>
+          <button class="testi-arrow" onclick="testiMove(1)" aria-label="Next testimonial">→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-sec">
+  <h2>Your loved one deserves a <i>peaceful</i> place to call home.</h2>
+  <p>Tours are free, relaxed, and completely pressure-free. Come see for yourself why families trust In Each Other's Care with the people they love most.</p>
+  <div class="cta-btns">
+    <a href="tel:+18013696018" class="btn-gold-lg">📞 Call (801) 369-6018</a>
+    <a href="#contact" class="btn-wh-lg">📅 Request a Tour Online</a>
+  </div>
+</section>
+
+
+
+
+<!-- FAQ -->
+<section class="sec faq-bg" id="faq">
+  <div class="wrap">
+    <div class="rv" style="text-align:center;max-width:560px;margin:0 auto">
+      <p class="ew">Common Questions</p>
+      <h2 class="h2">Answers to What <i>Families Ask Most</i></h2>
+      <p class="lead" style="margin:0 auto">We believe in total transparency. Here are the questions we hear most often, answered honestly.</p>
+    </div>
+    <div class="faq-grid rv">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How do I know if my loved one is ready for an AFH?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Signs that it may be time include increasing difficulty with daily activities, safety concerns at home, loneliness or isolation, memory-related challenges, or caregiver burnout in the family. We offer free consultations to help you assess where your loved one is and what level of care makes the most sense.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Do you provide Dementia or Alzheimer’s care?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Yes. We have experience supporting residents with dementia and memory loss and strive to provide a safe, structured, and reassuring environment.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What's included in the monthly rate?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Your monthly rate includes 24-hour supervision, medication management, assistance with activities of daily living, home-cooked meals and snacks, housekeeping and laundry, activities and social engagement, coordination with healthcare providers, cable, haircuts, and nurse delegation/assessments. There are no surprise add-on fees for standard care services.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Are visitors welcome?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Yes. Families and friends are encouraged to visit and remain actively involved in their loved one's life. This is their home and the doors are always open. Families do not need to call or schedule visits but if you are hoping for management or staff to have time, we ask that families let us know in advance if you are wanting time set aside</div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What happens if my loved one's needs increase?<span class="faq-icon">+</span></div>
+        <div class="faq-a">We regularly review and update each resident's care plan as their needs evolve. Our licensed staff are trained to handle a wide range of care levels, including advanced memory care and hospice support. We partner with local healthcare providers to ensure continuity and always communicate proactively with families.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How do I start the admission process?<span class="faq-icon">+</span></div>
+        <div class="faq-a">It starts with a simple conversation. Call us or fill out the contact form and we'll schedule a free, no-pressure tour. We'll walk you through the home, answer every question, and if it feels like the right fit, we'll guide you through the assessment and move-in process step by step.</div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+<!-- LOCATIONS -->
+<section class="sec" id="amenities">
+  <div class="wrap">
+    <div class="rv">
+      <p class="ew">Part of the In Each Other's Care Family</p>
+      <h2 class="h2">One Family, <i>Three</i> More Homes Across Washington</h2>
+      <p class="lead">Same warmth, same standard of care, two sister homes across Washington, each licensed, RN-BSN-run, and built around the same promise.</p>
+    </div>
+    <div class="loc-grid">
+      <div class="loc-card rv" onclick="openSlider('parkside')" style="cursor:pointer">
+        <div class="loc-img"><img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/pafh.jpg?w=700&q=80" alt="Parkside Adult Family Home in Vancouver WA"/></div>
+        <div class="loc-body">
+          <h3>Parkside Adult Family Home</h3>
+          <p class="loc-addr">📍 6101 Texas Dr, Vancouver, WA 98661</p>
+          <a class="loc-phone" href="tel:+18013696018">📞 (801) 369-6018</a>
+        </div>
+      </div>
+      <div class="loc-card rv" onclick="openSlider('firstplace')" style="cursor:pointer">
+        <div class="loc-img"><img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=700&q=80" alt="First Place Adult Family Home"/></div>
+        <div class="loc-body">
+          <h3>First Place Adult Family Home</h3>
+          <p class="loc-addr">📍 14731 NE 11th St, Vancouver, WA 98684</p>
+          <a class="loc-phone" href="tel:+18013696018">📞 (801) 369-6018</a>
+        </div>
+      </div>
+
+      <div class="loc-card rv" onclick="openSlider('comingsoon')" style="cursor:pointer">
+        <div class="loc-img"><img src="https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=700&q=80" alt="In Each Other's Care Adult Family Home in Auburn"/></div>
+        <div class="loc-body">
+          <h3>Opening Soon ..!</h3>
+          <p class="loc-addr">📍 Vancouver, WA</p>
+          <a class="loc-phone" href="tel:+18013696018">📞 (801) 369-6018</a>
+        </div>
+      </div>
+    </div> 
+  </div>
+</section>
+
+
+<!-- STEPS -->
+<section class="sec path-bg" id="steps">
+  <div class="wrap">
+    <div class="rv" style="text-align:center;max-width:600px;margin:0 auto">
+      <p class="ew ew-wh">The Process</p>
+      <h2 class="h2 h2-wh">From First Call to <i style="color:var(--mint)">Welcome Home</i></h2>
+      <p class="lead lead-wh" style="margin:0 auto">No pressure, no rush. Just a warm, guided path that helps you find the right fit for someone you love.</p>
+    </div>
+    <div class="path-row rv">
+      <div class="path-connector"></div>
+      <div class="path-node">
+        <div class="path-circle">📝<span class="path-num">1</span></div>
+        <div class="path-text">
+          <h3>Tell Us Your Story</h3>
+          <p>A short call or intake form helps us learn your loved one's needs, health history, and daily rhythms before we ever meet.</p>
+        </div>
+      </div>
+      <div class="path-node">
+        <div class="path-circle">🏡<span class="path-num">2</span></div>
+        <div class="path-text">
+          <h3>Come See It Yourself</h3>
+          <p>Tour the home, meet our caregivers, and feel the everyday warmth for yourself. No pressure, just an honest look around.</p>
+        </div>
+      </div>
+      <div class="path-node">
+        <div class="path-circle">🩺<span class="path-num">3</span></div>
+        <div class="path-text">
+          <h3>We Build the Plan</h3>
+          <p>Our RN designs a care plan around real routines, medications, and comfort, nothing generic and nothing rushed.</p>
+        </div>
+      </div>
+      <div class="path-node">
+        <div class="path-circle">🔑<span class="path-num">4</span></div>
+        <div class="path-text">
+          <h3>Move In &amp; Settle In</h3>
+          <p>We stay close through moving day and every week after, until your family feels at home here too.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PROMO -->
+<section class="sec glass-bg" id="offer">
+  <div class="glass-orb glass-orb1"></div>
+  <div class="glass-orb glass-orb2"></div>
+  <div class="glass-orb glass-orb3"></div>
+  <div class="wrap glass-wrap">
+    <div class="rv" style="text-align:center;max-width:600px;margin:0 auto">
+      <p class="ew">Special Offer</p>
+      <h2 class="h2">Save More, <i>Together</i></h2>
+      <p class="lead" style="margin:0 auto">Two ways to make quality care more affordable for the families we love.</p>
+    </div>
+
+    <div class="glass-panels rv">
+      <div class="glass-panel">
+        <span class="offer-ribbon">Limited Time</span>
+        <div class="offer-top">
+          <div class="glass-ic">💚</div>
+          <p class="gp-tag">New Residents</p>
+          <div class="offer-amount">$1,500<span>OFF</span></div>
+        </div>
+        <div class="offer-notch-row"><div class="offer-notch offer-notch-l"></div><div class="offer-notch offer-notch-r"></div></div>
+        <div class="offer-divider"></div>
+        <div class="offer-bottom">
+          <h3>Off your first month</h3>
+          <p>Move in with less to worry about. New residents receive a $1,500 discount applied directly to their first month of care.</p>
+          <a href="#contact" class="offer-cta">Claim this offer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+      <div class="glass-panel">
+        <span class="offer-ribbon">Refer &amp; Earn</span>
+        <div class="offer-top">
+          <div class="glass-ic">🤝</div>
+          <p class="gp-tag">Referrals</p>
+          <div class="offer-amount">$500<span>BONUS</span></div>
+        </div>
+        <div class="offer-notch-row"><div class="offer-notch offer-notch-l"></div><div class="offer-notch offer-notch-r"></div></div>
+        <div class="offer-divider"></div>
+        <div class="offer-bottom">
+          <h3>Referral bonus</h3>
+          <p>Know someone who'd thrive here? Past families and staff members earn a $500 bonus for every new resident they refer.</p>
+          <a href="#contact" class="offer-cta">Claim this offer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CONTACT -->
+<section class="sec contact-bg" id="contact">
+  <div class="wrap">
+    <div class="rv">
+      <p class="ew">Get in Touch</p>
+      <h2 class="h2">We'd Love to <i>Hear From You</i></h2>
+    </div>
+    <div class="contact-grid">
+      <div class="rv-l">
+        <p class="ci-head">Whether you have questions, want to tour, or simply need someone to talk to, we're here. No obligation. Just a warm, honest conversation.</p>
+        <div class="cd"><div class="cd-ic">📞</div><div class="cd-t"><strong>Phone</strong><a href="tel:+18013696018">(801) 369-6018</a></div></div>
+        <div class="cd"><div class="cd-ic">✉️</div><div class="cd-t"><strong>Email</strong><a href="mailto:parksideadultfamilyhome@gmail.com">parksideadultfamilyhome@gmail.com</a></div></div>
+        <div class="cd"><div class="cd-ic">📍</div><div class="cd-t"><strong>Location</strong><a href="https://maps.google.com" target="_blank" rel="noopener">Vancouver, WA 98661</a></div></div>
+        <div class="cd"><div class="cd-ic">🕐</div><div class="cd-t"><strong>Office Hours</strong><span>Monday – Saturday, 8 AM – 6 PM</span></div></div>
+      </div>
+      <div class="rv-r">
+        <div class="form-card">
+          <div id="fsok" style="display:none;padding:24px;background:var(--mint-pale);border-radius:14px;border:1.5px solid var(--mint)">
+            <p style="font-size:1.05rem;font-weight:700;color:var(--forest);margin-bottom:10px">✅ Form sent successfully!</p>
+            <p style="font-size:.9rem;color:var(--body);line-height:1.75;margin-bottom:14px">The In Each Other's Care team will be in touch with you soon.</p>
+            <p style="font-size:.85rem;color:var(--sub);line-height:1.75">If you have any questions in the meantime, feel free to email us at <a href="mailto:parksideadultfamilyhome@gmail.com" style="color:var(--forest);font-weight:600">parksideadultfamilyhome@gmail.com</a> or call us directly at <a href="tel:+18013696018" style="color:var(--forest);font-weight:600">(801) 369-6018</a>.</p>
+          </div>
+          <div id="fserr" style="display:none;color:red;font-size:.85rem;margin-bottom:12px;padding:12px;background:#fff0f0;border-radius:8px">Something went wrong. Please try again or call us at (564) 888-3396.</div>
+          <form id="cf">
+            <div class="form-row">
+              <div>
+                <label for="fn">First Name</label>
+                <input type="text" id="fn" name="first_name" placeholder="Margaret" required/>
+                <div class="field-err" id="err-fn">⚠ Please fill in your first name.</div>
+              </div>
+              <div>
+                <label for="ln">Last Name</label>
+                <input type="text" id="ln" name="last_name" placeholder="Johnson" required/>
+                <div class="field-err" id="err-ln">⚠ Please fill in your last name.</div>
+              </div>
+            </div>
+            <label for="ph">Phone Number</label>
+            <input type="tel" id="ph" name="phone" placeholder="(206) 555-0000" required/>
+            <div class="field-err" id="err-ph">⚠ Please fill in your phone number.</div>
+            <label for="em">Email Address</label>
+            <input type="email" id="em" name="email" placeholder="you@example.com" required/>
+            <div class="field-err" id="err-em">⚠ Please fill in a valid email address.</div>
+            <label for="msg">Message</label>
+            <textarea id="msg" name="message" placeholder="Tell us a little about your loved one and what kind of care they may need…" required></textarea>
+            <div class="field-err" id="err-msg">⚠ Please fill in your message.</div>
+            <button type="submit" id="cfbtn">Send Message & Request a Tour →</button>
+          </form>
+          <script>
+            const fields = [
+              {id:'fn', err:'err-fn'},
+              {id:'ln', err:'err-ln'},
+              {id:'ph', err:'err-ph'},
+              {id:'em', err:'err-em'},
+              {id:'msg', err:'err-msg'}
+            ];
+
+            // Clear error on input
+            fields.forEach(({id, err}) => {
+              document.getElementById(id).addEventListener('input', function(){
+                this.classList.remove('invalid');
+                document.getElementById(err).classList.remove('show');
+              });
+            });
+
+            document.getElementById('cf').addEventListener('submit', async function(e) {
+              e.preventDefault();
+
+              // Validate all fields
+              let valid = true;
+              fields.forEach(({id, err}) => {
+                const el = document.getElementById(id);
+                if (!el.value.trim()) {
+                  el.classList.add('invalid');
+                  document.getElementById(err).classList.add('show');
+                  valid = false;
+                } else {
+                  el.classList.remove('invalid');
+                  document.getElementById(err).classList.remove('show');
+                }
+              });
+              if (!valid) return;
+
+              const btn = document.getElementById('cfbtn');
+              btn.textContent = 'Sending…';
+              btn.disabled = true;
+              try {
+                const res = await fetch('https://formspree.io/f/mjgdqdyn', {
+                  method: 'POST',
+                  body: new FormData(this),
+                  headers: { Accept: 'application/json' }
+                });
+                if (res.ok) {
+                  document.getElementById('cf').style.display = 'none';
+                  document.getElementById('fserr').style.display = 'none';
+                  document.getElementById('fsok').style.display = 'block';
+                } else {
+                  document.getElementById('fserr').style.display = 'block';
+                  btn.textContent = 'Send Message & Request a Tour →';
+                  btn.disabled = false;
+                }
+              } catch(err) {
+                document.getElementById('fserr').style.display = 'block';
+                btn.textContent = 'Send Message & Request a Tour →';
+                btn.disabled = false;
+              }
+            });
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-inner">
+    <div class="ft-bottom">
+      <div class="ft-logo">🕊️ In Each Other's Care AFH</div>
+      <span class="ft-copy">© 2026 In Each Other's Care Adult Family Home</span>
+      <span class="ft-credit">Designed by <a href="https://diwaspandey.com.np" target="_blank" rel="noopener">Diwas Pandey</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// FAQ toggle
+function toggleFaq(el){
+  const item = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+
+// Mobile drawer
+const ham=document.getElementById('ham'),ov=document.getElementById('ov'),dr=document.getElementById('drawer');
+ham.addEventListener('click',()=>{ov.classList.add('open');dr.classList.add('open');document.body.style.overflow='hidden'});
+function closeMob(){ov.classList.remove('open');dr.classList.remove('open');document.body.style.overflow=''}
+
+function toggleSvc(btn){
+  var card=btn.closest('.svc');
+  var wasOpen=card.classList.contains('open');
+  document.querySelectorAll('.svc.open').forEach(function(c){
+    c.classList.remove('open');
+    c.querySelector('.svc-chevron').textContent='+';
+  });
+  if(!wasOpen){
+    card.classList.add('open');
+    card.querySelector('.svc-chevron').textContent='+';
+  }
+}
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();const top=t.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top,behavior:'smooth'})}
+  });
+});
+
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}});
+},{threshold:0.1});
+document.querySelectorAll('.rv,.rv-l,.rv-r').forEach(el=>obs.observe(el));
+
+// Gallery filter (desktop)
+const allItems=[...document.querySelectorAll('.gi')];
+function filterG(cat,btn){
+  document.querySelectorAll('.gtab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(cat==='all'){
+    allItems.forEach(i=>{ i.style.display=(i.dataset.highlight==='true')?'':'none'; });
+  } else {
+    let shown=0;
+    allItems.forEach(i=>{
+      const matches=i.dataset.cat===cat;
+      const show=matches&&shown<6;
+      if(show)shown++;
+      i.style.display=show?'':'none';
+    });
+  }
+  // also filter mobile slider
+  filterSlider(cat);
+}
+
+// Lightbox detail map
+const detailMap={
+  care:{badge:'🩷 Care',desc:'Our dedicated caregivers provide round-the-clock, personalized care in a warm, home-like setting.'},
+  activity:{badge:'🎨 Activity',desc:'Enriching daily activities designed to engage body and mind — from art to music to garden therapy.'},
+  event:{badge:'🎉 Celebration',desc:'Every milestone matters. We celebrate birthdays, holidays, and everyday moments with residents and families.'},
+  outdoor:{badge:'🌿 Outdoors',desc:'Fresh air and nature are part of daily life. Morning walks and garden time support both mood and wellness.'},
+};
+
+function openLightbox(img,title,sub,cat){
+  document.getElementById('lbimg').src=img.src;
+  document.getElementById('lbimg').alt=img.alt;
+  document.getElementById('lbcap').textContent=title;
+  document.getElementById('lbsub').textContent=sub||'';
+  const d=detailMap[cat]||detailMap['care'];
+  document.getElementById('lbdetail').innerHTML=
+    '<span class="lb-badge">'+d.badge+'</span>'+
+    '<span class="lb-badge">✨ In Each Other\'s Care</span>';
+  // add description below
+  let descEl=document.getElementById('lb-desc');
+  if(!descEl){descEl=document.createElement('p');descEl.id='lb-desc';descEl.style.cssText='color:rgba(255,255,255,.6);font-size:.82rem;margin-top:10px;line-height:1.7;max-width:480px;margin-left:auto;margin-right:auto';document.querySelector('.lb-box').appendChild(descEl);}
+  descEl.textContent=d.desc;
+  document.getElementById('lbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+// Desktop lightbox
+function lb(el){
+  openLightbox(el.querySelector('img'),el.dataset.title,el.dataset.sub,el.dataset.detail||el.dataset.cat);
+}
+
+// Mobile slide lightbox
+function lbSlide(el){
+  openLightbox(el.querySelector('img'),el.dataset.title,el.dataset.sub,el.dataset.cat);
+}
+
+function closeLb(){document.getElementById('lbox').classList.remove('open');document.body.style.overflow=''}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb()});
+
+// ── MOBILE SLIDER ──
+const track=document.getElementById('galTrack');
+const slides=[...document.querySelectorAll('.gal-slide')];
+const dotsWrap=document.getElementById('galDots');
+const counter=document.getElementById('galCounter');
+let slideIdx=0,startX=0,isDragging=false,slideFilterCat='all';
+
+function buildDots(){
+  dotsWrap.innerHTML='';
+  const visible=slides.filter(s=>s.style.display!=='none');
+  if(visible.length<=1){dotsWrap.style.display='none';return;}
+  dotsWrap.style.display='flex';
+  visible.forEach((_,i)=>{
+    const d=document.createElement('button');
+    d.className='gal-dot'+(i===0?' active':'');
+    d.setAttribute('aria-label','Slide '+(i+1));
+    d.onclick=()=>goSlide(i);
+    dotsWrap.appendChild(d);
+  });
+}
+
+function getVisible(){return slides.filter(s=>s.style.display!=='none');}
+
+function goSlide(n){
+  const vis=getVisible();
+  if(!vis.length)return;
+  slideIdx=((n%vis.length)+vis.length)%vis.length;
+  // slides with display:none are removed from the flex flow entirely,
+  // so visible slides sit at consecutive positions 0,1,2... in the track —
+  // use slideIdx directly rather than the slide's position in the full unfiltered list
+  const w=document.getElementById('galSlider').offsetWidth;
+  track.style.transform='translateX(-'+(slideIdx*w)+'px)';
+  [...dotsWrap.children].forEach((d,i)=>d.classList.toggle('active',i===slideIdx));
+  counter.textContent=(slideIdx+1)+' / '+vis.length;
+}
+
+document.getElementById('galPrev').onclick=()=>goSlide(slideIdx-1);
+document.getElementById('galNext').onclick=()=>goSlide(slideIdx+1);
+
+// touch swipe
+track.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;isDragging=true},{passive:true});
+track.addEventListener('touchend',e=>{
+  if(!isDragging)return;isDragging=false;
+  const dx=e.changedTouches[0].clientX-startX;
+  if(Math.abs(dx)>40)goSlide(slideIdx+(dx<0?1:-1));
+},{passive:true});
+
+function filterSlider(cat){
+  slideFilterCat=cat;
+  if(cat==='all'){
+    // Mobile shows every photo on "All Moments" (desktop grid still caps at 6 highlights)
+    slides.forEach(s=>{ s.style.display=''; });
+  } else {
+    let shown=0;
+    slides.forEach(s=>{
+      const matches=s.dataset.cat===cat;
+      const show=matches&&shown<6;
+      if(show)shown++;
+      s.style.display=show?'':'none';
+    });
+  }
+  slideIdx=0;
+  const vis=getVisible();
+  if(!vis.length){counter.textContent='0 / 0';dotsWrap.innerHTML='';return;}
+  buildDots();
+  goSlide(0);
+}
+
+// Owner video: click photo to swap in a Facebook video embed that autoplays inline (no new tab)
+(function(){
+  const playBtn=document.getElementById('ownerPlayBtn');
+  const frame=document.getElementById('ownerVideoFrame');
+  if(!playBtn||!frame)return;
+  const fbVideoUrl=encodeURIComponent('https://www.facebook.com/reel/913828867784535');
+  playBtn.addEventListener('click',()=>{
+    frame.src='https://www.facebook.com/plugins/video.php?href='+fbVideoUrl+'&show_text=false&autoplay=true&width=900';
+    frame.style.display='block';
+    playBtn.style.display='none';
+  });
+})();
+
+// init gallery on load — desktop grid shows 6 highlights on "All Moments"; mobile slider shows all 13
+(function(){
+  allItems.forEach(i=>{
+    i.style.display=(i.dataset.highlight==='true')?'':'none';
+  });
+  filterSlider('all');
+  // re-calc on resize
+  window.addEventListener('resize',()=>goSlide(slideIdx));
+})();
+
+// Testimonial slider
+const testiCards=[...document.querySelectorAll('.testi-slider .tc')];
+const testiDotsEl=document.getElementById('testiDots');
+let testiIdx=0,testiTimer;
+testiCards.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='testi-dot'+(i===0?' active':'');
+  d.setAttribute('aria-label','Go to testimonial '+(i+1));
+  d.onclick=()=>{testiGo(i);resetTesti()};
+  testiDotsEl.appendChild(d);
+});
+function testiGo(i){
+  testiCards[testiIdx].classList.remove('active');
+  testiDotsEl.children[testiIdx].classList.remove('active');
+  testiIdx=(i+testiCards.length)%testiCards.length;
+  testiCards[testiIdx].classList.add('active');
+  testiDotsEl.children[testiIdx].classList.add('active');
+}
+function testiMove(d){testiGo(testiIdx+d);resetTesti()}
+function resetTesti(){clearInterval(testiTimer);testiTimer=setInterval(()=>testiGo(testiIdx+1),6000)}
+resetTesti();
+
+</script>
+
+<!-- ── IMAGE SLIDER LIGHTBOX ── -->
+<style>
+.ls-overlay{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.ls-overlay.open{opacity:1;pointer-events:all}
+.ls-header{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:18px 24px;z-index:10}
+.ls-title{color:#fff;font-family:'Playfair Display',Georgia,serif;font-size:1.1rem;font-weight:700;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.ls-close{background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.5);color:#fff;width:44px;height:44px;border-radius:50%;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s;flex-shrink:0}
+.ls-close:hover{background:rgba(255,255,255,.3);border-color:#fff}
+.ls-stage{position:relative;width:100%;max-width:900px;display:flex;align-items:center;justify-content:center;padding:80px 70px}
+.ls-img-wrap{width:100%;max-height:72vh;display:flex;align-items:center;justify-content:center;border-radius:16px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.6)}
+.ls-img-wrap img{width:100%;max-height:72vh;object-fit:contain;display:block;background:#111}
+.ls-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.4);color:#fff;width:48px;height:48px;border-radius:50%;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s;flex-shrink:0}
+.ls-arrow:hover{background:rgba(255,255,255,.3);border-color:#fff}
+.ls-prev{left:10px}.ls-next{right:10px}
+.ls-footer{display:flex;flex-direction:column;align-items:center;gap:12px;padding-bottom:24px}
+.ls-counter{color:rgba(255,255,255,.6);font-size:.82rem;letter-spacing:.1em}
+.ls-dots{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;max-width:300px}
+.ls-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);border:none;cursor:pointer;transition:background .2s,transform .2s;padding:0}
+.ls-dot.active{background:#fff;transform:scale(1.3)}
+@media(max-width:600px){
+  .ls-stage{padding:70px 50px}
+  .ls-arrow{width:38px;height:38px;font-size:1rem}
+  .ls-prev{left:4px}.ls-next{right:4px}
+}
+</style>
+
+<!-- Lightbox Modal -->
+<div class="ls-overlay" id="lsOverlay" role="dialog" aria-modal="true" aria-label="Home image gallery">
+  <div class="ls-header">
+    <span class="ls-title" id="lsTitle"></span>
+    <button class="ls-close" id="lsClose" aria-label="Close gallery">✕</button>
+  </div>
+  <div class="ls-stage">
+    <button class="ls-arrow ls-prev" id="lsPrev" aria-label="Previous image">‹</button>
+    <div class="ls-img-wrap"><img id="lsImg" src="" alt=""/></div>
+    <button class="ls-arrow ls-next" id="lsNext" aria-label="Next image">›</button>
+  </div>
+  <div class="ls-footer">
+    <div class="ls-counter" id="lsCounter"></div>
+    <div class="ls-dots" id="lsDots"></div>
+  </div>
+</div>
+
+<script>
+// ── SLIDER DATA — replace placeholder URLs with your real images ──
+const sliderData = {
+  parkside: {
+    title: 'Parkside Adult Family Home',
+    images: [
+      {src:'https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/pafh.jpg',alt:'Parkside front exterior'},
+      {src:'https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/interior/69144169516__1CB3FB71-E6ED-45C0-B3DC-8B7AA1A85434.JPG?w=900&q=85',alt:'Parkside living room'},
+      {src:'https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/interior/69144170812__C9C63694-16AC-4F04-A723-5ED0FEC72819.JPG?w=900&q=85',alt:'Parkside bedroom'},
+      {src:'https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/interior/69144171849__54449A1C-0B21-44A5-85DB-6CA8D5D62AB8.JPG?w=900&q=85',alt:'Parkside kitchen'},
+      {src:'https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/interior/IMG_1189.JPG?w=900&q=85',alt:'Parkside backyard'},
+      {src:'https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/interior/IMG_2131.JPG?w=900&q=85',alt:'Parkside exterior side view'},
+      {src:'https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/interior/IMG_2247.JPG?w=900&q=85',alt:'Parkside dining area'},
+      {src:'https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/interior/IMG_2814.JPG?w=900&q=85',alt:'Parkside bathroom'},
+      {src:'https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/interior/Resized_20220704_122141.JPG?w=900&q=85',alt:'Parkside garden'},
+      {src:'https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/interior/image000000%20(2).JPG?w=900&q=85',alt:'Parkside common area'},
+    ]
+  },
+  firstplace: {
+    title: 'First Place Adult Family Home',
+    images: [
+      {src:'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=900&q=85',alt:'First Place front exterior'},
+      {src:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=900&q=85',alt:'First Place living room'},
+      {src:'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900&q=85',alt:'First Place bedroom'},
+      {src:'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&q=85',alt:'First Place kitchen'},
+      {src:'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=900&q=85',alt:'First Place backyard'},
+      {src:'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=900&q=85',alt:'First Place exterior'},
+      {src:'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=900&q=85',alt:'First Place dining'},
+      {src:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=900&q=85',alt:'First Place bathroom'},
+      {src:'https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=900&q=85',alt:'First Place garden'},
+      {src:'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=900&q=85',alt:'First Place common area'},
+    ]
+  },
+  comingsoon: {
+    title: 'Opening Soon — Vancouver, WA',
+    images: [
+      {src:'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=900&q=85',alt:'Coming soon home exterior'},
+      {src:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=85',alt:'Interior preview'},
+      {src:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=900&q=85',alt:'Exterior view'},
+      {src:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&q=85',alt:'Garden area'},
+      {src:'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=900&q=85',alt:'Front of home'},
+      {src:'https://images.unsplash.com/photo-1554995207-c18c203602cb?w=900&q=85',alt:'Dining area'},
+      {src:'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900&q=85',alt:'Bedroom'},
+      {src:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=900&q=85',alt:'Living space'},
+      {src:'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=900&q=85',alt:'Bathroom'},
+      {src:'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=900&q=85',alt:'Common area'},
+    ]
+  }
+};
+
+let lsCurrent=0, lsImages=[], lsKey='';
+const lsOverlay=document.getElementById('lsOverlay');
+const lsImg=document.getElementById('lsImg');
+const lsTitle=document.getElementById('lsTitle');
+const lsCounter=document.getElementById('lsCounter');
+const lsDots=document.getElementById('lsDots');
+
+function openSlider(key){
+  lsKey=key;
+  const data=sliderData[key];
+  lsImages=data.images;
+  lsTitle.textContent=data.title;
+  lsCurrent=0;
+  buildDots();
+  showSlide(0);
+  lsOverlay.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeSlider(){
+  lsOverlay.classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function buildDots(){
+  lsDots.innerHTML='';
+  lsImages.forEach((_,i)=>{
+    const d=document.createElement('button');
+    d.className='ls-dot'+(i===0?' active':'');
+    d.setAttribute('aria-label','View image '+(i+1));
+    d.onclick=()=>showSlide(i);
+    lsDots.appendChild(d);
+  });
+}
+
+function showSlide(i){
+  lsCurrent=(i+lsImages.length)%lsImages.length;
+  lsImg.src=lsImages[lsCurrent].src;
+  lsImg.alt=lsImages[lsCurrent].alt;
+  lsCounter.textContent=(lsCurrent+1)+' / '+lsImages.length;
+  lsDots.querySelectorAll('.ls-dot').forEach((d,idx)=>d.classList.toggle('active',idx===lsCurrent));
+}
+
+document.getElementById('lsClose').onclick=closeSlider;
+document.getElementById('lsPrev').onclick=()=>showSlide(lsCurrent-1);
+document.getElementById('lsNext').onclick=()=>showSlide(lsCurrent+1);
+
+// Close on backdrop click
+lsOverlay.addEventListener('click',e=>{if(e.target===lsOverlay)closeSlider()});
+
+// Keyboard navigation
+document.addEventListener('keydown',e=>{
+  if(!lsOverlay.classList.contains('open'))return;
+  if(e.key==='ArrowLeft')showSlide(lsCurrent-1);
+  else if(e.key==='ArrowRight')showSlide(lsCurrent+1);
+  else if(e.key==='Escape')closeSlider();
+});
+
+// Touch swipe support
+let lsTouchX=null;
+lsOverlay.addEventListener('touchstart',e=>{lsTouchX=e.touches[0].clientX},{passive:true});
+lsOverlay.addEventListener('touchend',e=>{
+  if(lsTouchX===null)return;
+  const diff=lsTouchX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>40){diff>0?showSlide(lsCurrent+1):showSlide(lsCurrent-1)}
+  lsTouchX=null;
+},{passive:true});
+</script>
+</body>
+</html>

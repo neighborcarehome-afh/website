@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meet the Owner: A Lifetime of Caregiving | Tami, RN BSN | In Each Other's Care AFH</title>
+<meta name="description" content="Meet Tami, RN BSN, owner and administrator of In Each Other's Care Adult Family Homes. 20 years of caregiving experience, 15 years in NICU nursing, and 6 years as an AFH provider.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & TOKENS ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --forest:#1E3A2F;
+  --forest-mid:#2C5440;
+  --moss:#4A7C59;
+  --mint:#C8E6C9;
+  --mint-pale:#EDF7EE;
+  --gold:#D4A853;
+  --gold-pale:#FBF4E6;
+  --blush:#F2ECE4;
+  --ink:#111B14;
+  --body:#374840;
+  --sub:#5E7368;
+  --border:#D6E4D9;
+  --white:#FFFFFF;
+  --fd:'Playfair Display',Georgia,serif;
+  --fb:'Inter',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--white);color:var(--body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:16px;left:50%;transform:translateX(-50%);
+  z-index:300;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.8);border-radius:100px;
+  padding:0 10px 0 20px;
+  display:flex;align-items:center;gap:8px;height:58px;
+  box-shadow:0 8px 32px rgba(30,58,47,.12);
+  width:calc(100% - 48px);max-width:960px;
+  transition:box-shadow .3s;
+}
+nav.scrolled{box-shadow:0 12px 40px rgba(30,58,47,.18)}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:auto}
+.nl-icon{width:32px;height:32px;background:var(--forest);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.nl-name{font-family:var(--fd);font-size:1rem;font-weight:700;color:var(--forest);white-space:nowrap}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
+.nav-links a{text-decoration:none;font-size:.82rem;font-weight:500;color:var(--body);padding:7px 14px;border-radius:100px;transition:background .2s,color .2s}
+.nav-links a:hover{background:var(--mint-pale);color:var(--forest)}
+.nav-cta{background:var(--forest);color:var(--white);padding:9px 20px;border-radius:100px;font-weight:600;font-size:.82rem;white-space:nowrap;transition:background .2s}
+.nav-cta:hover{background:var(--forest-mid)}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;background:var(--forest);border:none;padding:10px 12px;border-radius:100px;margin-left:4px}
+.hamburger span{display:block;width:18px;height:1.5px;background:#fff;border-radius:2px}
+
+/* ── MOBILE DRAWER ── */
+.mob-overlay{display:none;position:fixed;inset:0;background:rgba(17,27,20,.55);z-index:280;backdrop-filter:blur(4px)}
+.mob-overlay.open{display:block}
+.mob-drawer{position:fixed;top:0;right:-100%;width:80%;max-width:320px;height:100vh;background:var(--white);z-index:290;padding:80px 32px 40px;display:flex;flex-direction:column;gap:4px;transition:right .35s cubic-bezier(.4,0,.2,1);box-shadow:-8px 0 40px rgba(0,0,0,.12)}
+.mob-drawer.open{right:0}
+.mob-drawer a{display:block;padding:14px 0;font-size:1rem;font-weight:500;color:var(--body);text-decoration:none;border-bottom:1px solid var(--border);transition:color .2s}
+.mob-drawer a:hover{color:var(--forest)}
+.mob-ph{color:var(--gold);border:none;font-weight:600;font-size:1.1rem}
+.mob-cta{margin-top:24px;background:var(--forest);color:var(--white);text-align:center;border-radius:10px;padding:16px;border:none;font-weight:700;font-size:1rem}
+.mob-close{position:absolute;top:20px;right:20px;background:none;border:1.5px solid var(--border);border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:1.1rem;color:var(--body);display:flex;align-items:center;justify-content:center}
+
+/* ── SHARED UTILITIES ── */
+.wrap{max-width:1040px;margin:0 auto}
+.ew{font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--moss);margin-bottom:10px;display:block}
+.ew-light{color:var(--mint)}
+.h2{font-family:var(--fd);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:700;line-height:1.15;color:var(--ink);margin-bottom:18px}
+.h2 i{font-style:italic;color:var(--moss)}
+.h2-light{color:#fff}
+.h2-light i{color:var(--gold)}
+
+/* ── REVEAL ANIMATIONS ── */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+.rv-l{opacity:0;transform:translateX(-24px);transition:opacity .6s ease,transform .6s ease}
+.rv-l.in{opacity:1;transform:none}
+.rv-r{opacity:0;transform:translateX(24px);transition:opacity .6s ease,transform .6s ease}
+.rv-r.in{opacity:1;transform:none}
+
+/* ── FLOATING CTA ── */
+.float-cta{position:fixed;bottom:28px;right:28px;z-index:400}
+.float-btn{display:flex;align-items:center;gap:10px;background:var(--forest);color:#fff;text-decoration:none;padding:14px 22px;border-radius:100px;font-weight:700;font-size:.88rem;box-shadow:0 8px 32px rgba(30,58,47,.35);transition:all .25s;white-space:nowrap}
+.float-btn:hover{background:var(--forest-mid);transform:translateY(-3px);box-shadow:0 14px 40px rgba(30,58,47,.45)}
+.float-btn .fb-icon{width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+
+/* ── SECTION 1: PAGE HERO — blush ── */
+.owner-hero{background:var(--blush);padding:160px 24px 64px;text-align:center}
+.owner-hero .ew{justify-content:center;display:flex}
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:600;color:var(--forest);text-decoration:none;margin-bottom:24px;transition:gap .2s}
+.back-link:hover{gap:10px}
+
+/* ── SECTION 2: PHOTO — white ── */
+.owner-photo-sec{background:var(--white);padding:0 24px}
+.owner-photo-wrap{max-width:860px;margin:0 auto;transform:translateY(-40px)}
+.owner-photo-wrap img{width:100%;height:480px;object-fit:cover;object-position:top center;border-radius:24px;display:block;box-shadow:0 32px 80px rgba(30,58,47,.2)}
+
+/* ── SECTION 3: LETTER — mint-pale (alternating light) ── */
+.owner-letter-sec{background:var(--mint-pale);padding:80px 24px 100px}
+.owner-letter-inner{max-width:720px;margin:0 auto}
+.owner-credentials{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px;justify-content:center}
+.owner-cred{display:inline-flex;align-items:center;gap:7px;background:var(--white);color:var(--forest);font-size:.74rem;font-weight:700;padding:8px 16px;border-radius:100px;border:1.5px solid var(--border)}
+.owner-letter p{font-size:.97rem;color:var(--body);line-height:1.88;margin-bottom:20px}
+.owner-letter p:last-child{margin-bottom:0}
+.owner-pullquote{border-left:3px solid var(--gold);padding:4px 0 4px 24px;margin:32px 0;font-family:var(--fd);font-size:1.15rem;font-style:italic;color:var(--ink);line-height:1.6}
+.owner-sig{margin-top:36px;font-family:var(--fd);font-size:1.4rem;font-weight:700;color:var(--forest)}
+.owner-sig span{display:block;font-family:var(--fb);font-size:.75rem;font-weight:600;color:var(--sub);letter-spacing:.06em;text-transform:uppercase;margin-top:5px}
+.letter-cta{margin-top:48px;text-align:center}
+.btn-gold{background:var(--gold);color:var(--ink);padding:16px 38px;border-radius:50px;font-weight:700;font-size:.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .25s;box-shadow:0 8px 24px rgba(212,168,83,.3);border:none;cursor:pointer}
+.btn-gold:hover{background:#C49640;transform:translateY(-3px);box-shadow:0 14px 36px rgba(212,168,83,.45)}
+
+/* ── SECTION 4: GALLERY — white ── */
+.owner-gallery-sec{background:var(--white);padding:90px 24px}
+.gallery-head{max-width:680px;margin:0 auto 48px;text-align:center}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1180px;margin:0 auto}
+.gi{border-radius:16px;overflow:hidden;aspect-ratio:1/1;cursor:pointer;background:var(--border)}
+.gi img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.gi:hover img{transform:scale(1.06)}
+
+/* ── SECTION 5: PHILOSOPHY — forest (dark) ── */
+.philosophy-sec{background:var(--forest);padding:100px 24px}
+.philosophy-inner{max-width:720px;margin:0 auto}
+.philosophy-inner .ew{color:var(--mint)}
+.philosophy-inner p{color:rgba(255,255,255,.82);font-size:.97rem;line-height:1.88;margin-bottom:20px}
+.philosophy-inner p:last-child{margin-bottom:0}
+.philosophy-quote{border-left:3px solid var(--gold);padding:4px 0 4px 24px;margin:32px 0;font-family:var(--fd);font-size:1.15rem;font-style:italic;color:#fff;line-height:1.6}
+
+
+
+/* ── SECTION 7: CONTACT — blush ── */
+.contact-sec{background:var(--blush);padding:96px 24px}
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:72px;align-items:start;margin-top:56px}
+.ci-head{font-size:1rem;color:var(--sub);line-height:1.82;margin-bottom:32px}
+.cd{display:flex;gap:14px;align-items:flex-start;margin-bottom:24px}
+.cd-ic{width:44px;height:44px;background:var(--forest);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.cd-t strong{display:block;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--moss);margin-bottom:4px}
+.cd-t a,.cd-t span{color:var(--ink);text-decoration:none;font-weight:600;font-size:.95rem;line-height:1.5}
+.cd-t a:hover{color:var(--forest)}
+.form-card{background:#fff;border-radius:20px;padding:40px 36px;border:1px solid var(--border);box-shadow:0 8px 32px rgba(30,58,47,.08)}
+.form-card label{display:block;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sub);margin-bottom:6px}
+.form-card input,.form-card textarea{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:var(--fb);font-size:.95rem;background:#fff;color:var(--ink);margin-bottom:18px;outline:none;transition:border-color .2s,box-shadow .2s}
+.form-card input:focus,.form-card textarea:focus{border-color:var(--forest);box-shadow:0 0 0 3px rgba(30,58,47,.08)}
+.form-card input.invalid,.form-card textarea.invalid{border-color:#e53935;box-shadow:0 0 0 3px rgba(229,57,53,.1)}
+.field-err{display:none;color:#e53935;font-size:.75rem;font-weight:600;margin-top:-14px;margin-bottom:12px}
+.field-err.show{display:block}
+.form-card textarea{height:112px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-card button{width:100%;padding:16px;background:var(--forest);color:#fff;border:none;border-radius:12px;font-family:var(--fb);font-size:.95rem;font-weight:700;cursor:pointer;transition:background .2s,transform .15s;letter-spacing:.03em}
+.form-card button:hover{background:var(--forest-mid);transform:translateY(-1px)}
+
+/* ── FOOTER ── */
+footer{background:var(--forest);padding:28px 24px}
+.ft-inner{max-width:1040px;margin:0 auto}
+.ft-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.ft-logo{display:flex;align-items:center;gap:9px;font-family:var(--fd);font-size:1rem;font-weight:700;color:#fff}
+.ft-logo-icon{width:30px;height:30px;background:rgba(255,255,255,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.ft-copy{font-size:.78rem;color:rgba(255,255,255,.4)}
+.ft-credit{font-size:.78rem;color:rgba(255,255,255,.4)}
+.ft-credit a{color:rgba(255,255,255,.55);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:1px;transition:color .2s,border-color .2s}
+.ft-credit a:hover{color:#fff;border-color:rgba(255,255,255,.5)}
+@media(max-width:600px){
+  .ft-bottom{flex-direction:column;align-items:center;text-align:center}
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{top:10px;padding:0 8px 0 16px;height:54px;border-radius:14px;width:calc(100% - 24px)}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .owner-photo-wrap img{height:360px}
+  .contact-grid{grid-template-columns:1fr;gap:40px}
+  .gallery-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:600px){
+  .owner-hero{padding:140px 20px 48px}
+  .owner-photo-wrap img{height:280px;border-radius:16px}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .cta-btns{flex-direction:column;align-items:center}
+  .form-row{grid-template-columns:1fr}
+  .form-card{padding:28px 22px}
+
+  .float-btn span{display:none}
+  .float-btn{padding:14px}
+}
+</style>
+</head>
+<body>
+
+<!-- FLOATING CALL BUTTON -->
+<div class="float-cta">
+  <a href="tel:+18013696018" class="float-btn">
+    <div class="fb-icon">📞</div>
+    <span>Call Us Now</span>
+  </a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="afh.html" class="nav-logo">
+    <div class="nl-icon">🕊️</div>
+    <span class="nl-name">In Each Other's Care AFH</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="afh.html#about">About</a></li>
+    <li><a href="afh.html#services">Services</a></li>
+    <li><a href="tel:+18013696018" style="color:var(--forest);font-weight:700">📞 (801) 369-6018</a></li>
+    <li><a href="#contact" class="nav-cta">Schedule Tour</a></li>
+  </ul>
+  <button class="hamburger" id="ham" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mob-overlay" id="ov" onclick="closeMob()"></div>
+<div class="mob-drawer" id="drawer">
+  <button class="mob-close" onclick="closeMob()">✕</button>
+  <a href="afh.html#about" onclick="closeMob()">About Us</a>
+  <a href="afh.html#services" onclick="closeMob()">Care Services</a>
+  <a href="tel:+18013696018" class="mob-ph">📞 (801) 369-6018</a>
+  <a href="#contact" class="mob-cta" onclick="closeMob()">Schedule a Free Tour</a>
+</div>
+
+<!-- 1. PAGE HERO — blush -->
+<section class="owner-hero">
+  <div class="wrap">
+    <a href="afh.html" class="back-link rv">← Back to Home</a>
+    <span class="ew rv">Meet the Owner</span>
+    <h1 class="h2 rv">A Lifetime of <i>Caregiving</i></h1>
+  </div>
+</section>
+
+<!-- 2. PHOTO — white -->
+<section class="owner-photo-sec">
+  <div class="owner-photo-wrap rv">
+    <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/IMG_6020.JPG?w=900&q=85" alt="Tami Serpa, RN BSN — Owner of In Each Other's Care AFH" loading="eager"/>
+  </div>
+</section>
+
+<!-- 3. LETTER — mint-pale -->
+<section class="owner-letter-sec">
+  <div class="owner-letter-inner">
+    <div class="owner-credentials rv">
+      <span class="owner-cred">🎓 RN, BSN</span>
+      <span class="owner-cred">🕊️ 20 Years Caregiving</span>
+      <span class="owner-cred">👶 15 Years NICU</span>
+      <span class="owner-cred">🏡 6 Years AFH Provider</span>
+    </div>
+    <div class="owner-letter rv">
+      <p>My name is Tami, and caring for others has been a part of my life for as long as I can remember.</p>
+      <p>I grew up in an Adult Family Home owned and operated by my mother, where I learned early on that caregiving is about much more than meeting physical needs. It's about preserving dignity, building meaningful relationships, and creating a place where people feel safe, valued, and truly at home.</p>
+      <p>After becoming a Registered Nurse, I spent more than 15 years working in the Neonatal Intensive Care Unit (NICU), caring for critically ill and medically fragile infants and supporting families during some of the most difficult and meaningful moments of their lives. During that same season of life, I also helped care for my grandmother and a family member with significant disabilities for more than a decade while raising my own children.</p>
+      <p>Those experiences shaped my understanding of caregiving from both professional and personal perspectives. They taught me the importance of compassion, trust, communication, and the small details that can make the difference between simply providing care and helping someone truly feel cared for.</p>
+      <p>Today, I combine my nursing background with a lifetime of caregiving experience to provide thoughtful, personalized care for each resident entrusted to us. As an owner, I remain actively involved in the day-to-day operations of our homes because I believe families deserve transparency, accessibility, and the confidence of knowing their loved one is receiving exceptional care.</p>
+      <p>Our goal has always been simple: to create the kind of home where we would feel comfortable placing our own parents and grandparents.</p>
+      <blockquote class="owner-pullquote">We believe families deserve the opportunity to be family again, spending less time worrying about daily tasks and more time enjoying meaningful moments together as daughters, sons, spouses, grandchildren, and friends.</blockquote>
+      <p>The responsibilities of caregiving can often change the relationship between loved ones. By providing compassionate, dependable care, we hope to relieve some of that burden so families can return to simply being family.</p>
+      <p>It is a privilege to care for the residents who call our homes their own, and an honor to support the families who place their trust in us.</p>
+    </div>
+    <div class="owner-sig rv">Tami<span>Owner &amp; Administrator, RN BSN</span></div>
+    <div class="letter-cta rv">
+      <a href="#contact" class="btn-gold">Schedule a Free Tour →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 4. GALLERY — white -->
+<section class="owner-gallery-sec">
+  <div class="gallery-head rv">
+    <span class="ew">Behind the Scenes</span>
+    <h2 class="h2">More Moments With <i>Tami</i></h2>
+  </div>
+  <div class="gallery-grid rv">
+    <div class="gi"><img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/tami/IMG_7153.JPG?w=500&q=80" alt="" loading="lazy"/></div>
+    <div class="gi"><img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/tami/IMG_5011.JPG?w=500&q=80" alt="" loading="lazy"/></div>
+    <div class="gi"><img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/tami/IMG_3731.JPG?w=500&q=80" alt="" loading="lazy"/></div>
+    <div class="gi"><img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/tami/IMG_2261.JPG?w=500&q=80" alt="" loading="lazy"/></div>
+    <div class="gi"><img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/tami/IMG_2254.JPG?w=500&q=80" alt="" loading="lazy"/></div>
+    <div class="gi"><img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/tami/IMG_2112.JPG?w=500&q=80" alt="" loading="lazy"/></div>
+    <div class="gi"><img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/tami/IMG_2241.JPG?w=500&q=80" alt="" loading="lazy"/></div>
+    <div class="gi"><img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/tami/IMG_2168.JPG?w=500&q=80" alt="" loading="lazy"/></div>
+    <div class="gi"><img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/tami/image000000%20(1).JPG?w=500&q=80" alt="" loading="lazy"/></div>
+    <div class="gi"><img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/tami/image000001%20(1).JPG?w=500&q=80" alt="" loading="lazy"/></div>
+    <div class="gi"><img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/tami/IMG_1764.JPG?w=500&q=80" alt="" loading="lazy"/></div>
+    <div class="gi"><img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/tami/IMG_2117.JPG?w=500&q=80" alt="" loading="lazy"/></div>
+  </div>
+</section>
+
+<!-- 5. PHILOSOPHY — forest (dark) -->
+<section class="philosophy-sec">
+  <div class="philosophy-inner">
+    <span class="ew ew-light rv">Our Approach</span>
+    <h2 class="h2 h2-light rv">Our Philosophy of <i>Care</i></h2>
+    <div class="rv">
+      <p>Throughout my life, I've learned that there is a difference between simply completing a task and creating an experience.</p>
+      <p>One of the earliest lessons came from an unexpected place. As a young server at PF Chang's, I was taught the difference between providing a taxi ride service and a limousine ride service. Both get you to the same destination, but one simply provides transportation while the other anticipates needs, removes obstacles, and allows you to relax knowing everything has been thoughtfully taken care of—and that if a concern arises, you know exactly who will be there to help.</p>
+      <p>That concept shaped my mindset and has guided countless decisions throughout my career.</p>
+      <p>Over the years, I carried that philosophy into nursing, caregiving, and eventually into the Adult Family Homes we operate today. Anyone can complete a checklist of tasks. Medications can be passed, meals can be served, and appointments can be scheduled. But exceptional care is often found in the things that never make it onto a task list.</p>
+      <p>It's communicating directly with physicians so families don't spend hours navigating phone trees and waiting for answers. It's proactively updating family members so they aren't left wondering how their loved one is doing. It's noticing subtle changes before they become larger concerns. It's understanding not only a resident's medical needs, but also their routines, preferences, fears, and what brings them comfort.</p>
+      <blockquote class="philosophy-quote">We believe the best care happens when residents feel known, families feel supported, and small details are handled before they become burdens.</blockquote>
+      <p>Our goal is not simply to meet our residents' physical needs. Our goal is to create a home where people feel respected, understood, comfortable, and genuinely cared for every day.</p>
+      <p>Ultimately, our mission is simple: to create homes where families can return to being family again. By providing thoughtful, dependable care and anticipating needs before they become worries, we hope to give families the freedom to spend less time managing daily responsibilities and more time enjoying meaningful moments with the people they love.</p>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- 7. CONTACT — blush -->
+<section class="contact-sec" id="contact">
+  <div class="wrap">
+    <div class="rv">
+      <span class="ew">Get in Touch</span>
+      <h2 class="h2">We'd Love to <i>Hear From You</i></h2>
+    </div>
+    <div class="contact-grid">
+      <div class="rv-l">
+        <p class="ci-head">Whether you have questions, want to tour, or simply need someone to talk to, we're here. No obligation. Just a warm, honest conversation.</p>
+        <div class="cd">
+          <div class="cd-ic">📞</div>
+          <div class="cd-t"><strong>Phone</strong><a href="tel:+18013696018">(801) 369-6018</a></div>
+        </div>
+        <div class="cd">
+          <div class="cd-ic">✉️</div>
+          <div class="cd-t"><strong>Email</strong><a href="mailto:parksideadultfamilyhome@gmail.com">parksideadultfamilyhome@gmail.com</a></div>
+        </div>
+        <div class="cd">
+          <div class="cd-ic">📍</div>
+          <div class="cd-t"><strong>Location</strong><a href="https://maps.google.com" target="_blank" rel="noopener">Vancouver, WA 98661</a></div>
+        </div>
+        <div class="cd">
+          <div class="cd-ic">🕐</div>
+          <div class="cd-t"><strong>Office Hours</strong><span>Monday – Saturday, 8 AM – 6 PM</span></div>
+        </div>
+      </div>
+      <div class="rv-r">
+        <div class="form-card">
+          <div id="fsok" style="display:none;padding:24px;background:var(--mint-pale);border-radius:14px;border:1.5px solid var(--mint)">
+            <p style="font-size:1.05rem;font-weight:700;color:var(--forest);margin-bottom:10px">✅ Message sent!</p>
+            <p style="font-size:.9rem;color:var(--body);line-height:1.75;margin-bottom:14px">The In Each Other's Care team will be in touch with you soon.</p>
+            <p style="font-size:.85rem;color:var(--sub);line-height:1.75">Questions in the meantime? Email <a href="mailto:parksideadultfamilyhome@gmail.com" style="color:var(--forest);font-weight:600">parksideadultfamilyhome@gmail.com</a> or call <a href="tel:+18013696018" style="color:var(--forest);font-weight:600">(801) 369-6018</a>.</p>
+          </div>
+          <div id="fserr" style="display:none;color:#c62828;font-size:.85rem;margin-bottom:12px;padding:12px;background:#fff0f0;border-radius:8px">Something went wrong. Please try again or call us at (801) 369-6018.</div>
+          <form id="cf">
+            <div class="form-row">
+              <div>
+                <label for="fn">First Name</label>
+                <input type="text" id="fn" name="first_name" placeholder="Margaret" required/>
+                <div class="field-err" id="err-fn">⚠ Please fill in your first name.</div>
+              </div>
+              <div>
+                <label for="ln">Last Name</label>
+                <input type="text" id="ln" name="last_name" placeholder="Johnson" required/>
+                <div class="field-err" id="err-ln">⚠ Please fill in your last name.</div>
+              </div>
+            </div>
+            <label for="ph">Phone Number</label>
+            <input type="tel" id="ph" name="phone" placeholder="(206) 555-0000" required/>
+            <div class="field-err" id="err-ph">⚠ Please fill in your phone number.</div>
+            <label for="em">Email Address</label>
+            <input type="email" id="em" name="email" placeholder="you@example.com" required/>
+            <div class="field-err" id="err-em">⚠ Please fill in a valid email address.</div>
+            <label for="msg">Message</label>
+            <textarea id="msg" name="message" placeholder="Tell us a little about your loved one and what kind of care they may need…" required></textarea>
+            <div class="field-err" id="err-msg">⚠ Please fill in your message.</div>
+            <button type="submit" id="cfbtn">Send Message &amp; Request a Tour →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-inner">
+    <div class="ft-bottom">
+      <div class="ft-logo">
+        <div class="ft-logo-icon">🕊️</div>
+        In Each Other's Care AFH
+      </div>
+      <span class="ft-copy">© 2026 In Each Other's Care Adult Family Home</span>
+      <span class="ft-credit">Designed by <a href="https://diwaspandey.com.np" target="_blank" rel="noopener">Diwas Pandey</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Nav mobile drawer
+const ham = document.getElementById('ham');
+const ov  = document.getElementById('ov');
+const dr  = document.getElementById('drawer');
+ham.addEventListener('click', () => { ov.classList.add('open'); dr.classList.add('open'); document.body.style.overflow = 'hidden'; });
+function closeMob() { ov.classList.remove('open'); dr.classList.remove('open'); document.body.style.overflow = ''; }
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+}, { threshold: .12 });
+document.querySelectorAll('.rv,.rv-l,.rv-r').forEach(el => obs.observe(el));
+
+// Nav scroll shadow
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Contact form
+const fields = [
+  { id: 'fn', err: 'err-fn' },
+  { id: 'ln', err: 'err-ln' },
+  { id: 'ph', err: 'err-ph' },
+  { id: 'em', err: 'err-em' },
+  { id: 'msg', err: 'err-msg' }
+];
+fields.forEach(({ id, err }) => {
+  document.getElementById(id).addEventListener('input', function () {
+    this.classList.remove('invalid');
+    document.getElementById(err).classList.remove('show');
+  });
+});
+document.getElementById('cf').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  let valid = true;
+  fields.forEach(({ id, err }) => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) { el.classList.add('invalid'); document.getElementById(err).classList.add('show'); valid = false; }
+    else { el.classList.remove('invalid'); document.getElementById(err).classList.remove('show'); }
+  });
+  if (!valid) return;
+  const btn = document.getElementById('cfbtn');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+  try {
+    const res = await fetch('https://formspree.io/f/mjgdqdyn', { method: 'POST', body: new FormData(this), headers: { Accept: 'application/json' } });
+    if (res.ok) {
+      document.getElementById('cf').style.display = 'none';
+      document.getElementById('fserr').style.display = 'none';
+      document.getElementById('fsok').style.display = 'block';
+    } else {
+      document.getElementById('fserr').style.display = 'block';
+      btn.textContent = 'Send Message & Request a Tour →';
+      btn.disabled = false;
+    }
+  } catch (err) {
+    document.getElementById('fserr').style.display = 'block';
+    btn.textContent = 'Send Message & Request a Tour →';
+    btn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>

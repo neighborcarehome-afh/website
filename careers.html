@@ -33,13 +33,13 @@ a{color:inherit}
 /* ── FLOATING NAV ── */
 nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:300;background:var(--white);border:1px solid var(--border);border-radius:100px;padding:0 10px 0 22px;display:flex;align-items:center;gap:8px;height:60px;box-shadow:0 12px 34px rgba(16,28,21,.14);width:calc(100% - 48px);max-width:960px;transition:all .3s}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto}
-.nl-icon{width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.nl-icon{width:32px;height:32px;background:var(--forest);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
 .nl-name{font-family:var(--fd);font-size:1rem;font-weight:600;color:var(--ink);white-space:nowrap}
 .nav-links{display:flex;align-items:center;gap:4px;list-style:none}
 .nav-links a{text-decoration:none;font-size:.82rem;font-weight:500;color:var(--body);padding:8px 15px;border-radius:100px;transition:background .2s,color .2s}
 .nav-links a:hover{background:var(--gold-pale);color:var(--forest)}
-.nav-cta{background:var(--gold)!important;color:var(--ink)!important;padding:10px 20px!important;border-radius:100px!important;font-weight:700!important;font-size:.82rem!important;white-space:nowrap;transition:background .2s!important}
-.nav-cta:hover{background:var(--mint)!important}
+.nav-cta{background:var(--forest)!important;color:var(--white)!important;padding:10px 20px!important;border-radius:100px!important;font-weight:700!important;font-size:.82rem!important;white-space:nowrap;transition:background .2s!important}
+.nav-cta:hover{background:var(--forest-mid)!important}
 .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;background:var(--gold);border:none;padding:10px 12px;border-radius:100px;margin-left:4px}
 .hamburger span{display:block;width:18px;height:1.5px;background:var(--ink);border-radius:2px}
 .mob-overlay{display:none;position:fixed;inset:0;background:rgba(16,28,21,.6);z-index:280;backdrop-filter:blur(4px)}
@@ -316,17 +316,17 @@ footer{background:var(--ink);padding:24px 24px}
         <div class="form-row">
           <div class="field">
             <label for="fullname">Full Name</label>
-            <input type="text" id="fullname" name="fullname" required>
+            <input type="text" id="fullname" name="fi-sender-fullName" required>
           </div>
           <div class="field">
             <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" required>
+            <input type="tel" id="phone" name="fi-sender-phone" required>
           </div>
         </div>
         <div class="form-row full">
           <div class="field">
             <label for="address">Home Address</label>
-            <input type="text" id="address" name="address" placeholder="Street, City, State, ZIP" required>
+            <input type="text" id="address" name="fi-sender-address" placeholder="Street, City, State, ZIP" required>
           </div>
         </div>
       </fieldset>
@@ -336,7 +336,7 @@ footer{background:var(--ink);padding:24px 24px}
         <div class="form-row">
           <div class="field">
             <label for="position">Applying As</label>
-            <select id="position" name="position" required>
+            <select id="position" name="fi-select-position" required>
               <option value="">Select one</option>
               <option value="CNA">CNA &mdash; Certified Nursing Assistant</option>
               <option value="HCA">HCA &mdash; Home Care Aide</option>
@@ -344,7 +344,7 @@ footer{background:var(--ink);padding:24px 24px}
           </div>
           <div class="field">
             <label for="experience">Years of Caregiving Experience</label>
-            <select id="experience" name="experience" required>
+            <select id="experience" name="fi-select-experience" required>
               <option value="">Select one</option>
               <option value="0-1">Less than 1 year</option>
               <option value="1-2">1–2 years</option>
@@ -357,7 +357,7 @@ footer{background:var(--ink);padding:24px 24px}
         <div class="form-row full">
           <div class="field">
             <label for="prevwork">Previous Work Location(s) <span class="hint">(most recent employer / facility)</span></label>
-            <input type="text" id="prevwork" name="prevwork" placeholder="e.g., Sunrise Senior Living, Vancouver, WA">
+            <input type="text" id="prevwork" name="fi-text-prevWork" placeholder="e.g., Sunrise Senior Living, Vancouver, WA">
           </div>
         </div>
       </fieldset>
@@ -367,21 +367,21 @@ footer{background:var(--ink);padding:24px 24px}
         <div class="form-row">
           <div class="field">
             <label for="ref1name">Reference 1 &ndash; Name &amp; Relationship</label>
-            <input type="text" id="ref1name" name="ref1name" placeholder="e.g., Jane Doe, Supervisor" required>
+            <input type="text" id="ref1name" name="fi-text-ref1Name" placeholder="e.g., Jane Doe, Supervisor" required>
           </div>
           <div class="field">
             <label for="ref1phone">Reference 1 &ndash; Phone Number</label>
-            <input type="tel" id="ref1phone" name="ref1phone" required>
+            <input type="tel" id="ref1phone" name="fi-text-ref1Phone" required>
           </div>
         </div>
         <div class="form-row">
           <div class="field">
             <label for="ref2name">Reference 2 &ndash; Name &amp; Relationship</label>
-            <input type="text" id="ref2name" name="ref2name" placeholder="e.g., John Smith, Coworker" required>
+            <input type="text" id="ref2name" name="fi-text-ref2Name" placeholder="e.g., John Smith, Coworker" required>
           </div>
           <div class="field">
             <label for="ref2phone">Reference 2 &ndash; Phone Number</label>
-            <input type="tel" id="ref2phone" name="ref2phone" required>
+            <input type="tel" id="ref2phone" name="fi-text-ref2Phone" required>
           </div>
         </div>
       </fieldset>
@@ -391,7 +391,7 @@ footer{background:var(--ink);padding:24px 24px}
         <div class="form-row full">
           <div class="field">
             <label for="education">Highest Level of Education</label>
-            <select id="education" name="education" required>
+            <select id="education" name="fi-select-education" required>
               <option value="">Select one</option>
               <option value="highschool">High School Diploma / GED</option>
               <option value="vocational">Vocational / Trade Certificate (incl. CNA/HCA training)</option>
@@ -410,28 +410,28 @@ footer{background:var(--ink);padding:24px 24px}
         <div class="form-row">
           <div class="field">
             <label for="startdate">Earliest Day You Can Start</label>
-            <input type="date" id="startdate" name="startdate" required>
+            <input type="date" id="startdate" name="fi-date-startDate" required>
           </div>
           <div class="field">
             <label>Preferred Shift Availability</label>
             <div class="radio-group" id="avail-group">
-              <label class="radio-option"><input type="radio" name="availability" value="weekday" required> Weekday</label>
-              <label class="radio-option"><input type="radio" name="availability" value="weekend"> Weekend</label>
-              <label class="radio-option"><input type="radio" name="availability" value="other"> Other</label>
+              <label class="radio-option"><input type="radio" name="fi-radio-availability" value="weekday" required> Weekday</label>
+              <label class="radio-option"><input type="radio" name="fi-radio-availability" value="weekend"> Weekend</label>
+              <label class="radio-option"><input type="radio" name="fi-radio-availability" value="other"> Other</label>
             </div>
             <div id="other-availability-wrap">
-              <input type="text" id="other-availability" name="other-availability" placeholder="Please describe your availability">
+              <input type="text" id="other-availability" name="fi-text-otherAvailability" placeholder="Please describe your availability">
             </div>
           </div>
         </div>
         <div class="form-row">
           <div class="field">
             <label for="salary">Expected Salary <span class="hint">(hourly)</span></label>
-            <input type="text" id="salary" name="salary" placeholder="e.g., $22/hr">
+            <input type="text" id="salary" name="fi-text-expectedSalary" placeholder="e.g., $22/hr">
           </div>
           <div class="field">
             <label for="calltime">Best Time to Call You / Schedule a Meeting</label>
-            <input type="text" id="calltime" name="calltime" placeholder="e.g., Weekdays after 5 PM, or anytime this week">
+            <input type="text" id="calltime" name="fi-text-callTime" placeholder="e.g., Weekdays after 5 PM, or anytime this week">
           </div>
         </div>
       </fieldset>
@@ -440,7 +440,7 @@ footer{background:var(--ink);padding:24px 24px}
         <legend>Resume / CV</legend>
         <div class="file-field" id="file-field-wrap">
           <label for="cv">Upload your CV or Resume <span class="hint">(required)</span></label><br>
-          <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx" required>
+          <input type="file" id="cv" name="fi-file-resume" accept=".pdf,.doc,.docx" required>
           <p id="cv-warning" class="field-warning">⚠️ Please upload your CV or resume before submitting.</p>
         </div>
       </fieldset>
@@ -463,6 +463,7 @@ footer{background:var(--ink);padding:24px 24px}
   </div>
 </footer>
 
+<script src="https://forminit.com/sdk/v1/forminit.js"></script>
 <script>
   // Mobile drawer
   const ham=document.getElementById('ham'),ov=document.getElementById('ov'),dr=document.getElementById('drawer');
@@ -535,27 +536,30 @@ footer{background:var(--ink);padding:24px 24px}
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending…';
 
-    const formData = new FormData(applyForm);
+    // Normalize the applicant's phone number to E.164 (+1XXXXXXXXXX) for Forminit's sender.phone validation
+    const phoneInput = document.getElementById('phone');
+    const rawPhone = phoneInput.value.trim();
+    const digitsOnly = rawPhone.replace(/\D/g, '');
+    if (rawPhone && !rawPhone.startsWith('+')) {
+      if (digitsOnly.length === 10) {
+        phoneInput.value = '+1' + digitsOnly;
+      } else if (digitsOnly.length === 11 && digitsOnly.startsWith('1')) {
+        phoneInput.value = '+' + digitsOnly;
+      }
+    }
 
-    fetch('https://formspree.io/f/mqerldrw', {
-      method: 'POST',
-      body: formData,
-      headers: { 'Accept': 'application/json' }
-    })
-      .then(response => {
-        if (response.ok) {
-          successMsg.textContent = '✅ Application sent successfully! The Neighbor Care Homes team will call or email you soon to schedule a conversation.';
-          successMsg.style.display = 'block';
-          applyForm.reset();
-          document.getElementById('other-availability-wrap').style.display = 'none';
-        } else {
-          return response.json().then(data => {
-            const errorText = (data && data.errors && data.errors.length)
-              ? data.errors.map(err => err.message).join(', ')
-              : 'Something went wrong. Please try again or call us directly.';
-            throw new Error(errorText);
-          });
+    const formData = new FormData(applyForm);
+    const forminit = new Forminit();
+
+    forminit.submit('zip2n1vgumr', formData)
+      .then(({ data, error }) => {
+        if (error) {
+          throw new Error(error.message || 'Something went wrong. Please try again or call us directly.');
         }
+        successMsg.textContent = '✅ Application sent successfully! The Neighbor Care Homes team will call or email you soon to schedule a conversation.';
+        successMsg.style.display = 'block';
+        applyForm.reset();
+        document.getElementById('other-availability-wrap').style.display = 'none';
       })
       .catch(error => {
         successMsg.textContent = '⚠️ ' + (error.message || 'Something went wrong. Please try again or call us directly at (801) 369-6018.');

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join Our Team | Neighbor Care Homes Careers</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --forest:#173C2C;
+  --forest-mid:#255840;
+  --moss:#3F6B52;
+  --mint:#F1D48B;
+  --mint-pale:#F6EFDB;
+  --gold:#C9A227;
+  --gold-dark:#8A6A16;
+  --gold-pale:#FBF3DE;
+  --blush:#FBF8F1;
+  --ink:#101C15;
+  --body:#3C4A41;
+  --sub:#6B786E;
+  --border:#E7DEC3;
+  --white:#FFFFFF;
+  --fd:'Fraunces',Georgia,serif;
+  --fb:'Work Sans',system-ui,sans-serif;
+  --r:18px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--white);color:var(--body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+
+/* ── FLOATING NAV ── */
+nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:300;background:var(--white);border:1px solid var(--border);border-radius:100px;padding:0 10px 0 22px;display:flex;align-items:center;gap:8px;height:60px;box-shadow:0 12px 34px rgba(16,28,21,.14);width:calc(100% - 48px);max-width:960px;transition:all .3s}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto}
+.nl-icon{width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.nl-name{font-family:var(--fd);font-size:1rem;font-weight:600;color:var(--ink);white-space:nowrap}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
+.nav-links a{text-decoration:none;font-size:.82rem;font-weight:500;color:var(--body);padding:8px 15px;border-radius:100px;transition:background .2s,color .2s}
+.nav-links a:hover{background:var(--gold-pale);color:var(--forest)}
+.nav-cta{background:var(--gold)!important;color:var(--ink)!important;padding:10px 20px!important;border-radius:100px!important;font-weight:700!important;font-size:.82rem!important;white-space:nowrap;transition:background .2s!important}
+.nav-cta:hover{background:var(--mint)!important}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;background:var(--gold);border:none;padding:10px 12px;border-radius:100px;margin-left:4px}
+.hamburger span{display:block;width:18px;height:1.5px;background:var(--ink);border-radius:2px}
+.mob-overlay{display:none;position:fixed;inset:0;background:rgba(16,28,21,.6);z-index:280;backdrop-filter:blur(4px)}
+.mob-overlay.open{display:block}
+.mob-drawer{position:fixed;top:0;right:-100%;width:80%;max-width:320px;height:100vh;background:var(--white);z-index:290;padding:80px 32px 40px;display:flex;flex-direction:column;gap:4px;transition:right .35s cubic-bezier(.4,0,.2,1);box-shadow:-8px 0 40px rgba(0,0,0,.12)}
+.mob-drawer.open{right:0}
+.mob-drawer a{display:block;padding:14px 0;font-size:1rem;font-weight:500;color:var(--body);text-decoration:none;border-bottom:1px solid var(--border);transition:color .2s}
+.mob-drawer a:hover{color:var(--forest)}
+.mob-cta{margin-top:24px;background:var(--forest);color:var(--white)!important;text-align:center;border-radius:10px;padding:16px!important;border:none!important;font-weight:700!important;font-size:1rem!important}
+.mob-ph{color:var(--gold-dark)!important;border:none!important;font-weight:600!important;font-size:1.1rem!important}
+.mob-close{position:absolute;top:20px;right:20px;background:none;border:1.5px solid var(--border);border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:1.1rem;color:var(--body);display:flex;align-items:center;justify-content:center}
+
+/* ── SECTION BASE ── */
+.sec{padding:100px 24px}
+.wrap{max-width:1100px;margin:0 auto}
+.ew{font-size:.7rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:12px;position:relative;padding-left:28px}
+.ew::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:20px;height:2px;background:var(--forest)}
+.h2{font-family:var(--fd);font-size:clamp(2.1rem,4vw,3rem);font-weight:600;line-height:1.14;color:var(--ink);margin-bottom:18px;letter-spacing:-.01em}
+.h2 i,.h2 em{font-style:italic;color:var(--gold-dark);font-weight:500}
+.lead{font-size:1.02rem;color:var(--sub);line-height:1.8;max-width:560px}
+.section-head{max-width:640px;margin:0 auto 40px;text-align:center}
+.section-head::before{content:'';display:block;width:40px;height:3px;background:var(--gold);margin:0 auto 18px;border-radius:2px}
+.section-head .ew{padding-left:0;display:block}
+.section-head .ew::before{display:none}
+.section-head .lead{max-width:520px;margin:0 auto}
+
+/* ── BUTTONS ── */
+.btn-gold{background:var(--gold);color:var(--ink);padding:16px 32px;border-radius:50px;font-weight:700;font-size:.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .3s cubic-bezier(.4,0,.2,1);letter-spacing:.02em;box-shadow:0 10px 26px rgba(201,162,39,.32);border:2px solid transparent;cursor:pointer}
+.btn-gold:hover{background:#B18F20;transform:translateY(-4px);box-shadow:0 18px 34px rgba(201,162,39,.4)}
+.btn-line{background:transparent;color:var(--forest);padding:15px 32px;border-radius:50px;border:2px solid var(--forest);font-weight:700;font-size:.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .3s cubic-bezier(.4,0,.2,1);cursor:pointer}
+.btn-line:hover{background:var(--forest);color:var(--white);transform:translateY(-4px)}
+.btn-forest{background:var(--forest);color:var(--white);padding:16px 32px;border-radius:50px;font-weight:700;font-size:.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px;justify-content:center;transition:all .3s cubic-bezier(.4,0,.2,1);letter-spacing:.02em;box-shadow:0 10px 26px rgba(23,60,44,.32);border:2px solid transparent;cursor:pointer}
+.btn-forest:hover{background:var(--forest-mid);transform:translateY(-4px);box-shadow:0 18px 34px rgba(23,60,44,.4)}
+
+/* ── HERO ── */
+.hero{background:var(--gold-pale);padding:160px 24px 100px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-180px;right:-180px;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.6) 0%,rgba(255,255,255,0) 72%);z-index:0}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center;position:relative;z-index:1}
+.hero h1{font-family:var(--fd);font-size:clamp(2.3rem,4.2vw,3.4rem);font-weight:600;line-height:1.1;color:var(--ink);margin-bottom:20px;letter-spacing:-.01em}
+.hero h1 i{font-style:italic;color:var(--gold-dark);font-weight:500}
+.hero p.lead{margin-bottom:0}
+.hero-actions{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:32px;margin-top:38px;flex-wrap:wrap}
+.stat b{display:block;font-family:var(--fd);font-size:1.7rem;font-weight:600;color:var(--forest);line-height:1}
+.stat span{font-size:.78rem;color:var(--sub);letter-spacing:.04em;text-transform:uppercase;font-weight:600}
+.hero-photo{position:relative;aspect-ratio:4/3.3}
+.hero-photo-clip{position:relative;width:100%;height:100%;border-radius:38% 62% 63% 37%/45% 38% 62% 55%;overflow:hidden;box-shadow:0 30px 70px rgba(16,28,21,.22);border:6px solid var(--white);outline:2px solid var(--gold-pale)}
+.hero-photo::after{content:'';position:absolute;inset:-22px;z-index:-1;border:2px dashed var(--gold);border-radius:38% 62% 63% 37%/45% 38% 62% 55%}
+.hero-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-badge{position:absolute;bottom:14px;left:24px;display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--ink);padding:12px 18px;border-radius:12px;font-size:.82rem;font-weight:700;box-shadow:0 10px 28px rgba(16,28,21,.28);z-index:2;white-space:nowrap}
+
+/* ── ABOUT AFH ── */
+.about{background:var(--gold-pale)}
+.about-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:8px}
+.about-card{background:var(--white);border-radius:var(--r);padding:28px 22px;text-align:center;transition:transform .3s cubic-bezier(.4,0,.2,1),box-shadow .3s;border-top:4px solid var(--forest)}
+.about-card:nth-child(4n+2){border-top-color:var(--gold)}
+.about-card:nth-child(4n+3){border-top-color:var(--forest)}
+.about-card:nth-child(4n+4){border-top-color:var(--gold)}
+.about-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(23,60,44,.14)}
+.about-card .ico{width:48px;height:48px;margin:0 auto 14px;background:var(--forest);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 10px 22px rgba(23,60,44,.24)}
+.about-card h4{font-family:var(--fd);font-size:1.02rem;font-weight:600;color:var(--ink);margin-bottom:6px}
+.about-card p{font-size:.86rem;color:var(--sub);margin:0;line-height:1.6}
+.about-note{margin-top:36px;background:var(--forest);border-radius:var(--r);padding:28px 32px;color:#fff;font-size:.98rem;line-height:1.7}
+.about-note strong{color:var(--mint)}
+
+/* ── JOB DESCRIPTION ── */
+.job{background:var(--white)}
+.job-card{background:transparent;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:48px 64px;position:relative}
+.job-meta-row{grid-column:1/-1;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px 0;border-bottom:2px solid var(--forest);padding-bottom:26px;margin-bottom:10px}
+.job-meta{display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:600;color:var(--forest);padding:0 22px;white-space:nowrap}
+.job-meta:not(:last-child){border-right:1px solid var(--border)}
+.job-meta .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.job-card>div:not(.job-meta-row):not(.job-cta){padding-top:2px;position:relative}
+.job-card>div:not(.job-meta-row):not(.job-cta):first-of-type::after{content:'';position:absolute;top:2px;bottom:0;right:-32px;width:1px;background:var(--border)}
+.job h4{font-family:var(--fd);font-size:1.15rem;font-weight:600;margin-bottom:16px;color:var(--forest);display:flex;align-items:center;gap:10px}
+.job ul{margin:0;padding-left:0;color:var(--sub);font-size:.94rem;list-style:none}
+.job ul li{margin-bottom:12px;line-height:1.6;padding-left:22px;position:relative}
+.job ul li::before{content:'';position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.job-cta{grid-column:1/-1;text-align:center;margin-top:20px}
+
+/* ── APPLICATION FORM ── */
+.apply{background:var(--gold-pale)}
+.form-card{background:transparent;padding:0;max-width:840px;margin:0 auto}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.form-row.full{grid-template-columns:1fr}
+.field label{display:block;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--forest);margin-bottom:7px}
+.field .hint{font-weight:500;color:var(--sub);font-size:.75rem;letter-spacing:0;text-transform:none;margin-left:4px}
+.field input[type=text],.field input[type=tel],.field input[type=email],.field input[type=number],.field input[type=date],.field select,.field textarea{
+  width:100%;padding:13px 15px;border-radius:10px;border:1.5px solid var(--border);background:var(--white);font-family:var(--fb);font-size:.95rem;color:var(--ink);outline:none;transition:border-color .2s,box-shadow .2s;appearance:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--forest);box-shadow:0 0 0 3px rgba(23,60,44,.1)}
+.field textarea{resize:vertical;min-height:70px}
+fieldset{border:none;border-top:2px solid var(--forest);border-radius:0;padding:26px 0 6px;margin-bottom:32px}
+fieldset legend{font-family:var(--fd);font-weight:600;color:var(--forest);padding:0;margin-bottom:8px;font-size:1.15rem;width:100%}
+.radio-group{display:flex;gap:14px;flex-wrap:wrap;margin-top:4px}
+.radio-option{display:flex;align-items:center;gap:7px;font-size:.9rem;color:var(--ink);background:var(--white);border:1.5px solid var(--border);padding:10px 15px;border-radius:10px;cursor:pointer;transition:border-color .2s,background .2s}
+.radio-option:hover{border-color:var(--forest)}
+.radio-option input{accent-color:var(--forest)}
+#other-availability-wrap{display:none;margin-top:12px}
+.file-field{border:2px dashed var(--forest);border-radius:14px;padding:24px;text-align:center;background:var(--white);transition:border-color .2s,background .2s}
+.file-field label{color:var(--forest)}
+.file-field input{margin-top:8px}
+.file-field.invalid{border-color:#C0392B;background:#FDEDED}
+.field-warning{display:none;color:#C0392B;font-size:.82rem;font-weight:600;margin-top:10px}
+.field-warning.show{display:block}
+.call-note{display:flex;gap:12px;align-items:flex-start;background:var(--forest);border-radius:14px;padding:18px 20px;margin-bottom:26px}
+.call-note .ico{font-size:1.3rem}
+.call-note p{margin:0;font-size:.9rem;color:var(--mint);line-height:1.6}
+.submit-row{text-align:center;margin-top:10px}
+.submit-row .btn-gold,.submit-row .btn-forest{width:100%;justify-content:center;font-size:1.02rem;padding:16px}
+.privacy-note{text-align:center;font-size:.8rem;color:var(--sub);margin-top:16px}
+#success-msg{display:none;background:var(--white);border:2px solid var(--forest);color:var(--forest);border-radius:12px;padding:20px;margin-top:18px;font-weight:600;text-align:center}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);padding:24px 24px}
+.ft-inner{max-width:1100px;margin:0 auto}
+.ft-single{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.ft-logo{font-family:var(--fd);font-size:1.15rem;font-weight:600;color:#fff;display:flex;align-items:center;gap:8px}
+.ft-copy{font-size:.85rem;color:rgba(255,255,255,.5)}
+.ft-credit{font-size:.85rem;color:rgba(255,255,255,.5)}
+.ft-credit a{color:rgba(255,255,255,.7);text-decoration:none;transition:color .2s}
+.ft-credit a:hover{color:var(--gold)}
+@media(max-width:600px){.ft-single{justify-content:center;text-align:center}}
+
+/* ── REVEAL ── */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  nav{top:10px;padding:0 8px 0 16px;height:54px;border-radius:14px;width:calc(100% - 24px)}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+}
+@media (max-width:820px){
+  .hero{padding:130px 20px 64px}
+  .hero-grid{grid-template-columns:1fr;gap:36px}
+  .hero-photo{order:-1}
+  .hero-photo-clip{border-radius:24px}
+  .hero-photo::after{border-radius:24px}
+  .about-grid{grid-template-columns:repeat(2,1fr)}
+  .job-card{grid-template-columns:1fr}
+  .job-card>div:not(.job-meta-row):not(.job-cta):first-of-type::after{display:none}
+  .form-row{grid-template-columns:1fr}
+}
+@media (max-width:480px){
+  .about-grid{grid-template-columns:1fr}
+  .sec{padding:64px 20px}
+  .job-meta{border-right:none!important;padding:0}
+  .job-meta-row{flex-direction:column;gap:10px}
+}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="nl-icon">🕊️</div>
+    <span class="nl-name">Neighbor Care Homes</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="https://neighborcarehomes.com">Home</a></li>
+    <li><a href="#job">The Role</a></li>
+    <li><a href="#apply">Apply Now</a></li>
+    <li><a href="tel:+18013696018" style="color:var(--gold);font-weight:700">📞 (801) 369-6018</a></li>
+    <li><a href="#apply" class="nav-cta">Apply Now</a></li>
+  </ul>
+  <button class="hamburger" id="ham" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mob-overlay" id="ov" onclick="closeMob()"></div>
+<div class="mob-drawer" id="drawer">
+  <button class="mob-close" onclick="closeMob()">✕</button>
+  <a href="index.html" onclick="closeMob()">Home</a>
+  <a href="#job" onclick="closeMob()">The Role</a>
+  <a href="#apply" onclick="closeMob()">Apply Now</a>
+  <a href="tel:+18013696018" class="mob-ph">📞 (801) 369-6018</a>
+  <a href="#apply" class="mob-cta" onclick="closeMob()">Apply Now</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="ew">We're Hiring</div>
+      <h1>Come Care for Our<br>Residents <i>Like Family</i></h1>
+      <p class="lead">Neighbor Care Homes is looking for warm, dependable CNAs and HCAs to join a small, six-resident adult family home where you'll actually get to know the people you care for — not just their room number.</p>
+      <div class="hero-actions">
+        <a href="#apply" class="btn-forest">Apply Now <span style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.18);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.85rem">→</span></a>
+        <a href="tel:+18013696018" class="btn-line">📞 Call Us Instead</a>
+      </div>
+      
+    </div>
+    <div class="hero-photo rv">
+      <div class="hero-photo-clip">
+        <img src="https://raw.githubusercontent.com/Diwas524/website-file/refs/heads/main/daily_care/IMG_2906%20(1).JPG?w=900&q=80" alt="Caregiver with senior resident at Neighbor Care Homes">
+      </div>
+      <div class="hero-badge">👩‍⚕️ Now hiring CNAs &amp; HCAs</div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- JOB DESCRIPTION -->
+<section class="job sec" id="job">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="ew">The Opportunity</div>
+      <h2 class="h2">Caregiver <i>(CNA / HCA)</i></h2>
+      <p class="lead">Full-time and part-time shifts available across our Vancouver, WA homes.</p>
+    </div>
+    <div class="job-card">
+      <div class="job-meta-row">
+        <span class="job-meta"><span class="dot"></span>Full-Time &amp; Part-Time</span>
+        <span class="job-meta"><span class="dot"></span>Day, Evening &amp; NOC Shifts</span>
+        <span class="job-meta"><span class="dot"></span>Vancouver, WA</span>
+      </div>
+
+      <div>
+        <h4>🌿 What You'll Do</h4>
+        <ul>
+          <li>Assist residents with bathing, dressing, grooming, toileting, and transfers with patience and dignity</li>
+          <li>Support mobility, positioning, and fall-prevention throughout the day</li>
+          <li>Help prepare and serve home-cooked meals, and assist with feeding as needed</li>
+          <li>Monitor and document changes in resident condition, mood, or behavior</li>
+          <li>Support medication reminders alongside licensed staff</li>
+          <li>Engage residents in daily activities — conversation, games, music, and time outdoors</li>
+          <li>Keep resident spaces clean, safe, and comfortable</li>
+          <li>Communicate warmly and clearly with families and the care team</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>✅ What We're Looking For</h4>
+        <ul>
+          <li>Active WA State CNA or HCA certification (or actively pursuing)</li>
+          <li>Genuine warmth, patience, and reliability</li>
+          <li>Prior caregiving or AFH/senior care experience preferred, not required</li>
+          <li>Current CPR/First Aid certification (or willingness to obtain)</li>
+          <li>Ability to assist with lifting, transfers, and physical care tasks</li>
+          <li>Comfortable with light housekeeping and meal support</li>
+          <li>Passes required background check and TB/health screening</li>
+          <li>Flexibility for weekday, weekend, or overnight shifts a plus</li>
+        </ul>
+      </div>
+
+      <div class="job-cta">
+        <a href="#apply" class="btn-forest">Apply for This Role →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLICATION FORM -->
+<section class="apply sec" id="apply">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="ew">Ready to Join Us?</div>
+      <h2 class="h2">Apply to Become a <i>Caregiver</i></h2>
+      <p class="lead">Fill out the form below and our team will reach out to schedule a call or an in-person visit.</p>
+    </div>
+
+    <form class="form-card" id="apply-form">
+
+      <div class="call-note">
+        <span class="ico">📞</span>
+        <p>We're happy to call you or schedule a short meeting to talk through the role before you apply. Just note your best time to reach you below, or call us directly at <a href="tel:+18013696018" style="color:var(--gold);font-weight:800;">(801) 369-6018</a>.</p>
+      </div>
+
+      <fieldset>
+        <legend>Your Information</legend>
+        <div class="form-row">
+          <div class="field">
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" name="fullname" required>
+          </div>
+          <div class="field">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div class="field">
+            <label for="address">Home Address</label>
+            <input type="text" id="address" name="address" placeholder="Street, City, State, ZIP" required>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Position &amp; Experience</legend>
+        <div class="form-row">
+          <div class="field">
+            <label for="position">Applying As</label>
+            <select id="position" name="position" required>
+              <option value="">Select one</option>
+              <option value="CNA">CNA &mdash; Certified Nursing Assistant</option>
+              <option value="HCA">HCA &mdash; Home Care Aide</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="experience">Years of Caregiving Experience</label>
+            <select id="experience" name="experience" required>
+              <option value="">Select one</option>
+              <option value="0-1">Less than 1 year</option>
+              <option value="1-2">1–2 years</option>
+              <option value="3-5">3–5 years</option>
+              <option value="6-10">6–10 years</option>
+              <option value="10+">10+ years</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div class="field">
+            <label for="prevwork">Previous Work Location(s) <span class="hint">(most recent employer / facility)</span></label>
+            <input type="text" id="prevwork" name="prevwork" placeholder="e.g., Sunrise Senior Living, Vancouver, WA">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>References <span class="hint">(please provide 2)</span></legend>
+        <div class="form-row">
+          <div class="field">
+            <label for="ref1name">Reference 1 &ndash; Name &amp; Relationship</label>
+            <input type="text" id="ref1name" name="ref1name" placeholder="e.g., Jane Doe, Supervisor" required>
+          </div>
+          <div class="field">
+            <label for="ref1phone">Reference 1 &ndash; Phone Number</label>
+            <input type="tel" id="ref1phone" name="ref1phone" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="ref2name">Reference 2 &ndash; Name &amp; Relationship</label>
+            <input type="text" id="ref2name" name="ref2name" placeholder="e.g., John Smith, Coworker" required>
+          </div>
+          <div class="field">
+            <label for="ref2phone">Reference 2 &ndash; Phone Number</label>
+            <input type="tel" id="ref2phone" name="ref2phone" required>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Education</legend>
+        <div class="form-row full">
+          <div class="field">
+            <label for="education">Highest Level of Education</label>
+            <select id="education" name="education" required>
+              <option value="">Select one</option>
+              <option value="highschool">High School Diploma / GED</option>
+              <option value="vocational">Vocational / Trade Certificate (incl. CNA/HCA training)</option>
+              <option value="some-college">Some College</option>
+              <option value="associate">Associate's Degree</option>
+              <option value="bachelor">Bachelor's Degree</option>
+              <option value="graduate">Graduate Degree</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Availability &amp; Pay</legend>
+        <div class="form-row">
+          <div class="field">
+            <label for="startdate">Earliest Day You Can Start</label>
+            <input type="date" id="startdate" name="startdate" required>
+          </div>
+          <div class="field">
+            <label>Preferred Shift Availability</label>
+            <div class="radio-group" id="avail-group">
+              <label class="radio-option"><input type="radio" name="availability" value="weekday" required> Weekday</label>
+              <label class="radio-option"><input type="radio" name="availability" value="weekend"> Weekend</label>
+              <label class="radio-option"><input type="radio" name="availability" value="other"> Other</label>
+            </div>
+            <div id="other-availability-wrap">
+              <input type="text" id="other-availability" name="other-availability" placeholder="Please describe your availability">
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="salary">Expected Salary <span class="hint">(hourly)</span></label>
+            <input type="text" id="salary" name="salary" placeholder="e.g., $22/hr">
+          </div>
+          <div class="field">
+            <label for="calltime">Best Time to Call You / Schedule a Meeting</label>
+            <input type="text" id="calltime" name="calltime" placeholder="e.g., Weekdays after 5 PM, or anytime this week">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Resume / CV</legend>
+        <div class="file-field" id="file-field-wrap">
+          <label for="cv">Upload your CV or Resume <span class="hint">(required)</span></label><br>
+          <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx" required>
+          <p id="cv-warning" class="field-warning">⚠️ Please upload your CV or resume before submitting.</p>
+        </div>
+      </fieldset>
+
+      <div class="submit-row">
+        <button type="submit" class="btn-forest">Submit Application →</button>
+      </div>
+      <p class="privacy-note">By submitting, you agree to be contacted by phone, text, or email regarding your application.</p>
+      <div id="success-msg">✅ Application sent successfully! The Neighbor Care Homes team will call or email you soon to schedule a conversation.</div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-inner ft-single">
+    <div class="ft-logo">🕊️ Neighbor Care Homes</div>
+    <span class="ft-copy">© 2026 Neighbor Care Homes</span>
+    <span class="ft-credit">Designed by <a href="https://diwaspandey.com.np" target="_blank" rel="noopener">Diwas Pandey</a></span>
+  </div>
+</footer>
+
+<script>
+  // Mobile drawer
+  const ham=document.getElementById('ham'),ov=document.getElementById('ov'),dr=document.getElementById('drawer');
+  ham.addEventListener('click',()=>{ov.classList.add('open');dr.classList.add('open');document.body.style.overflow='hidden'});
+  function closeMob(){ov.classList.remove('open');dr.classList.remove('open');document.body.style.overflow=''}
+
+  // Smooth scroll with fixed-nav offset
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const t=document.querySelector(a.getAttribute('href'));
+      if(t){e.preventDefault();const top=t.getBoundingClientRect().top+window.scrollY-90;window.scrollTo({top,behavior:'smooth'})}
+    });
+  });
+
+  // Scroll reveal
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}});
+  },{threshold:0.1});
+  document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+  document.getElementById('cv').addEventListener('change', function(){
+    if (this.files && this.files.length > 0) {
+      document.getElementById('cv-warning').classList.remove('show');
+      document.getElementById('file-field-wrap').classList.remove('invalid');
+    }
+  });
+
+  const availGroup = document.getElementById('avail-group');
+  const otherWrap = document.getElementById('other-availability-wrap');
+  availGroup.addEventListener('change', (e) => {
+    otherWrap.style.display = e.target.value === 'other' ? 'block' : 'none';
+    document.getElementById('other-availability').required = e.target.value === 'other';
+  });
+
+  const applyForm = document.getElementById('apply-form');
+  const successMsg = document.getElementById('success-msg');
+  const submitBtn = applyForm.querySelector('.submit-row button[type="submit"]');
+
+  const cvInput = document.getElementById('cv');
+  const cvWarning = document.getElementById('cv-warning');
+  const fileFieldWrap = document.getElementById('file-field-wrap');
+
+  applyForm.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    successMsg.style.display = 'none';
+    successMsg.style.background = '';
+    successMsg.style.borderColor = '';
+    successMsg.style.color = '';
+
+    // Reset CV warning state before re-checking
+    cvWarning.classList.remove('show');
+    fileFieldWrap.classList.remove('invalid');
+
+    // Check all required fields (native browser validation for text/select/radio/etc.)
+    if (!applyForm.checkValidity()) {
+      applyForm.reportValidity();
+      return;
+    }
+
+    // Explicit check for the resume/CV upload
+    if (!cvInput.files || cvInput.files.length === 0) {
+      cvWarning.classList.add('show');
+      fileFieldWrap.classList.add('invalid');
+      fileFieldWrap.scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+
+    const originalBtnText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    const formData = new FormData(applyForm);
+
+    fetch('https://formspree.io/f/mqerldrw', {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+      .then(response => {
+        if (response.ok) {
+          successMsg.textContent = '✅ Application sent successfully! The Neighbor Care Homes team will call or email you soon to schedule a conversation.';
+          successMsg.style.display = 'block';
+          applyForm.reset();
+          document.getElementById('other-availability-wrap').style.display = 'none';
+        } else {
+          return response.json().then(data => {
+            const errorText = (data && data.errors && data.errors.length)
+              ? data.errors.map(err => err.message).join(', ')
+              : 'Something went wrong. Please try again or call us directly.';
+            throw new Error(errorText);
+          });
+        }
+      })
+      .catch(error => {
+        successMsg.textContent = '⚠️ ' + (error.message || 'Something went wrong. Please try again or call us directly at (801) 369-6018.');
+        successMsg.style.background = '#FDEDED';
+        successMsg.style.borderColor = '#E0A6A6';
+        successMsg.style.color = '#8A2E2E';
+        successMsg.style.display = 'block';
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+        successMsg.scrollIntoView({behavior:'smooth', block:'center'});
+      });
+  });
+</script>
+
+</body>
+</html>

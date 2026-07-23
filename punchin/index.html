@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Punch — Time Clock</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<!-- PWA / iOS home-screen install support -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#eef1f6">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Punch">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<script src="company-config.js"></script>
+<script type="module" src="firebase-backend.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-1:#eef1f6; --bg-2:#e4e9f2;
+    --glass:rgba(255,255,255,0.55); --glass-strong:rgba(255,255,255,0.72); --glass-raised:rgba(255,255,255,0.85);
+    --glass-border:rgba(255,255,255,0.9);
+    --card:#faf7ee;
+    --card-line:#ddd4bd;
+    --blue:#0071e3; --blue-deep:#0058b8;
+    --red:#e0453b;
+    --green:#1e8e5a;
+    --text-lo:#6e7580;
+    --text-hi:#1d1d1f;
+    --shadow-soft:0 8px 30px rgba(31,41,55,0.08), 0 1px 2px rgba(31,41,55,0.06);
+    --shadow-lift:0 20px 45px rgba(31,41,55,0.14), 0 2px 6px rgba(31,41,55,0.08);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{
+    background:
+      radial-gradient(1100px 600px at 12% -10%, rgba(0,113,227,0.14), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(94,175,255,0.16), transparent 55%),
+      linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    background-attachment:fixed;
+    color:var(--text-hi);
+    font-family:'Inter', sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    padding:calc(32px + env(safe-area-inset-top)) 16px calc(32px + env(safe-area-inset-bottom));
+    -webkit-font-smoothing:antialiased;
+  }
+  .display{font-family:'Manrope',sans-serif; letter-spacing:-.01em;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  h1,h2,h3{font-family:'Manrope',sans-serif; margin:0; letter-spacing:-.01em; font-weight:800; color:var(--text-hi);}
+  h2{font-size:15px; text-transform:uppercase; letter-spacing:.04em; font-weight:700; color:#3a3f47;}
+
+  .app{width:100%; max-width:880px;}
+
+  /* ---- Login ---- */
+  .login-wrap{
+    display:flex; flex-direction:column; align-items:center; gap:28px;
+    padding-top:8vh;
+  }
+  .brand{display:flex; flex-direction:column; align-items:center; gap:6px;}
+  .brand .mark{
+    width:64px;height:64px;border-radius:50%;
+    background:linear-gradient(180deg, #1a8cff, var(--blue));
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:18px; color:#fff;
+    box-shadow:0 10px 24px rgba(0,113,227,0.32);
+  }
+  .brand h1{font-size:28px;color:var(--text-hi);}
+  .brand p{margin:0;color:var(--text-lo);font-size:13px;letter-spacing:.08em;text-transform:uppercase;}
+
+  .login-card{
+    background:var(--glass-strong);
+    -webkit-backdrop-filter:blur(28px) saturate(180%); backdrop-filter:blur(28px) saturate(180%);
+    border:1px solid var(--glass-border);
+    border-radius:20px;
+    padding:32px;
+    width:100%;
+    max-width:380px;
+    box-shadow:var(--shadow-lift);
+  }
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:12px;color:var(--text-lo);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;font-weight:600;}
+  .field input{
+    width:100%;padding:11px 12px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);
+    background:rgba(255,255,255,0.8);color:var(--text-hi);font-family:'Inter',sans-serif;font-size:14px;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .field input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,113,227,0.15);}
+  .btn{
+    width:100%;padding:12px;border-radius:10px;border:none;cursor:pointer;
+    font-family:'Inter',sans-serif;font-weight:600;letter-spacing:0;text-transform:none;font-size:14px;
+    background:linear-gradient(180deg, #1a8cff, var(--blue));color:#fff;
+    box-shadow:0 1px 2px rgba(0,113,227,0.25), 0 6px 16px rgba(0,113,227,0.28);
+    transition:transform .12s ease, box-shadow .12s ease, filter .12s ease;
+  }
+  .btn:hover{filter:brightness(1.05); transform:translateY(-1px);}
+  .btn:active{transform:translateY(0); filter:brightness(0.97);}
+  .btn.secondary{
+    background:rgba(255,255,255,0.6); border:1px solid rgba(0,0,0,0.1); color:var(--text-hi);
+    box-shadow:none; -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  }
+  .btn.secondary:hover{background:rgba(255,255,255,0.85); filter:none; transform:none;}
+  .btn.danger{background:linear-gradient(180deg, #ec6259, var(--red));color:#fff;box-shadow:0 1px 2px rgba(224,69,59,0.25), 0 6px 16px rgba(224,69,59,0.28);}
+  .btn.small{width:auto;padding:8px 16px;font-size:12px;}
+  .error{color:var(--red);font-size:13px;margin-top:10px;text-align:center;font-weight:500;}
+  .hint{margin-top:18px;font-size:12px;color:var(--text-lo);text-align:center;line-height:1.7;}
+  .hint b{color:var(--text-hi);}
+
+  /* ---- Top bar ---- */
+  .topbar{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid rgba(0,0,0,0.06);
+  }
+  .who{display:flex;align-items:center;gap:12px;}
+  .who .avatar{
+    width:38px;height:38px;border-radius:50%;background:linear-gradient(180deg, #1a8cff, var(--blue));
+    display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:13px;
+    box-shadow:0 4px 12px rgba(0,113,227,0.3);
+  }
+  .who .name{font-size:15px;font-weight:600;}
+  .who .role{font-size:11px;color:var(--text-lo);text-transform:uppercase;letter-spacing:.06em;}
+
+  /* ---- Punch card (signature element) ---- */
+  .punchcard{
+    background:var(--card);
+    color:#241f16;
+    border-radius:14px;
+    padding:24px 26px;
+    position:relative;
+    margin-bottom:28px;
+    background-image:
+      repeating-linear-gradient(to bottom, transparent 0 27px, var(--card-line) 27px 28px);
+    box-shadow:var(--shadow-lift);
+    border:1px solid rgba(255,255,255,0.9);
+  }
+  .punchcard::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:14px;
+    background-image:radial-gradient(circle, #cfc6ab 3px, transparent 3.5px);
+    background-size:14px 20px; background-position:4px 10px; background-repeat:repeat-y;
+    border-right:1px dashed var(--card-line);
+    border-radius:14px 0 0 14px;
+  }
+  .punchcard-inner{padding-left:22px;}
+  .pc-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+  .pc-top .label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#6b6350;}
+  .pc-status{
+    display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:13px;
+    padding:4px 10px;border-radius:20px;
+  }
+  .pc-status.in{background:rgba(30,142,90,0.14);color:#1e8e5a;}
+  .pc-status.out{background:rgba(110,117,128,0.14);color:#5a6270;}
+  .pc-status .dot{width:7px;height:7px;border-radius:50%;background:currentColor;}
+  .pc-clock{font-family:'IBM Plex Mono',monospace;font-size:42px;font-weight:500;margin:6px 0 18px;letter-spacing:.02em;color:#241f16;}
+  .pc-clock .secs{font-size:22px;color:#8a806a;}
+  .pc-actions{display:flex;gap:12px;}
+  .pc-actions .btn{flex:1;}
+
+  /* ---- Sections ---- */
+  .section{margin-bottom:28px;}
+  .section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+  .section-head h2{font-size:15px;color:var(--text-hi);}
+  .section-head .sub{font-size:11px;color:var(--text-lo);text-transform:uppercase;letter-spacing:.06em;}
+
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{
+    text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-lo);
+    padding:8px 12px;border-bottom:1px solid rgba(0,0,0,0.08);font-weight:600;
+  }
+  td{padding:10px 12px;border-bottom:1px solid rgba(0,0,0,0.05);color:var(--text-hi);font-family:'IBM Plex Mono',monospace;}
+  tr:last-child td{border-bottom:none;}
+  .panel-box{
+    background:var(--glass);
+    -webkit-backdrop-filter:blur(24px) saturate(180%); backdrop-filter:blur(24px) saturate(180%);
+    border:1px solid var(--glass-border); border-radius:18px; overflow:hidden; box-shadow:var(--shadow-soft);
+  }
+  .panel-box .pad{padding:4px 4px;}
+  .empty-row td{color:var(--text-lo);font-family:'Inter',sans-serif;text-align:center;padding:22px;}
+
+  .tag{padding:2px 8px;border-radius:20px;font-size:11px;font-family:'Inter',sans-serif;}
+  .tag.open{background:rgba(0,113,227,0.12);color:var(--blue-deep);}
+  .tag.closed{background:rgba(30,142,90,0.12);color:var(--green);}
+
+  .stat-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .stat{
+    flex:1;min-width:150px;
+    background:var(--glass);
+    -webkit-backdrop-filter:blur(24px) saturate(180%); backdrop-filter:blur(24px) saturate(180%);
+    border:1px solid var(--glass-border);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow-soft);
+  }
+  .stat .k{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-lo);margin-bottom:8px;font-weight:600;}
+  .stat .v{font-family:'IBM Plex Mono',monospace;font-size:26px;color:var(--blue-deep);}
+  .stat .v span{font-size:14px;color:var(--text-lo);margin-left:4px;}
+
+  /* Admin */
+  .user-list{display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap;}
+  .user-chip{
+    padding:10px 16px;border-radius:12px;border:1px solid rgba(0,0,0,0.08);background:var(--glass);
+    -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px);
+    cursor:pointer;font-size:13px;color:var(--text-hi);display:flex;align-items:center;gap:8px;
+  }
+  .user-chip .dot{width:8px;height:8px;border-radius:50%;background:#c3c8d1;}
+  .user-chip .dot.in{background:var(--green);}
+  .user-chip.active{border-color:var(--blue);background:var(--glass-raised);}
+  .user-chip .role-tag{font-size:10px;color:var(--text-lo);text-transform:uppercase;}
+
+  /* Tabs */
+  .tab-nav{display:flex;gap:6px;margin-bottom:22px;border-bottom:1px solid rgba(0,0,0,0.08);}
+  .tab-btn{
+    background:none;border:none;color:var(--text-lo);font-family:'Manrope',sans-serif;font-weight:700;
+    font-size:13px;letter-spacing:.02em;text-transform:uppercase;padding:10px 4px;margin-right:18px;
+    cursor:pointer;border-bottom:2px solid transparent;
+  }
+  .tab-btn.active{color:var(--blue-deep);border-bottom-color:var(--blue);}
+
+  /* Schedule form (used for admin add-account form) */
+  .sched-form{
+    display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;
+    background:var(--glass);
+    -webkit-backdrop-filter:blur(24px) saturate(180%); backdrop-filter:blur(24px) saturate(180%);
+    border:1px solid var(--glass-border);border-radius:16px;padding:18px;margin-bottom:20px;box-shadow:var(--shadow-soft);
+  }
+  .sched-form .field{margin-bottom:0;}
+  .sched-form input[type="date"],
+  .sched-form input[type="time"],
+  .sched-form input[type="text"],
+  .sched-form input[type="password"],
+  .sched-form select{
+    width:100%;padding:9px 10px;border-radius:9px;border:1px solid rgba(0,0,0,0.08);
+    background:rgba(255,255,255,0.8);color:var(--text-hi);font-family:'IBM Plex Mono',monospace;font-size:13px;
+  }
+  .sched-form .btn{padding:10px 18px;width:auto;}
+  .sched-form.cols-5{grid-template-columns:1fr 1fr 1fr 1fr auto;}
+  .icon-btn{
+    background:rgba(255,255,255,0.6);border:1px solid rgba(0,0,0,0.1);color:var(--text-lo);border-radius:7px;
+    padding:5px 9px;cursor:pointer;font-size:11px;font-family:'Inter',sans-serif;
+  }
+  .icon-btn:hover{color:var(--red);border-color:var(--red);}
+
+  /* Weekly schedule calendar */
+  .cal-nav{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+  .cal-nav .btn{width:auto;}
+  .cal-range{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--text-hi);flex:1;text-align:center;}
+  .cal-wrap{overflow-x:auto;margin-bottom:28px;padding-bottom:6px;}
+  .cal-grid{display:grid;grid-template-columns:108px repeat(7, minmax(96px,1fr));gap:6px;min-width:820px;}
+  .cal-head-cell{background:transparent;text-align:center;font-size:11px;color:var(--text-lo);padding:6px 4px;font-family:'Inter',sans-serif;line-height:1.5;}
+  .cal-shift-label{
+    font-size:12px;color:var(--text-hi);display:flex;flex-direction:column;justify-content:center;
+    padding:10px 10px;background:var(--glass);border:1px solid var(--glass-border);border-radius:10px;
+  }
+  .cal-shift-label span{font-size:10px;color:var(--text-lo);margin-top:3px;font-family:'IBM Plex Mono',monospace;}
+  .cal-cell{
+    background:var(--glass);border:1px solid var(--glass-border);border-radius:10px;padding:6px;min-height:56px;
+    display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:4px;
+  }
+  .cal-cell.mine{border-color:var(--blue);background:rgba(0,113,227,0.08);}
+  .mine-tag{font-size:11px;color:var(--blue-deep);font-family:'Inter',sans-serif;font-weight:600;}
+  .cell-chip{
+    width:28px;height:28px;border-radius:50%;font-size:10px;font-family:'IBM Plex Mono',monospace;
+    border:1px solid rgba(0,0,0,0.1);background:rgba(255,255,255,0.7);color:var(--text-lo);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;padding:0;
+  }
+  .cell-chip.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+
+  @media (max-width: 640px){
+    .sched-form{grid-template-columns:1fr 1fr;}
+    .sched-form.cols-5{grid-template-columns:1fr 1fr;}
+  }
+
+  .role-badge{padding:2px 10px;border-radius:20px;font-size:11px;text-transform:capitalize;font-family:'Inter',sans-serif;font-weight:500;}
+  .role-badge.admin{background:rgba(0,113,227,0.12);color:var(--blue-deep);}
+  .role-badge.user{background:rgba(110,117,128,0.12);color:var(--text-lo);}
+
+  /* ---- Fixed admin sidebar ---- */
+  .admin-sidebar{
+    position:fixed;top:0;left:0;bottom:0;width:230px;
+    background:var(--glass-strong);
+    -webkit-backdrop-filter:blur(28px) saturate(180%); backdrop-filter:blur(28px) saturate(180%);
+    border-right:1px solid var(--glass-border);
+    padding:22px 14px;overflow-y:auto;z-index:200;
+    display:flex;flex-direction:column;gap:20px;
+  }
+  .sidebar-brand{
+    display:flex;align-items:center;gap:10px;margin-bottom:4px;padding:0 6px;
+    font-family:'Manrope',sans-serif;text-transform:uppercase;letter-spacing:.04em;font-weight:800;
+    color:var(--text-hi);font-size:15px;
+  }
+  .sidebar-brand .mark{
+    width:28px;height:28px;border-radius:50%;background:linear-gradient(180deg, #1a8cff, var(--blue));
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;color:#fff;font-size:9px;font-weight:600;flex-shrink:0;
+  }
+  .sidebar-group-title{
+    font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-lo);
+    margin-bottom:6px;padding:0 10px;font-weight:600;
+  }
+  .sidebar-link{
+    display:flex;align-items:center;width:100%;text-align:left;background:none;border:none;
+    color:var(--text-hi);font-family:'Inter',sans-serif;font-size:13px;
+    padding:9px 10px;border-radius:9px;cursor:pointer;margin-bottom:2px;
+  }
+  .sidebar-link:hover{background:rgba(0,0,0,0.05);}
+  .sidebar-link.active{background:rgba(0,113,227,0.1);color:var(--blue-deep);font-weight:600;}
+  .sidebar-link.top-level{
+    font-family:'Manrope',sans-serif;text-transform:uppercase;letter-spacing:.03em;font-size:12px;font-weight:700;
+  }
+  .sidebar-link .dot{width:6px;height:6px;border-radius:50%;background:#c3c8d1;display:inline-block;margin-right:8px;flex-shrink:0;}
+  .sidebar-link .dot.in{background:var(--green);}
+  .sidebar-empty{padding:8px 10px;color:var(--text-lo);font-size:12px;}
+  .sidebar-footer{margin-top:auto;padding-top:10px;border-top:1px solid rgba(0,0,0,0.08);}
+
+  body.admin-mode{padding-left:262px;}
+
+  @media (max-width:900px){
+    .admin-sidebar{
+      position:static;width:100%;height:auto;flex-direction:row;flex-wrap:wrap;
+      border-right:none;border-bottom:1px solid var(--glass-border);margin-bottom:20px;
+    }
+    .sidebar-footer{margin-top:0;padding-top:0;border-top:none;}
+    body.admin-mode{padding-left:16px;}
+  }
+
+  .topbar-right{display:flex;gap:10px;align-items:center;}
+  ::-webkit-scrollbar{height:6px;width:6px;}
+  ::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.18);border-radius:4px;}
+
+  @media (max-width: 560px){
+    .pc-clock{font-size:32px;}
+    .stat-row{flex-direction:column;}
+  }
+
+  .storage-banner{
+    position:sticky;top:0;left:0;right:0;width:100%;z-index:1000;
+    background:var(--red);color:#fff;font-family:'Inter',sans-serif;
+    font-size:13px;padding:10px 16px;display:flex;align-items:center;justify-content:center;gap:14px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.2);
+  }
+  .storage-banner button{
+    background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.4);color:#fff;
+    border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;
+  }
+</style>
+</head>
+<body>
+<div id="storageBanner" style="display:none;"></div>
+<div id="adminSidebar" class="admin-sidebar" style="display:none;"></div>
+<div class="app" id="app"></div>
+
+<script>
+/* ===================== Data / Auth ===================== */
+/* Waits for firebase-backend.js (a module script, so it loads after this
+   inline script starts running) to finish initializing and expose
+   window.FB, before anything here tries to call it. */
+function waitForFB(){
+  if (window.FB) return Promise.resolve();
+  return new Promise(resolve => window.addEventListener('fb-ready', resolve, { once: true }));
+}
+
+const COMPANY_ID = window.COMPANY_ID;
+const COMPANY_NAME = window.COMPANY_NAME;
+
+// Populated after login from Firestore (see loadCompanyRoster below) —
+// no more hardcoded demo accounts or in-app passwords.
+let ACCOUNTS = {};
+async function loadCompanyRoster(){
+  ACCOUNTS = await window.FB.listCompanyAccounts(COMPANY_ID);
+}
+function getRegularUsers(){
+  return Object.keys(ACCOUNTS).filter(u => ACCOUNTS[u].role === 'user');
+}
+
+const SHIFTS = [
+  { key: 's1', label: '6 – 2', time: '6:00 AM – 2:00 PM' },
+  { key: 's2', label: '2 – 10', time: '2:00 PM – 10:00 PM' },
+  { key: 's3', label: '10 – 6', time: '10:00 PM – 6:00 AM' }
+];
+
+let state = {
+  loginError: '',
+  currentUser: null,      // username string
+  entriesCache: {},       // username -> array of entries
+  adminSelected: null,    // username being viewed on Time Management
+  adminSection: 'timeManagement', // 'timeManagement' | 'schedule' | 'reports' | 'updateUsers' | 'addUsers' | 'managePermissions' | 'removeUsers'
+  clockTick: null,
+  userTab: 'clock',       // 'clock' | 'schedule'
+  scheduleWeekStart: null,
+  accountsError: '',
+  editingPunchIdx: null,  // admin: index (within employee's full entries array) of punch being edited
+  editingUserPunchIdx: null, // user: index of their own punch they're drafting a change-request for
+  requestError: ''
+};
+
+/* ===================== Storage helpers ===================== */
+function sleep(ms){ return new Promise(resolve => setTimeout(resolve, ms)); }
+
+/* window.storage.set can fail transiently (e.g. "Internal server error
+   while processing action"). Previously every save site did a bare
+   try/catch that just console.error'd — meaning a failed save looked
+   identical to a successful one from the user's perspective, and the
+   punch/edit they just made was silently lost. This wrapper retries
+   once, and if it still fails, surfaces a visible banner so the user
+   knows to retry instead of assuming it saved. */
+async function withStorageRetry(fn, label){
+  try{
+    await fn();
+    clearStorageWarning();
+    return true;
+  }catch(e1){
+    console.error(label + ' failed, retrying once', e1);
+    await sleep(600);
+    try{
+      await fn();
+      clearStorageWarning();
+      return true;
+    }catch(e2){
+      console.error(label + ' failed after retry', e2);
+      showStorageWarning(`Couldn't save (${label}). Your last change may not have saved — check your connection and try again.`);
+      return false;
+    }
+  }
+}
+
+async function loadEntries(uid){
+  try{
+    return await window.FB.loadEntries(uid);
+  }catch(e){
+    console.error('loadEntries failed', e);
+    return [];
+  }
+}
+async function saveEntries(uid, entries){
+  return withStorageRetry(
+    () => window.FB.saveEntries(uid, COMPANY_ID, entries),
+    'save punch'
+  );
+}
+async function loadGrid(){
+  try{
+    return await window.FB.loadGrid(COMPANY_ID);
+  }catch(e){
+    console.error('loadGrid failed', e);
+    return {};
+  }
+}
+async function saveGrid(grid){
+  return withStorageRetry(
+    () => window.FB.saveGrid(COMPANY_ID, grid),
+    'save schedule'
+  );
+}
+
+async function createEditRequest(reqData){
+  return withStorageRetry(
+    () => window.FB.createEditRequest({ ...reqData, companyId: COMPANY_ID }),
+    'submit change request'
+  );
+}
+async function listEditRequestsForCompany(){
+  try{
+    return await window.FB.listEditRequestsForCompany(COMPANY_ID);
+  }catch(e){
+    console.error('listEditRequestsForCompany failed', e);
+    return [];
+  }
+}
+async function listEditRequestsForUser(uid){
+  try{
+    return await window.FB.listEditRequestsForUser(uid);
+  }catch(e){
+    console.error('listEditRequestsForUser failed', e);
+    return [];
+  }
+}
+async function approveEditRequest(request){
+  try{
+    await window.FB.approveEditRequest(request, state.currentUser);
+    clearStorageWarning();
+    return true;
+  }catch(e){
+    console.error('approveEditRequest failed', e);
+    if (e && e.message === 'stale-request'){
+      showStorageWarning('That punch has changed since this request was filed — reject it and ask the employee to resubmit.');
+    } else {
+      showStorageWarning("Couldn't approve that request — try again.");
+    }
+    return false;
+  }
+}
+async function rejectEditRequest(requestId){
+  return withStorageRetry(
+    () => window.FB.rejectEditRequest(requestId, state.currentUser),
+    'reject request'
+  );
+}
+
+/* ===================== Time helpers ===================== */
+function pad(n){ return n < 10 ? '0'+n : ''+n; }
+function fmtDate(d){ return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+function fmtDateLabel(dateStr){
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString(undefined, { weekday:'short', month:'short', day:'numeric' });
+}
+function fmtTime(iso){
+  const d = new Date(iso);
+  return d.toLocaleTimeString(undefined, { hour:'numeric', minute:'2-digit' });
+}
+function fmtDateTime(iso){
+  const d = new Date(iso);
+  return fmtDateLabel(fmtDate(d)) + ', ' + fmtTime(iso);
+}
+function hoursBetween(startIso, endIso){
+  return (new Date(endIso) - new Date(startIso)) / 3600000;
+}
+function fmtHours(h){
+  return h.toFixed(2) + 'h';
+}
+function isSameDate(iso1, iso2){
+  return fmtDate(new Date(iso1)) === fmtDate(new Date(iso2));
+}
+// datetime-local inputs use "YYYY-MM-DDTHH:mm" in the browser's local time,
+// with no timezone info — matches how `new Date(...)` parses/prints locally.
+function toInputValue(iso){
+  const d = new Date(iso);
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes());
+}
+function fromInputValue(val){
+  return new Date(val).toISOString();
+}
+function getWeekStart(dateStr){
+  const d = new Date(dateStr + 'T00:00:00');
+  const day = d.getDay(); // 0=Sun
+  const diff = (day === 0 ? -6 : 1) - day; // shift to Monday
+  d.setDate(d.getDate() + diff);
+  return fmtDate(d);
+}
+function getWeekEnd(weekStartStr){
+  const d = new Date(weekStartStr + 'T00:00:00');
+  d.setDate(d.getDate() + 6);
+  return fmtDate(d);
+}
+function weekDates(weekStart){
+  const d = new Date(weekStart + 'T00:00:00');
+  const out = [];
+  for (let i = 0; i < 7; i++){
+    out.push(fmtDate(new Date(d.getFullYear(), d.getMonth(), d.getDate() + i)));
+  }
+  return out;
+}
+function shiftWeek(weekStart, deltaDays){
+  const d = new Date(weekStart + 'T00:00:00');
+  d.setDate(d.getDate() + deltaDays);
+  return fmtDate(d);
+}
+function weekRangeLabel(weekStart){
+  const dates = weekDates(weekStart);
+  const start = new Date(dates[0] + 'T00:00:00');
+  const end = new Date(dates[6] + 'T00:00:00');
+  const startStr = start.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  const endStr = end.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+  return `${startStr} – ${endStr}`;
+}
+function cellKey(weekStart, dayIdx, shiftKey){
+  return weekStart + '_' + dayIdx + '_' + shiftKey;
+}
+function getPayPeriod(dateStr){
+  const d = new Date(dateStr + 'T00:00:00');
+  const y = d.getFullYear(), m = d.getMonth();
+  const lastDay = new Date(y, m+1, 0).getDate();
+  if (d.getDate() <= 15){
+    return { start: fmtDate(new Date(y,m,1)), end: fmtDate(new Date(y,m,15)), key: y+'-'+pad(m+1)+'-A' };
+  } else {
+    return { start: fmtDate(new Date(y,m,16)), end: fmtDate(new Date(y,m,lastDay)), key: y+'-'+pad(m+1)+'-B' };
+  }
+}
+
+/* Group entries (completed + in-progress) by day, return map date -> {entries, totalHours, openNow} */
+function summarizeByDay(entries){
+  const days = {};
+  entries.forEach(e => {
+    const dateKey = fmtDate(new Date(e.clockIn));
+    if (!days[dateKey]) days[dateKey] = { entries: [], totalHours: 0, hasOpen: false };
+    days[dateKey].entries.push(e);
+    if (e.clockOut){
+      days[dateKey].totalHours += hoursBetween(e.clockIn, e.clockOut);
+    } else {
+      days[dateKey].hasOpen = true;
+    }
+  });
+  return days;
+}
+
+function summarizeByWeek(dayMap){
+  const weeks = {};
+  Object.keys(dayMap).forEach(dateKey => {
+    const ws = getWeekStart(dateKey);
+    if (!weeks[ws]) weeks[ws] = { start: ws, end: getWeekEnd(ws), totalHours: 0 };
+    weeks[ws].totalHours += dayMap[dateKey].totalHours;
+  });
+  return weeks;
+}
+
+function summarizeByPayPeriod(dayMap){
+  const periods = {};
+  Object.keys(dayMap).forEach(dateKey => {
+    const pp = getPayPeriod(dateKey);
+    if (!periods[pp.key]) periods[pp.key] = { start: pp.start, end: pp.end, totalHours: 0, key: pp.key };
+    periods[pp.key].totalHours += dayMap[dateKey].totalHours;
+  });
+  return periods;
+}
+
+/* ===================== Security helpers ===================== */
+/* Escape any string before interpolating it into innerHTML. Names,
+   usernames, and other admin-editable text are user-controlled and
+   must never be inserted raw — otherwise a display name like
+   `<img src=x onerror=...>` becomes a stored XSS that fires for
+   every viewer, including other admins. */
+function escapeHtml(str){
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+function initialsOf(name){
+  return escapeHtml(name.split(' ').map(w => w[0] || '').join(''));
+}
+
+/* Lives outside #app so it isn't wiped out every time a screen does a
+   full app.innerHTML re-render. */
+function showStorageWarning(message){
+  const el = document.getElementById('storageBanner');
+  if (!el) return;
+  el.className = 'storage-banner';
+  el.style.display = 'flex';
+  el.innerHTML = `<span>${escapeHtml(message)}</span><button id="dismissStorageWarning">Dismiss</button>`;
+  document.getElementById('dismissStorageWarning').onclick = clearStorageWarning;
+}
+function clearStorageWarning(){
+  const el = document.getElementById('storageBanner');
+  if (!el) return;
+  el.style.display = 'none';
+  el.innerHTML = '';
+}
+
+/* Shows/hides the fixed left sidebar and shifts the main content area
+   over to make room for it. Only the admin view uses the sidebar —
+   login and the employee view stay in the normal centered layout. */
+function setAdminMode(on){
+  document.body.classList.toggle('admin-mode', on);
+  const el = document.getElementById('adminSidebar');
+  if (el && !on){
+    el.style.display = 'none';
+    el.innerHTML = '';
+  }
+}
+
+/* ===================== Rendering ===================== */
+const app = document.getElementById('app');
+
+function render(){
+  if (!state.currentUser){
+    setAdminMode(false);
+    renderLogin();
+  } else if (ACCOUNTS[state.currentUser].role === 'admin'){
+    renderAdmin();
+  } else {
+    setAdminMode(false);
+    renderUser();
+  }
+}
+
+function renderLogin(){
+  app.innerHTML = `
+    <div class="login-wrap">
+      <div class="brand">
+        <div class="mark">${new Date().getHours()%12 || 12}:${pad(new Date().getMinutes())}</div>
+        <h1>Punch</h1>
+        <p>${escapeHtml(COMPANY_NAME)}</p>
+      </div>
+      <div class="login-card">
+        <div class="field">
+          <label for="uname">Email</label>
+          <input id="uname" type="email" autocomplete="username" placeholder="you@company.com" />
+        </div>
+        <div class="field">
+          <label for="pword">Password</label>
+          <input id="pword" type="password" autocomplete="current-password" placeholder="••••••" />
+        </div>
+        <button class="btn" id="loginBtn">Log in</button>
+        ${state.loginError ? `<div class="error">${escapeHtml(state.loginError)}</div>` : ''}
+        <div class="hint">
+          Forgot your password? Ask your admin, or use the reset link they can send you.
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('loginBtn').onclick = doLogin;
+  document.getElementById('pword').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  document.getElementById('uname').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+}
+
+let loginInFlight = false;
+async function doLogin(){
+  if (loginInFlight) return;
+  const email = document.getElementById('uname').value.trim();
+  const password = document.getElementById('pword').value;
+  const btn = document.getElementById('loginBtn');
+  loginInFlight = true;
+  if (btn){ btn.disabled = true; btn.textContent = 'Logging in…'; }
+  try{
+    const profile = await window.FB.login(email, password);
+    if (profile.companyId !== COMPANY_ID){
+      await window.FB.logout();
+      state.loginError = "That account isn't registered to this company's site.";
+      render();
+      return;
+    }
+    if (profile.role !== 'admin' && profile.role !== 'user'){
+      await window.FB.logout();
+      state.loginError = 'This account type cannot log into an individual company site.';
+      render();
+      return;
+    }
+    await loadCompanyRoster();
+    state.currentUser = profile.uid;
+    state.loginError = '';
+    render();
+  }catch(e){
+    console.error('login failed', e);
+    state.loginError = 'Incorrect email or password.';
+    render();
+  } finally {
+    loginInFlight = false;
+  }
+}
+
+async function logout(){
+  if (state.clockTick) clearInterval(state.clockTick);
+  await window.FB.logout();
+  state.currentUser = null;
+  state.adminSelected = null;
+  state.userTab = 'clock';
+  state.adminSection = 'timeManagement';
+  state.accountsError = '';
+  setAdminMode(false);
+  render();
+}
+
+function tabNavHtml(tabs, activeKey, groupId){
+  return `
+    <div class="tab-nav" data-group="${groupId}">
+      ${tabs.map(t => `<button class="tab-btn ${t.key === activeKey ? 'active' : ''}" data-tab="${t.key}">${t.label}</button>`).join('')}
+    </div>
+  `;
+}
+
+function topbarHtml(username, showBack){
+  const acc = ACCOUNTS[username];
+  const initials = initialsOf(acc.name);
+  return `
+    <div class="topbar">
+      <div class="who">
+        <div class="avatar">${initials}</div>
+        <div>
+          <div class="name">${escapeHtml(acc.name)}</div>
+          <div class="role">${escapeHtml(acc.role)}</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        ${showBack ? `<button class="btn secondary small" id="backBtn">All employees</button>` : ''}
+        <button class="btn secondary small" id="logoutBtn">Log out</button>
+      </div>
+    </div>
+  `;
+}
+
+/* ---------- USER VIEW ---------- */
+async function renderUser(){
+  const username = state.currentUser;
+  const entries = await loadEntries(username);
+  state.entriesCache[username] = entries;
+  if (state.userTab === 'schedule'){
+    if (!state.scheduleWeekStart) state.scheduleWeekStart = getWeekStart(fmtDate(new Date()));
+    const grid = await loadGrid();
+    drawUserScheduleScreen(username, grid);
+  } else {
+    const myRequests = await listEditRequestsForUser(username);
+    drawUserScreen(username, entries, myRequests);
+  }
+}
+
+function userTabsHtml(){
+  return tabNavHtml([
+    { key: 'clock', label: 'Time Clock' },
+    { key: 'schedule', label: 'My Schedule' }
+  ], state.userTab, 'user');
+}
+
+function bindUserTabs(){
+  document.querySelectorAll('.tab-nav[data-group="user"] .tab-btn').forEach(btn => {
+    btn.onclick = () => { state.userTab = btn.dataset.tab; renderUser(); };
+  });
+  document.getElementById('logoutBtn').onclick = logout;
+}
+
+function weekNavHtml(){
+  return `
+    <div class="cal-nav">
+      <button class="btn secondary small" id="prevWeekBtn">‹ Prev</button>
+      <div class="cal-range">${weekRangeLabel(state.scheduleWeekStart)}</div>
+      <button class="btn secondary small" id="thisWeekBtn">This week</button>
+      <button class="btn secondary small" id="nextWeekBtn">Next ›</button>
+    </div>
+  `;
+}
+
+function bindWeekNav(onChange){
+  document.getElementById('prevWeekBtn').onclick = () => { state.scheduleWeekStart = shiftWeek(state.scheduleWeekStart, -7); onChange(); };
+  document.getElementById('nextWeekBtn').onclick = () => { state.scheduleWeekStart = shiftWeek(state.scheduleWeekStart, 7); onChange(); };
+  document.getElementById('thisWeekBtn').onclick = () => { state.scheduleWeekStart = getWeekStart(fmtDate(new Date())); onChange(); };
+}
+
+function calHeaderRowHtml(dates){
+  return `
+    <div class="cal-shift-label" style="background:transparent;border:none;"></div>
+    ${dates.map(d => `<div class="cal-head-cell">${fmtDateLabel(d)}</div>`).join('')}
+  `;
+}
+
+function userCalGridHtml(grid, weekStart, username){
+  const dates = weekDates(weekStart);
+  const rows = SHIFTS.map(shift => {
+    const cells = dates.map((d, i) => {
+      const key = cellKey(weekStart, i, shift.key);
+      const assigned = grid[key] || [];
+      const mine = assigned.includes(username);
+      return `<div class="cal-cell ${mine ? 'mine' : ''}">${mine ? '<span class="mine-tag">You\u2019re on</span>' : ''}</div>`;
+    }).join('');
+    return `
+      <div class="cal-shift-label">${shift.label}<span>${shift.time}</span></div>
+      ${cells}
+    `;
+  }).join('');
+  return `<div class="cal-wrap"><div class="cal-grid">${calHeaderRowHtml(dates)}${rows}</div></div>`;
+}
+
+function drawUserScheduleScreen(username, grid){
+  app.innerHTML = `
+    ${topbarHtml(username, false)}
+    ${userTabsHtml()}
+    <div class="section">
+      <div class="section-head">
+        <h2>My schedule</h2>
+        <span class="sub">6–2 &middot; 2–10 &middot; 10–6 shifts</span>
+      </div>
+      ${weekNavHtml()}
+      ${userCalGridHtml(grid, state.scheduleWeekStart, username)}
+    </div>
+  `;
+  bindUserTabs();
+  bindWeekNav(renderUser);
+}
+
+function drawUserScreen(username, entries, myRequests){
+  const open = entries.find(e => !e.clockOut);
+  const dayMap = summarizeByDay(entries);
+  const weekMap = summarizeByWeek(dayMap);
+  const ppMap = summarizeByPayPeriod(dayMap);
+
+  const today = fmtDate(new Date());
+  const todayHours = dayMap[today] ? dayMap[today].totalHours : 0;
+  const thisWeekStart = getWeekStart(today);
+  const weekHours = weekMap[thisWeekStart] ? weekMap[thisWeekStart].totalHours : 0;
+  const pp = getPayPeriod(today);
+  const ppHours = ppMap[pp.key] ? ppMap[pp.key].totalHours : 0;
+
+  // A punch with an unresolved pending request against it shows a badge
+  // instead of Edit/Delete buttons, so the employee can't file a second
+  // conflicting request while the first is still awaiting review.
+  const pendingByIdx = {};
+  myRequests.filter(r => r.status === 'pending' && (r.type === 'edit' || r.type === 'delete'))
+    .forEach(r => { pendingByIdx[r.idx] = r; });
+
+  const sortedDays = Object.keys(dayMap).sort().reverse();
+  const rowsHtml = sortedDays.length ? sortedDays.map(d => {
+    const day = dayMap[d];
+    const punches = day.entries.slice().sort((a,b)=> new Date(a.clockIn)-new Date(b.clockIn));
+    return punches.map(p => {
+      const idx = entries.indexOf(p);
+      const isEditing = state.editingUserPunchIdx === idx;
+      const spansDay = p.clockOut && !isSameDate(p.clockIn, p.clockOut);
+      if (isEditing){
+        return `
+          <tr>
+            <td>${fmtDateLabel(d)}</td>
+            <td colspan="2" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+              <input type="datetime-local" id="reqEditIn_${idx}" value="${toInputValue(p.clockIn)}" style="padding:7px 9px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);background:rgba(255,255,255,0.85);color:var(--text-hi);font-family:'IBM Plex Mono',monospace;font-size:12px;" />
+              <span>→</span>
+              <input type="datetime-local" id="reqEditOut_${idx}" value="${p.clockOut ? toInputValue(p.clockOut) : ''}" style="padding:7px 9px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);background:rgba(255,255,255,0.85);color:var(--text-hi);font-family:'IBM Plex Mono',monospace;font-size:12px;" />
+            </td>
+            <td>
+              <button class="icon-btn" data-submit-req-edit="${idx}">Submit</button>
+              <button class="icon-btn" data-cancel-req-edit="${idx}">Cancel</button>
+            </td>
+          </tr>
+        `;
+      }
+      const pending = pendingByIdx[idx];
+      return `
+        <tr>
+          <td>${fmtDateLabel(d)}</td>
+          <td>${fmtTime(p.clockIn)} → ${p.clockOut ? fmtTime(p.clockOut) : '—'}${spansDay ? ' <span class="tag open" style="margin-left:4px;">+1d</span>' : ''}</td>
+          <td>${p.clockOut ? fmtHours(hoursBetween(p.clockIn, p.clockOut)) : '<span class="tag open">in progress</span>'}</td>
+          <td>
+            ${pending
+              ? `<span class="tag open">Pending ${pending.type === 'delete' ? 'deletion' : 'change'}</span>`
+              : `<button class="icon-btn" data-req-edit="${idx}">Request edit</button><button class="icon-btn" data-req-delete="${idx}">Request delete</button>`}
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }).join('') : `<tr class="empty-row"><td colspan="4">No punches yet. Clock in to get started.</td></tr>`;
+
+  const recentRequests = myRequests.slice(0, 5);
+  const requestsRows = recentRequests.length ? recentRequests.map(r => {
+    const statusTag = r.status === 'pending' ? '<span class="tag open">Pending</span>'
+      : r.status === 'approved' ? '<span class="tag" style="background:rgba(60,160,90,0.15);color:#2f7a45;">Approved</span>'
+      : '<span class="tag" style="background:rgba(200,60,60,0.12);color:#b33;">Rejected</span>';
+    const typeLabel = r.type === 'add' ? 'Add punch' : r.type === 'delete' ? 'Delete punch' : 'Edit punch';
+    const when = r.proposedClockIn ? fmtDateTime(r.proposedClockIn) : (r.originalClockIn ? fmtDateTime(r.originalClockIn) : '—');
+    return `<tr><td>${typeLabel}</td><td>${when}</td><td>${statusTag}</td></tr>`;
+  }).join('') : '';
+
+  app.innerHTML = `
+    ${topbarHtml(username, false)}
+    ${userTabsHtml()}
+
+    <div class="punchcard">
+      <div class="punchcard-inner">
+        <div class="pc-top">
+          <span class="label">Current status</span>
+          <span class="pc-status ${open ? 'in' : 'out'}"><span class="dot"></span>${open ? 'Clocked in' : 'Clocked out'}</span>
+        </div>
+        <div class="pc-clock" id="liveClock">--:--<span class="secs">--</span></div>
+        <div style="font-size:12px;color:#6b6350;margin-bottom:16px;">
+          ${open ? 'Since ' + fmtDateTime(open.clockIn) : (entries.length ? 'Last clock-out: ' + fmtDateTime(entries.filter(e=>e.clockOut).slice(-1)[0]?.clockOut || '') : 'No activity yet')}
+        </div>
+        <div class="pc-actions">
+          <button class="btn" id="clockInBtn" ${open ? 'disabled style="opacity:.4;cursor:not-allowed;"' : ''}>Clock in</button>
+          <button class="btn danger" id="clockOutBtn" ${!open ? 'disabled style="opacity:.4;cursor:not-allowed;"' : ''}>Clock out</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-row" style="margin-bottom:28px;">
+      <div class="stat"><div class="k">Today</div><div class="v">${fmtHours(todayHours)}</div></div>
+      <div class="stat"><div class="k">This week</div><div class="v">${fmtHours(weekHours)}</div></div>
+      <div class="stat"><div class="k">Pay period ${pp.start.slice(5)}–${pp.end.slice(5)}</div><div class="v">${fmtHours(ppHours)}</div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <h2>Punch history</h2>
+        <span class="sub">${entries.length} entries</span>
+      </div>
+      ${state.requestError ? `<div class="error" style="text-align:left;margin-bottom:14px;">${escapeHtml(state.requestError)}</div>` : ''}
+      <div class="panel-box"><div class="pad">
+        <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;padding:12px 8px 16px;border-bottom:1px solid rgba(0,0,0,0.05);">
+          <div class="field" style="margin-bottom:0;">
+            <label for="reqAddIn">Missed a punch? Clock in</label>
+            <input type="datetime-local" id="reqAddIn" style="padding:9px 10px;font-size:13px;" />
+          </div>
+          <div class="field" style="margin-bottom:0;">
+            <label for="reqAddOut">Clock out (optional)</label>
+            <input type="datetime-local" id="reqAddOut" style="padding:9px 10px;font-size:13px;" />
+          </div>
+          <button class="btn" id="reqAddBtn" style="width:auto;padding:11px 18px;">Request add</button>
+        </div>
+        <table>
+          <thead><tr><th>Date</th><th>Clock in → out</th><th>Total</th><th></th></tr></thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+        <p style="font-size:12px;color:var(--text-lo,#8a8371);padding:12px 8px 0;">Edits and additions need admin approval before they show up here.</p>
+      </div></div>
+    </div>
+
+    ${recentRequests.length ? `
+    <div class="section">
+      <div class="section-head"><h2>Your recent requests</h2></div>
+      <div class="panel-box"><div class="pad">
+        <table><thead><tr><th>Type</th><th>Time</th><th>Status</th></tr></thead>
+        <tbody>${requestsRows}</tbody></table>
+      </div></div>
+    </div>` : ''}
+  `;
+
+  bindUserTabs();
+  const clockInBtn = document.getElementById('clockInBtn');
+  const clockOutBtn = document.getElementById('clockOutBtn');
+  clockInBtn.onclick = () => runClockAction(username, 'in', clockInBtn, clockOutBtn);
+  clockOutBtn.onclick = () => runClockAction(username, 'out', clockInBtn, clockOutBtn);
+
+  document.querySelectorAll('[data-req-edit]').forEach(btn => {
+    btn.onclick = () => { state.editingUserPunchIdx = Number(btn.dataset.reqEdit); state.requestError = ''; renderUser(); };
+  });
+  document.querySelectorAll('[data-cancel-req-edit]').forEach(btn => {
+    btn.onclick = () => { state.editingUserPunchIdx = null; state.requestError = ''; renderUser(); };
+  });
+  document.querySelectorAll('[data-submit-req-edit]').forEach(btn => {
+    btn.onclick = () => submitEditRequest(username, entries, Number(btn.dataset.submitReqEdit));
+  });
+  document.querySelectorAll('[data-req-delete]').forEach(btn => {
+    btn.onclick = () => submitDeleteRequest(username, entries, Number(btn.dataset.reqDelete));
+  });
+  const reqAddBtn = document.getElementById('reqAddBtn');
+  if (reqAddBtn) reqAddBtn.onclick = () => submitAddRequest(username);
+
+  if (state.clockTick) clearInterval(state.clockTick);
+  const tickEl = () => {
+    const el = document.getElementById('liveClock');
+    if (!el) return;
+    const now = new Date();
+    el.innerHTML = `${pad(now.getHours())}:${pad(now.getMinutes())}<span class="secs">:${pad(now.getSeconds())}</span>`;
+  };
+  tickEl();
+  state.clockTick = setInterval(tickEl, 1000);
+}
+
+async function submitEditRequest(username, entries, idx){
+  const inVal = document.getElementById('reqEditIn_' + idx).value;
+  const outVal = document.getElementById('reqEditOut_' + idx).value;
+  if (!inVal){
+    state.requestError = 'Clock-in time is required.';
+    renderUser();
+    return;
+  }
+  const proposedClockIn = fromInputValue(inVal);
+  const proposedClockOut = outVal ? fromInputValue(outVal) : null;
+  if (proposedClockOut && new Date(proposedClockOut) <= new Date(proposedClockIn)){
+    state.requestError = 'Clock-out must be after clock-in.';
+    renderUser();
+    return;
+  }
+  const original = entries[idx];
+  const ok = await createEditRequest({
+    uid: username, type: 'edit', idx,
+    proposedClockIn, proposedClockOut,
+    originalClockIn: original.clockIn, originalClockOut: original.clockOut || null
+  });
+  state.editingUserPunchIdx = null;
+  state.requestError = ok ? '' : "Couldn't submit that request — try again.";
+  await renderUser();
+}
+
+async function submitDeleteRequest(username, entries, idx){
+  if (!confirm('Ask your admin to delete this punch?')) return;
+  const original = entries[idx];
+  const ok = await createEditRequest({
+    uid: username, type: 'delete', idx,
+    originalClockIn: original.clockIn, originalClockOut: original.clockOut || null
+  });
+  state.requestError = ok ? '' : "Couldn't submit that request — try again.";
+  await renderUser();
+}
+
+async function submitAddRequest(username){
+  const inVal = document.getElementById('reqAddIn').value;
+  const outVal = document.getElementById('reqAddOut').value;
+  if (!inVal){
+    state.requestError = 'Pick a clock-in date/time first.';
+    renderUser();
+    return;
+  }
+  const proposedClockIn = fromInputValue(inVal);
+  const proposedClockOut = outVal ? fromInputValue(outVal) : null;
+  if (proposedClockOut && new Date(proposedClockOut) <= new Date(proposedClockIn)){
+    state.requestError = 'Clock-out must be after clock-in.';
+    renderUser();
+    return;
+  }
+  const ok = await createEditRequest({ uid: username, type: 'add', proposedClockIn, proposedClockOut });
+  state.requestError = ok ? '' : "Couldn't submit that request — try again.";
+  await renderUser();
+}
+
+/* Guards against the classic double-click / slow-network race: without
+   this, two rapid taps can both read "no open entry" before either
+   write lands, producing two open shifts that can never both be closed.
+   The buttons are disabled immediately (before the await) and the
+   in-flight flag blocks any programmatic double-call too. */
+let clockActionInFlight = false;
+
+async function runClockAction(username, action, clockInBtn, clockOutBtn){
+  if (clockActionInFlight) return;
+  clockActionInFlight = true;
+  if (clockInBtn) { clockInBtn.disabled = true; clockInBtn.style.opacity = '.4'; clockInBtn.style.cursor = 'not-allowed'; }
+  if (clockOutBtn) { clockOutBtn.disabled = true; clockOutBtn.style.opacity = '.4'; clockOutBtn.style.cursor = 'not-allowed'; }
+  try{
+    await clockAction(username, action);
+  } finally {
+    clockActionInFlight = false;
+    // renderUser() (called at the end of clockAction) already rebuilds
+    // the buttons with correct enabled/disabled state, but if it threw
+    // before reaching that point we still want to release the lock.
+  }
+}
+
+async function clockAction(username, action){
+  let entries = await loadEntries(username);
+  if (action === 'in'){
+    if (entries.some(e => !e.clockOut)) return;
+    entries.push({ clockIn: new Date().toISOString(), clockOut: null });
+  } else {
+    const idx = entries.map(e=>!e.clockOut).lastIndexOf(true);
+    if (idx === -1) return;
+    entries[idx].clockOut = new Date().toISOString();
+  }
+  await saveEntries(username, entries);
+  renderUser();
+}
+
+/* ---------- ADMIN VIEW ---------- */
+async function renderAdmin(){
+  setAdminMode(true);
+  // preload all employees' entries — needed for sidebar status dots and Reports
+  const allEntries = {};
+  for (const u of getRegularUsers()){
+    allEntries[u] = await loadEntries(u);
+  }
+  // Time Management can only ever point at an employee account (never an
+  // admin) — if the previously-selected user was removed or promoted,
+  // fall back to the first available employee.
+  if (!state.adminSelected || !ACCOUNTS[state.adminSelected] || ACCOUNTS[state.adminSelected].role !== 'user'){
+    state.adminSelected = getRegularUsers()[0] || null;
+  }
+
+  const editRequests = await listEditRequestsForCompany();
+  const pendingCount = editRequests.filter(r => r.status === 'pending').length;
+
+  renderAdminSidebar(allEntries, pendingCount);
+
+  switch (state.adminSection){
+    case 'schedule': {
+      if (!state.scheduleWeekStart) state.scheduleWeekStart = getWeekStart(fmtDate(new Date()));
+      const grid = await loadGrid();
+      drawScheduleScreen(grid);
+      break;
+    }
+    case 'reports':
+      drawReportsScreen(allEntries);
+      break;
+    case 'approvals':
+      drawApprovalsScreen(editRequests);
+      break;
+    case 'addUsers':
+      drawAddUsersScreen();
+      break;
+    case 'managePermissions':
+      drawManagePermissionsScreen();
+      break;
+    case 'removeUsers':
+      drawRemoveUsersScreen();
+      break;
+    case 'updateUsers':
+      drawUpdateUsersScreen();
+      break;
+    case 'timeManagement':
+    default:
+      drawTimeManagementScreen(allEntries);
+  }
+}
+
+/* Binds the logout button that every admin content screen's topbarHtml()
+   includes. Sidebar nav clicks are bound separately in renderAdminSidebar. */
+function bindTopbarChrome(){
+  const btn = document.getElementById('logoutBtn');
+  if (btn) btn.onclick = logout;
+}
+
+const MANAGE_USER_LINKS = [
+  { key: 'updateUsers', label: 'Update Users' },
+  { key: 'addUsers', label: 'Add Users' },
+  { key: 'managePermissions', label: 'Manage Permissions' },
+  { key: 'removeUsers', label: 'Remove user' }
+];
+
+function renderAdminSidebar(allEntries, pendingCount){
+  const el = document.getElementById('adminSidebar');
+  if (!el) return;
+  el.style.display = 'flex';
+
+  const manageLinksHtml = MANAGE_USER_LINKS.map(item => `
+    <button class="sidebar-link ${state.adminSection === item.key ? 'active' : ''}" data-section="${item.key}">${item.label}</button>
+  `).join('');
+
+  const employees = getRegularUsers();
+  const timeItemsHtml = employees.length
+    ? employees.map(u => {
+        const isOpen = (allEntries[u] || []).some(e => !e.clockOut);
+        const active = state.adminSection === 'timeManagement' && state.adminSelected === u;
+        return `
+          <button class="sidebar-link ${active ? 'active' : ''}" data-section="timeManagement" data-user="${escapeHtml(u)}">
+            <span class="dot ${isOpen ? 'in' : ''}"></span>${escapeHtml(ACCOUNTS[u].name)}
+          </button>
+        `;
+      }).join('')
+    : `<div class="sidebar-empty">No employees yet</div>`;
+
+  el.innerHTML = `
+    <div class="sidebar-brand"><span class="mark">${new Date().getHours()%12 || 12}:${pad(new Date().getMinutes())}</span> Punch</div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Manage User</div>
+      ${manageLinksHtml}
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Time Management</div>
+      ${timeItemsHtml}
+    </div>
+
+    <div class="sidebar-group">
+      <button class="sidebar-link top-level ${state.adminSection === 'approvals' ? 'active' : ''}" data-section="approvals">
+        Approvals${pendingCount ? ` <span class="tag open" style="margin-left:6px;">${pendingCount}</span>` : ''}
+      </button>
+      <button class="sidebar-link top-level ${state.adminSection === 'schedule' ? 'active' : ''}" data-section="schedule">Schedule</button>
+      <button class="sidebar-link top-level ${state.adminSection === 'reports' ? 'active' : ''}" data-section="reports">Reports</button>
+    </div>
+
+    <div class="sidebar-footer">
+      <button class="btn secondary small" id="sidebarLogoutBtn" style="width:100%;">Log out</button>
+    </div>
+  `;
+
+  el.querySelectorAll('[data-section]').forEach(btn => {
+    btn.onclick = () => {
+      state.adminSection = btn.dataset.section;
+      if (btn.dataset.user) state.adminSelected = btn.dataset.user;
+      state.editingPunchIdx = null;
+      renderAdmin();
+    };
+  });
+  document.getElementById('sidebarLogoutBtn').onclick = logout;
+}
+
+function adminCalGridHtml(grid, weekStart){
+  const dates = weekDates(weekStart);
+  const users = getRegularUsers();
+  const rows = SHIFTS.map(shift => {
+    const cells = dates.map((d, i) => {
+      const key = cellKey(weekStart, i, shift.key);
+      const assigned = grid[key] || [];
+      const chips = users.map(u => {
+        const isOn = assigned.includes(u);
+        const initials = initialsOf(ACCOUNTS[u].name);
+        return `<button class="cell-chip ${isOn ? 'active' : ''}" data-key="${escapeHtml(key)}" data-user="${escapeHtml(u)}" title="${escapeHtml(ACCOUNTS[u].name)}">${initials}</button>`;
+      }).join('');
+      return `<div class="cal-cell">${chips}</div>`;
+    }).join('');
+    return `
+      <div class="cal-shift-label">${shift.label}<span>${shift.time}</span></div>
+      ${cells}
+    `;
+  }).join('');
+  return `<div class="cal-wrap"><div class="cal-grid">${calHeaderRowHtml(dates)}${rows}</div></div>`;
+}
+
+function drawScheduleScreen(grid){
+  app.innerHTML = `
+    ${topbarHtml(state.currentUser, false)}
+
+    <div class="section">
+      <div class="section-head">
+        <h2>Weekly schedule</h2>
+        <span class="sub">Tap an employee's initials to assign or unassign a shift</span>
+      </div>
+      ${weekNavHtml()}
+      ${adminCalGridHtml(grid, state.scheduleWeekStart)}
+      ${scheduleLegendHtml()}
+    </div>
+  `;
+  bindTopbarChrome();
+  bindWeekNav(renderAdmin);
+  document.querySelectorAll('.cell-chip').forEach(btn => {
+    btn.onclick = () => toggleAssignment(btn.dataset.key, btn.dataset.user);
+  });
+}
+
+function scheduleLegendHtml(){
+  const users = getRegularUsers();
+  if (!users.length) return '';
+  const items = users.map(u => {
+    const initials = initialsOf(ACCOUNTS[u].name);
+    return `<span style="display:inline-flex;align-items:center;gap:6px;margin-right:16px;">
+      <span class="cell-chip" style="pointer-events:none;width:22px;height:22px;font-size:9px;">${initials}</span>
+      ${escapeHtml(ACCOUNTS[u].name)}
+    </span>`;
+  }).join('');
+  return `<div style="margin-top:14px;font-size:12px;color:var(--text-lo);display:flex;flex-wrap:wrap;align-items:center;">${items}</div>`;
+}
+
+async function toggleAssignment(key, username){
+  const grid = await loadGrid();
+  const arr = grid[key] ? grid[key].slice() : [];
+  const idx = arr.indexOf(username);
+  if (idx === -1) arr.push(username); else arr.splice(idx, 1);
+  if (arr.length) grid[key] = arr; else delete grid[key];
+  await saveGrid(grid);
+  renderAdmin();
+}
+
+/* ---------- ADMIN: REPORTS ---------- */
+function drawReportsScreen(allEntries){
+  const employees = getRegularUsers();
+  const today = fmtDate(new Date());
+  const thisWeekStart = getWeekStart(today);
+  const pp = getPayPeriod(today);
+
+  let totalWeekHours = 0;
+  const rows = employees.length ? employees.map(u => {
+    const dayMap = summarizeByDay(allEntries[u] || []);
+    const weekMap = summarizeByWeek(dayMap);
+    const ppMap = summarizeByPayPeriod(dayMap);
+    const todayHours = dayMap[today] ? dayMap[today].totalHours : 0;
+    const weekHours = weekMap[thisWeekStart] ? weekMap[thisWeekStart].totalHours : 0;
+    const ppHours = ppMap[pp.key] ? ppMap[pp.key].totalHours : 0;
+    const isOpen = (allEntries[u] || []).some(e => !e.clockOut);
+    totalWeekHours += weekHours;
+    return `
+      <tr>
+        <td style="font-family:'Inter',sans-serif;">${escapeHtml(ACCOUNTS[u].name)}${isOpen ? ' <span class="tag open">clocked in</span>' : ''}</td>
+        <td>${fmtHours(todayHours)}</td>
+        <td>${fmtHours(weekHours)}</td>
+        <td>${fmtHours(ppHours)}</td>
+      </tr>
+    `;
+  }).join('') : `<tr class="empty-row"><td colspan="4">No employees yet.</td></tr>`;
+
+  app.innerHTML = `
+    ${topbarHtml(state.currentUser, false)}
+
+    <div class="stat-row" style="margin-bottom:28px;">
+      <div class="stat"><div class="k">Employees</div><div class="v">${employees.length}</div></div>
+      <div class="stat"><div class="k">Team hours this week</div><div class="v">${fmtHours(totalWeekHours)}</div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <h2>Hours by employee</h2>
+        <span class="sub">Pay period ${pp.start.slice(5)}–${pp.end.slice(5)}</span>
+      </div>
+      <div class="panel-box"><div class="pad">
+        <table>
+          <thead><tr><th>Employee</th><th>Today</th><th>This week</th><th>Pay period</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div></div>
+    </div>
+  `;
+  bindTopbarChrome();
+}
+
+/* ---------- ADMIN: MANAGE USER — split into four focused screens ---------- */
+function drawAddUsersScreen(){
+  app.innerHTML = `
+    ${topbarHtml(state.currentUser, false)}
+
+    <div class="section">
+      <div class="section-head"><h2>Add a new account</h2></div>
+      <div class="panel-box"><div class="pad" style="padding:18px;">
+        <div class="sched-form cols-5">
+          <div class="field"><label for="newEmail">Email</label><input type="email" id="newEmail" placeholder="e.g. jane@company.com" /></div>
+          <div class="field"><label for="newName">Display name</label><input type="text" id="newName" placeholder="e.g. Jane Smith" /></div>
+          <div class="field"><label for="newPassword">Temporary password</label><input type="text" id="newPassword" placeholder="they can change it after" autocomplete="new-password" /></div>
+          <div class="field">
+            <label for="newRole">Role</label>
+            <select id="newRole">
+              <option value="user">Employee</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <button class="btn" id="addUserBtn">Add account</button>
+        </div>
+        ${state.accountsError ? `<div class="error" style="text-align:left;margin-top:14px;">${escapeHtml(state.accountsError)}</div>` : ''}
+      </div></div>
+    </div>
+  `;
+  bindTopbarChrome();
+  document.getElementById('addUserBtn').onclick = addUserAccount;
+}
+
+function drawUpdateUsersScreen(){
+  const rows = Object.keys(ACCOUNTS).map(u => {
+    const acc = ACCOUNTS[u];
+    return `
+      <tr>
+        <td style="font-family:'IBM Plex Mono',monospace;">${escapeHtml(acc.email)}</td>
+        <td style="font-family:'Inter',sans-serif;">${escapeHtml(acc.name)}</td>
+        <td><span class="role-badge ${acc.role}">${escapeHtml(acc.role)}</span></td>
+        <td><button class="icon-btn" data-sendreset="${escapeHtml(u)}">Send reset email</button></td>
+      </tr>
+    `;
+  }).join('');
+
+  app.innerHTML = `
+    ${topbarHtml(state.currentUser, false)}
+
+    <div class="section">
+      <div class="section-head"><h2>Update users</h2><span class="sub">${Object.keys(ACCOUNTS).length} accounts</span></div>
+      <div style="font-size:12px;color:var(--text-lo);margin-bottom:14px;">
+        Passwords can't be set directly by an admin — send the person a reset link instead, and they'll pick their own new password.
+      </div>
+      ${state.accountsError ? `<div class="error" style="text-align:left;margin-bottom:14px;">${escapeHtml(state.accountsError)}</div>` : ''}
+      <div class="panel-box"><div class="pad">
+        <table>
+          <thead><tr><th>Email</th><th>Name</th><th>Role</th><th></th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div></div>
+    </div>
+  `;
+  bindTopbarChrome();
+  document.querySelectorAll('[data-sendreset]').forEach(btn => {
+    btn.onclick = () => sendResetForUser(btn.dataset.sendreset);
+  });
+}
+
+function drawManagePermissionsScreen(){
+  const rows = Object.keys(ACCOUNTS).map(u => {
+    const acc = ACCOUNTS[u];
+    return `
+      <tr>
+        <td style="font-family:'IBM Plex Mono',monospace;">${escapeHtml(acc.email)}</td>
+        <td style="font-family:'Inter',sans-serif;">${escapeHtml(acc.name)}</td>
+        <td><span class="role-badge ${acc.role}">${escapeHtml(acc.role)}</span></td>
+        <td>
+          <select class="role-select" data-user="${escapeHtml(u)}" style="padding:7px 9px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);background:rgba(255,255,255,0.8);color:var(--text-hi);font-family:'Inter',sans-serif;font-size:12px;">
+            <option value="user" ${acc.role === 'user' ? 'selected' : ''}>Employee</option>
+            <option value="admin" ${acc.role === 'admin' ? 'selected' : ''}>Admin</option>
+          </select>
+        </td>
+        <td><button class="icon-btn" data-saverole="${escapeHtml(u)}">Save</button></td>
+      </tr>
+    `;
+  }).join('');
+
+  app.innerHTML = `
+    ${topbarHtml(state.currentUser, false)}
+
+    <div class="section">
+      <div class="section-head"><h2>Manage permissions</h2><span class="sub">${Object.keys(ACCOUNTS).length} accounts</span></div>
+      ${state.accountsError ? `<div class="error" style="text-align:left;margin-bottom:14px;">${escapeHtml(state.accountsError)}</div>` : ''}
+      <div class="panel-box"><div class="pad">
+        <table>
+          <thead><tr><th>Email</th><th>Name</th><th>Current role</th><th>Change to</th><th></th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div></div>
+    </div>
+  `;
+  bindTopbarChrome();
+  document.querySelectorAll('[data-saverole]').forEach(btn => {
+    btn.onclick = () => {
+      const sel = document.querySelector(`.role-select[data-user="${btn.dataset.saverole}"]`);
+      if (sel) updateUserRole(btn.dataset.saverole, sel.value);
+    };
+  });
+}
+
+function drawRemoveUsersScreen(){
+  const employees = getRegularUsers();
+  const rows = employees.length ? employees.map(u => {
+    const acc = ACCOUNTS[u];
+    return `
+      <tr>
+        <td style="font-family:'IBM Plex Mono',monospace;">${escapeHtml(acc.email)}</td>
+        <td style="font-family:'Inter',sans-serif;">${escapeHtml(acc.name)}</td>
+        <td><button class="icon-btn" data-removeuser="${escapeHtml(u)}">Remove</button></td>
+      </tr>
+    `;
+  }).join('') : `<tr class="empty-row"><td colspan="3">No employee accounts to remove.</td></tr>`;
+
+  app.innerHTML = `
+    ${topbarHtml(state.currentUser, false)}
+
+    <div class="section">
+      <div class="section-head"><h2>Remove user</h2><span class="sub">Admin accounts can't be removed here</span></div>
+      <div class="panel-box"><div class="pad">
+        <table>
+          <thead><tr><th>Email</th><th>Name</th><th></th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div></div>
+    </div>
+  `;
+  bindTopbarChrome();
+  document.querySelectorAll('[data-removeuser]').forEach(btn => {
+    btn.onclick = () => removeUserAccount(btn.dataset.removeuser);
+  });
+}
+
+async function addUserAccount(){
+  const email = document.getElementById('newEmail').value.trim().toLowerCase();
+  const name = document.getElementById('newName').value.trim();
+  const pw = document.getElementById('newPassword').value;
+  const role = document.getElementById('newRole').value;
+
+  if (!email || !name || !pw){
+    state.accountsError = 'Fill in email, name, and a temporary password.';
+    renderAdmin();
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    state.accountsError = 'Enter a valid email address.';
+    renderAdmin();
+    return;
+  }
+  if (pw.length < 6){
+    state.accountsError = 'Password must be at least 6 characters.';
+    renderAdmin();
+    return;
+  }
+  if (Object.values(ACCOUNTS).some(a => a.email === email)){
+    state.accountsError = 'That email is already registered here.';
+    renderAdmin();
+    return;
+  }
+  state.accountsError = '';
+  try{
+    await window.FB.createAccount({ email, password: pw, name, role, companyId: COMPANY_ID });
+    await loadCompanyRoster();
+  }catch(e){
+    console.error('create account failed', e);
+    state.accountsError = e && e.message && e.message.includes('email-already-in-use')
+      ? 'That email is already used by another account on this project.'
+      : "Couldn't create the account — check the details and try again.";
+  }
+  renderAdmin();
+}
+
+async function sendResetForUser(uid){
+  const acc = ACCOUNTS[uid];
+  if (!acc) return;
+  try{
+    await window.FB.sendReset(acc.email);
+    state.accountsError = '';
+    showStorageWarning(`Reset link sent to ${acc.email}.`);
+  }catch(e){
+    console.error('send reset failed', e);
+    state.accountsError = "Couldn't send the reset email — try again in a moment.";
+    renderAdmin();
+  }
+}
+
+/* New accounts always start as an employee (never admin) unless the
+   creator explicitly picks Admin in Add Users — role changes after
+   creation only happen here, via Manage Permissions. */
+async function updateUserRole(uid, newRole){
+  const acc = ACCOUNTS[uid];
+  if (!acc || acc.role === newRole) return;
+  if (acc.role === 'admin' && newRole === 'user'){
+    const adminCount = Object.values(ACCOUNTS).filter(a => a.role === 'admin').length;
+    if (adminCount <= 1){
+      state.accountsError = 'At least one admin account must remain — promote someone else first.';
+      renderAdmin();
+      return;
+    }
+  }
+  state.accountsError = '';
+  try{
+    await window.FB.setAccountRole(uid, newRole);
+    await loadCompanyRoster();
+  }catch(e){
+    console.error('update role failed', e);
+    state.accountsError = "Couldn't update the role — try again.";
+  }
+  renderAdmin();
+}
+
+async function removeUserAccount(uid){
+  if (!ACCOUNTS[uid] || ACCOUNTS[uid].role !== 'user') return;
+  const displayName = ACCOUNTS[uid].name;
+  const displayEmail = ACCOUNTS[uid].email;
+  const confirmed = window.confirm(
+    `Remove ${displayName} (${displayEmail})? This revokes their access immediately. Their punch history is kept but becomes unreachable unless they're re-added. This can't be undone from here.`
+  );
+  if (!confirmed) return;
+
+  try{
+    await window.FB.removeAccount(uid);
+    if (state.adminSelected === uid) state.adminSelected = null;
+    await loadCompanyRoster();
+  }catch(e){
+    console.error('remove account failed', e);
+    state.accountsError = "Couldn't remove the account — try again.";
+  }
+  renderAdmin();
+}
+
+/* ---------- ADMIN: TIME MANAGEMENT ---------- */
+function drawTimeManagementScreen(allEntries){
+  const employees = getRegularUsers();
+  if (!employees.length){
+    app.innerHTML = `
+      ${topbarHtml(state.currentUser, false)}
+      <div class="section"><div class="panel-box"><div class="pad" style="padding:32px;text-align:center;color:var(--text-lo);">
+        No employee accounts yet. Add one from <b>Manage User → Add Users</b>.
+      </div></div></div>
+    `;
+    bindTopbarChrome();
+    return;
+  }
+
+  const sel = state.adminSelected;
+  const entries = allEntries[sel];
+  const dayMap = summarizeByDay(entries);
+  const weekMap = summarizeByWeek(dayMap);
+  const ppMap = summarizeByPayPeriod(dayMap);
+
+  const sortedDays = Object.keys(dayMap).sort().reverse();
+  const dayRows = sortedDays.length ? sortedDays.map(d => {
+    const day = dayMap[d];
+    const punches = day.entries.slice().sort((a,b)=> new Date(a.clockIn)-new Date(b.clockIn));
+    const punchRows = punches.map(p => {
+      // idx is this punch's position in the employee's FULL entries array
+      // (not just this day's subset) — that's the array saveEntries() expects.
+      const idx = entries.indexOf(p);
+      const isEditing = state.editingPunchIdx === idx;
+      const spansDay = p.clockOut && !isSameDate(p.clockIn, p.clockOut);
+      if (isEditing){
+        return `
+          <tr>
+            <td>${fmtDateLabel(d)}</td>
+            <td colspan="2" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+              <input type="datetime-local" id="editIn_${idx}" value="${toInputValue(p.clockIn)}" style="padding:7px 9px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);background:rgba(255,255,255,0.85);color:var(--text-hi);font-family:'IBM Plex Mono',monospace;font-size:12px;" />
+              <span>→</span>
+              <input type="datetime-local" id="editOut_${idx}" value="${p.clockOut ? toInputValue(p.clockOut) : ''}" style="padding:7px 9px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);background:rgba(255,255,255,0.85);color:var(--text-hi);font-family:'IBM Plex Mono',monospace;font-size:12px;" />
+            </td>
+            <td>
+              <button class="icon-btn" data-save-punch="${idx}">Save</button>
+              <button class="icon-btn" data-cancel-punch="${idx}">Cancel</button>
+            </td>
+          </tr>
+        `;
+      }
+      return `
+        <tr>
+          <td>${fmtDateLabel(d)}</td>
+          <td>${fmtTime(p.clockIn)} → ${p.clockOut ? fmtTime(p.clockOut) : '—'}${spansDay ? ' <span class="tag open" style="margin-left:4px;">+1d</span>' : ''}</td>
+          <td>${p.clockOut ? fmtHours(hoursBetween(p.clockIn, p.clockOut)) : '<span class="tag open">in progress</span>'}</td>
+          <td>
+            <button class="icon-btn" data-edit-punch="${idx}">Edit</button>
+            <button class="icon-btn" data-del-punch="${idx}">Delete</button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+    return punchRows;
+  }).join('') : `<tr class="empty-row"><td colspan="4">No punches recorded for this employee.</td></tr>`;
+
+  const sortedWeeks = Object.keys(weekMap).sort().reverse();
+  const weekRows = sortedWeeks.length ? sortedWeeks.map(ws => {
+    const w = weekMap[ws];
+    return `<tr><td>${fmtDateLabel(w.start)} – ${fmtDateLabel(w.end)}</td><td>${fmtHours(w.totalHours)}</td></tr>`;
+  }).join('') : `<tr class="empty-row"><td colspan="2">No data yet.</td></tr>`;
+
+  const sortedPP = Object.keys(ppMap).sort().reverse();
+  const ppRows = sortedPP.length ? sortedPP.map(k => {
+    const p = ppMap[k];
+    return `<tr><td>${fmtDateLabel(p.start)} – ${fmtDateLabel(p.end)}</td><td>${fmtHours(p.totalHours)}</td></tr>`;
+  }).join('') : `<tr class="empty-row"><td colspan="2">No data yet.</td></tr>`;
+
+  const today = fmtDate(new Date());
+  const todayHours = dayMap[today] ? dayMap[today].totalHours : 0;
+  const isOpen = entries.some(e => !e.clockOut);
+
+  app.innerHTML = `
+    ${topbarHtml(state.currentUser, false)}
+
+    <div class="stat-row" style="margin-bottom:28px;">
+      <div class="stat"><div class="k">${escapeHtml(ACCOUNTS[sel].name)} — today</div><div class="v">${fmtHours(todayHours)} <span>${isOpen ? '· clocked in' : ''}</span></div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>Daily log — ${escapeHtml(ACCOUNTS[sel].name)}</h2><span class="sub">${entries.length} punches</span></div>
+      ${state.accountsError ? `<div class="error" style="text-align:left;margin-bottom:14px;">${escapeHtml(state.accountsError)}</div>` : ''}
+      <div class="panel-box"><div class="pad">
+        <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;padding:12px 8px 16px;border-bottom:1px solid rgba(0,0,0,0.05);">
+          <div class="field" style="margin-bottom:0;">
+            <label for="addPunchIn">Add punch — clock in</label>
+            <input type="datetime-local" id="addPunchIn" style="padding:9px 10px;font-size:13px;" />
+          </div>
+          <div class="field" style="margin-bottom:0;">
+            <label for="addPunchOut">Clock out (optional)</label>
+            <input type="datetime-local" id="addPunchOut" style="padding:9px 10px;font-size:13px;" />
+          </div>
+          <button class="btn" id="addPunchBtn" style="width:auto;padding:11px 18px;">Add punch</button>
+        </div>
+        <table><thead><tr><th>Date</th><th>Clock in → out</th><th>Hours</th><th></th></tr></thead>
+        <tbody>${dayRows}</tbody></table>
+      </div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>Weekly totals</h2></div>
+      <div class="panel-box"><div class="pad">
+        <table><thead><tr><th>Week</th><th>Total hours</th></tr></thead>
+        <tbody>${weekRows}</tbody></table>
+      </div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>Pay periods</h2><span class="sub">1–15 &amp; 16–end of month</span></div>
+      <div class="panel-box"><div class="pad">
+        <table><thead><tr><th>Period</th><th>Total hours</th></tr></thead>
+        <tbody>${ppRows}</tbody></table>
+      </div></div>
+    </div>
+  `;
+  bindTopbarChrome();
+
+  document.querySelectorAll('[data-edit-punch]').forEach(btn => {
+    btn.onclick = () => { state.editingPunchIdx = Number(btn.dataset.editPunch); state.accountsError = ''; renderAdmin(); };
+  });
+  document.querySelectorAll('[data-cancel-punch]').forEach(btn => {
+    btn.onclick = () => { state.editingPunchIdx = null; state.accountsError = ''; renderAdmin(); };
+  });
+  document.querySelectorAll('[data-save-punch]').forEach(btn => {
+    btn.onclick = () => saveEditedPunch(sel, entries, Number(btn.dataset.savePunch));
+  });
+  document.querySelectorAll('[data-del-punch]').forEach(btn => {
+    btn.onclick = () => deletePunchEntry(sel, entries, Number(btn.dataset.delPunch));
+  });
+  const addBtn = document.getElementById('addPunchBtn');
+  if (addBtn) addBtn.onclick = () => addManualPunch(sel, entries);
+}
+
+/* Admin: edit/delete/add punches directly. `entries` here is the exact array
+   reference returned by loadEntries() for the selected employee this render,
+   so mutating it in place and passing it straight to saveEntries() keeps
+   everything in sync — after saving we re-run renderAdmin() to refresh from
+   Firestore, so any stale local state gets replaced with the source of truth. */
+async function saveEditedPunch(uid, entries, idx){
+  const inVal = document.getElementById('editIn_' + idx).value;
+  const outVal = document.getElementById('editOut_' + idx).value;
+  if (!inVal){
+    state.accountsError = 'Clock-in time is required.';
+    renderAdmin();
+    return;
+  }
+  const clockIn = fromInputValue(inVal);
+  const clockOut = outVal ? fromInputValue(outVal) : null;
+  if (clockOut && new Date(clockOut) <= new Date(clockIn)){
+    state.accountsError = 'Clock-out must be after clock-in.';
+    renderAdmin();
+    return;
+  }
+  entries[idx] = { clockIn, clockOut };
+  state.accountsError = '';
+  const ok = await saveEntries(uid, entries);
+  state.editingPunchIdx = null;
+  if (!ok) state.accountsError = "Couldn't save that change — try again.";
+  await renderAdmin();
+}
+
+async function deletePunchEntry(uid, entries, idx){
+  if (!confirm('Delete this punch? This cannot be undone.')) return;
+  entries.splice(idx, 1);
+  const ok = await saveEntries(uid, entries);
+  if (!ok) state.accountsError = "Couldn't delete that punch — try again.";
+  await renderAdmin();
+}
+
+async function addManualPunch(uid, entries){
+  const inVal = document.getElementById('addPunchIn').value;
+  const outVal = document.getElementById('addPunchOut').value;
+  if (!inVal){
+    state.accountsError = 'Pick a clock-in date/time first.';
+    renderAdmin();
+    return;
+  }
+  const clockIn = fromInputValue(inVal);
+  const clockOut = outVal ? fromInputValue(outVal) : null;
+  if (clockOut && new Date(clockOut) <= new Date(clockIn)){
+    state.accountsError = 'Clock-out must be after clock-in.';
+    renderAdmin();
+    return;
+  }
+  entries.push({ clockIn, clockOut });
+  state.accountsError = '';
+  const ok = await saveEntries(uid, entries);
+  if (!ok) state.accountsError = "Couldn't add that punch — try again.";
+  await renderAdmin();
+}
+
+/* ---------- Approvals (employee-submitted punch change requests) ---------- */
+function drawApprovalsScreen(requests){
+  const pending = requests.filter(r => r.status === 'pending');
+  const resolved = requests.filter(r => r.status !== 'pending').slice(0, 15);
+
+  function rangeLabel(r){
+    if (r.type === 'add'){
+      return `${fmtDateTime(r.proposedClockIn)} → ${r.proposedClockOut ? fmtDateTime(r.proposedClockOut) : '—'}`;
+    }
+    const from = `${fmtDateTime(r.originalClockIn)} → ${r.originalClockOut ? fmtDateTime(r.originalClockOut) : '—'}`;
+    if (r.type === 'delete') return from;
+    const to = `${fmtDateTime(r.proposedClockIn)} → ${r.proposedClockOut ? fmtDateTime(r.proposedClockOut) : '—'}`;
+    return `${from} <span style="color:var(--text-lo,#8a8371);">→</span> ${to}`;
+  }
+  function typeLabel(t){
+    return t === 'add' ? 'Add punch' : t === 'delete' ? 'Delete punch' : 'Edit punch';
+  }
+
+  const pendingRows = pending.length ? pending.map(r => `
+    <tr>
+      <td>${escapeHtml(ACCOUNTS[r.uid] ? ACCOUNTS[r.uid].name : r.uid)}</td>
+      <td>${typeLabel(r.type)}</td>
+      <td>${rangeLabel(r)}</td>
+      <td>${fmtDateTime(r.createdAt)}</td>
+      <td>
+        <button class="icon-btn" data-approve-req="${r.id}">Approve</button>
+        <button class="icon-btn" data-reject-req="${r.id}">Reject</button>
+      </td>
+    </tr>
+  `).join('') : `<tr class="empty-row"><td colspan="5">No pending requests.</td></tr>`;
+
+  const resolvedRows = resolved.length ? resolved.map(r => `
+    <tr>
+      <td>${escapeHtml(ACCOUNTS[r.uid] ? ACCOUNTS[r.uid].name : r.uid)}</td>
+      <td>${typeLabel(r.type)}</td>
+      <td>${rangeLabel(r)}</td>
+      <td>${r.status === 'approved' ? '<span class="tag" style="background:rgba(60,160,90,0.15);color:#2f7a45;">Approved</span>' : '<span class="tag" style="background:rgba(200,60,60,0.12);color:#b33;">Rejected</span>'}</td>
+    </tr>
+  `).join('') : `<tr class="empty-row"><td colspan="4">Nothing resolved yet.</td></tr>`;
+
+  app.innerHTML = `
+    ${topbarHtml(state.currentUser, false)}
+
+    <div class="section">
+      <div class="section-head"><h2>Pending approvals</h2><span class="sub">${pending.length} waiting</span></div>
+      ${state.accountsError ? `<div class="error" style="text-align:left;margin-bottom:14px;">${escapeHtml(state.accountsError)}</div>` : ''}
+      <div class="panel-box"><div class="pad">
+        <table><thead><tr><th>Employee</th><th>Type</th><th>Change</th><th>Requested</th><th></th></tr></thead>
+        <tbody>${pendingRows}</tbody></table>
+      </div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>Recently resolved</h2></div>
+      <div class="panel-box"><div class="pad">
+        <table><thead><tr><th>Employee</th><th>Type</th><th>Change</th><th>Result</th></tr></thead>
+        <tbody>${resolvedRows}</tbody></table>
+      </div></div>
+    </div>
+  `;
+  bindTopbarChrome();
+
+  document.querySelectorAll('[data-approve-req]').forEach(btn => {
+    btn.onclick = async () => {
+      const req = requests.find(r => r.id === btn.dataset.approveReq);
+      if (!req) return;
+      state.accountsError = '';
+      await approveEditRequest(req);
+      await renderAdmin();
+    };
+  });
+  document.querySelectorAll('[data-reject-req]').forEach(btn => {
+    btn.onclick = async () => {
+      if (!confirm('Reject this request? The employee will need to resubmit if this was a mistake.')) return;
+      state.accountsError = '';
+      await rejectEditRequest(btn.dataset.rejectReq);
+      await renderAdmin();
+    };
+  });
+}
+
+/* ===================== Boot ===================== */
+// Auth persistence is session-only (see firebase-backend.js), but within
+// an already-open session a page refresh should still restore who was
+// logged in, rather than bouncing back to the login screen. This
+// listener is only used for that one-time initial check — doLogin() and
+// logout() manage state directly for everything after that.
+let bootHandled = false;
+async function handleInitialAuthState(user){
+  if (bootHandled) return;
+  bootHandled = true;
+  if (user){
+    try{
+      const profile = await window.FB.getProfile(user.uid);
+      if (profile && profile.companyId === COMPANY_ID && (profile.role === 'admin' || profile.role === 'user')){
+        await loadCompanyRoster();
+        state.currentUser = user.uid;
+      } else {
+        await window.FB.logout();
+      }
+    }catch(e){
+      console.error('initial session check failed', e);
+    }
+  }
+  render();
+}
+async function boot(){
+  await waitForFB();
+  window.FB.onAuthChange(handleInitialAuthState);
+}
+boot();
+
+if ('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(e => console.error('SW registration failed', e));
+  });
+}
+</script>
+</body>
+</html>

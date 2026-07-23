@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Care & Pricing Guide | Neighbor Care Homes</title>
+<meta name="description" content="Straightforward, transparent pricing for Adult Family Home care in Vancouver, WA. Understand our levels of care, what's included, and how to explore Medicaid options.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --forest:#1E3A2F;
+  --forest-mid:#2C5440;
+  --moss:#4A7C59;
+  --mint:#C8E6C9;
+  --mint-pale:#EDF7EE;
+  --gold:#D4A853;
+  --gold-pale:#FBF4E6;
+  --blush:#F2ECE4;
+  --ink:#111B14;
+  --body:#374840;
+  --sub:#5E7368;
+  --border:#D6E4D9;
+  --white:#FFFFFF;
+  --fd:'Playfair Display',Georgia,serif;
+  --fb:'Inter',system-ui,sans-serif;
+  --r:16px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--white);color:var(--body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+
+/* ── FLOATING NAV (matches site) ── */
+nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:300;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.8);border-radius:100px;padding:0 10px 0 20px;display:flex;align-items:center;gap:8px;height:58px;box-shadow:0 8px 32px rgba(30,58,47,.12);width:calc(100% - 48px);max-width:960px}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:auto}
+.nl-icon{width:32px;height:32px;background:var(--forest);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.nl-name{font-family:var(--fd);font-size:1rem;font-weight:700;color:var(--forest);white-space:nowrap}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
+.nav-links a{text-decoration:none;font-size:.82rem;font-weight:500;color:var(--body);padding:7px 14px;border-radius:100px;transition:background .2s,color .2s}
+.nav-links a:hover{background:var(--mint-pale);color:var(--forest)}
+.nav-links a.current{background:var(--mint-pale);color:var(--forest);font-weight:700}
+.nav-cta{background:var(--forest)!important;color:var(--white)!important;padding:9px 20px!important;border-radius:100px!important;font-weight:600!important;font-size:.82rem!important;white-space:nowrap;transition:background .2s!important}
+.nav-cta:hover{background:var(--forest-mid)!important}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;background:var(--forest);border:none;padding:10px 12px;border-radius:100px;margin-left:4px}
+.hamburger span{display:block;width:18px;height:1.5px;background:#fff;border-radius:2px}
+.mob-overlay{display:none;position:fixed;inset:0;background:rgba(17,27,20,.55);z-index:280;backdrop-filter:blur(4px)}
+.mob-overlay.open{display:block}
+.mob-drawer{position:fixed;top:0;right:-100%;width:80%;max-width:320px;height:100vh;background:var(--white);z-index:290;padding:80px 32px 40px;display:flex;flex-direction:column;gap:4px;transition:right .35s cubic-bezier(.4,0,.2,1);box-shadow:-8px 0 40px rgba(0,0,0,.12)}
+.mob-drawer.open{right:0}
+.mob-drawer a{display:block;padding:14px 0;font-size:1rem;font-weight:500;color:var(--body);text-decoration:none;border-bottom:1px solid var(--border);transition:color .2s}
+.mob-drawer a:hover{color:var(--forest)}
+.mob-cta{margin-top:24px;background:var(--forest);color:var(--white)!important;text-align:center;border-radius:10px;padding:16px!important;border:none!important;font-weight:700!important;font-size:1rem!important}
+.mob-ph{color:var(--gold)!important;border:none!important;font-weight:600!important;font-size:1.1rem!important}
+.mob-close{position:absolute;top:20px;right:20px;background:none;border:1.5px solid var(--border);border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:1.1rem;color:var(--body);display:flex;align-items:center;justify-content:center}
+
+/* ── PAGE HEADER ── */
+.pg-head{background:var(--forest);position:relative;overflow:hidden;padding:168px 24px 88px}
+.pg-head::before{content:'';position:absolute;top:-180px;right:-180px;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(212,168,83,.14) 0%,transparent 70%);pointer-events:none}
+.pg-head::after{content:'';position:absolute;bottom:-160px;left:-160px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(200,230,201,.08) 0%,transparent 70%);pointer-events:none}
+.pg-head-inner{max-width:760px;margin:0 auto;text-align:center;position:relative;z-index:1}
+.ew{font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--moss);margin-bottom:10px}
+.ew-wh{color:var(--mint)}
+.h2{font-family:var(--fd);font-size:clamp(2rem,4vw,2.9rem);font-weight:700;line-height:1.15;color:var(--ink);margin-bottom:18px}
+.h2-wh{color:#fff}
+.h2 i{font-style:italic;color:var(--moss)}
+.h2-wh i{color:var(--mint)}
+.lead{font-size:1rem;color:var(--sub);line-height:1.82}
+.lead-wh{color:rgba(255,255,255,.72)}
+.pg-head .ew-wh{justify-content:center}
+.pg-head-inner .ew{display:flex;align-items:center;justify-content:center;gap:8px}
+
+/* ── SECTION BASE ── */
+.sec{padding:88px 24px}
+.wrap{max-width:1040px;margin:0 auto}
+.wrap-n{max-width:880px;margin:0 auto}
+
+/* ── PROMISE STRIP ── */
+.promise{background:var(--gold-pale);border-top:3px solid var(--gold);border-bottom:3px solid var(--gold);padding:40px 24px}
+.promise-inner{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+.promise-item .pi{font-size:26px;margin-bottom:10px}
+.promise-item strong{display:block;font-size:.92rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+.promise-item p{font-size:.8rem;color:var(--sub);line-height:1.55}
+
+/* ── INTRO / PHOTO ── */
+.intro-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.intro-grid img{width:100%;height:380px;object-fit:cover;border-radius:20px;box-shadow:0 24px 64px rgba(30,58,47,.18);display:block}
+.intro-grid p+p{margin-top:14px}
+
+/* ── PRICING TABLE ── */
+.price-bg{background:var(--blush)}
+.admit-card{margin-top:28px;background:var(--forest);border-radius:20px;padding:36px 40px;color:#fff;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center}
+.admit-fee{text-align:center;flex-shrink:0}
+.admit-fee .af-n{font-family:var(--fd);font-size:2.4rem;font-weight:700;color:var(--mint)}
+.admit-fee .af-l{font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-top:4px}
+.admit-text p{color:rgba(255,255,255,.72);font-size:.9rem;line-height:1.75;margin-bottom:14px}
+.chip-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px}
+.chip-grid li{list-style:none;font-size:.82rem;color:rgba(255,255,255,.82);display:flex;gap:8px;align-items:flex-start;padding:5px 0}
+.chip-grid li::before{content:'✓';color:var(--mint);font-weight:700;flex-shrink:0}
+@media(max-width:700px){.admit-card{grid-template-columns:1fr;text-align:center}.chip-grid{grid-template-columns:1fr;text-align:left}}
+
+/* ── INCLUDED LIST ── */
+.inc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}
+.inc-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px}
+.inc-card .ic-icon{width:40px;height:40px;background:var(--forest);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:14px}
+.inc-card strong{display:block;font-size:.92rem;font-weight:700;color:var(--ink);margin-bottom:8px}
+.inc-card ul{margin:0;padding-left:18px}
+.inc-card li{font-size:.82rem;color:var(--sub);line-height:1.7}
+@media(max-width:820px){.inc-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.inc-grid{grid-template-columns:1fr}}
+
+/* ── FACTORS LIST ── */
+.factors-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 32px;margin-top:32px}
+.factors-grid li{list-style:none;font-size:.9rem;color:var(--body);display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--border)}
+.factors-grid li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--moss);flex-shrink:0;margin-top:8px}
+@media(max-width:700px){.factors-grid{grid-template-columns:1fr}}
+
+/* ── LEVELS ACCORDION (reuses faq pattern) ── */
+.faq-bg{background:var(--blush)}
+.faq-grid{display:flex;flex-direction:column;gap:14px;margin-top:44px}
+.faq-item{background:#fff;border-radius:16px;border:1.5px solid var(--border);overflow:hidden;transition:border-color .2s}
+.faq-item.open{border-color:var(--moss)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:22px 24px;cursor:pointer;user-select:none;flex-wrap:wrap}
+.faq-q-text{flex:1;min-width:200px}
+.faq-q-text strong{display:block;font-family:var(--fd);font-size:1.08rem;font-weight:700;color:var(--ink)}
+.faq-q-text span{font-size:.8rem;color:var(--sub)}
+.faq-rate{flex-shrink:0;background:var(--mint-pale);color:var(--forest);font-weight:700;font-size:.82rem;padding:7px 16px;border-radius:100px;white-space:nowrap}
+.faq-q .faq-icon{width:30px;height:30px;border-radius:50%;background:var(--mint-pale);color:var(--forest);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;transition:transform .3s,background .2s}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:var(--forest);color:#fff}
+.faq-a{display:none;padding:0 24px 24px}
+.faq-item.open .faq-a{display:block}
+.faq-a p{font-size:.88rem;color:var(--sub);line-height:1.7;margin-bottom:12px}
+.faq-a ul{padding-left:18px}
+.faq-a li{font-size:.86rem;color:var(--sub);line-height:1.8}
+
+/* ── COMMITMENT ── */
+.commit-bg{background:var(--forest);position:relative;overflow:hidden}
+.commit-bg::before{content:'';position:absolute;top:-160px;right:-140px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(212,168,83,.1) 0%,transparent 70%);pointer-events:none}
+.commit-bg p{color:rgba(255,255,255,.75);font-size:.95rem;line-height:1.85;margin-bottom:16px;position:relative;z-index:1}
+.commit-bg p:last-child{margin-bottom:0}
+
+/* ── MEDICAID / RESOURCES ── */
+.resource-note{background:var(--gold-pale);border:1px solid var(--gold);border-radius:18px;padding:32px 36px;margin-top:12px}
+.resource-note p{font-size:.92rem;color:var(--body);line-height:1.8;margin-bottom:14px}
+.resource-note p:last-child{margin-bottom:0}
+.res-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:32px}
+.res-card{display:flex;align-items:flex-start;gap:16px;background:#fff;border:1px solid var(--border);border-radius:16px;padding:20px 22px;text-decoration:none;transition:all .25s cubic-bezier(.4,0,.2,1)}
+.res-card:hover{border-color:var(--moss);transform:translateY(-3px);box-shadow:0 16px 36px rgba(30,58,47,.12)}
+.res-ic{width:42px;height:42px;flex-shrink:0;background:var(--forest);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px}
+.res-text strong{display:block;font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:3px}
+.res-text span{font-size:.78rem;color:var(--sub);line-height:1.5;display:block}
+.res-text .res-contact{margin-top:6px;font-size:.78rem;font-weight:600;color:var(--forest)}
+@media(max-width:700px){.res-grid{grid-template-columns:1fr}}
+
+/* ── CTA ── */
+.cta-sec{background:var(--forest);padding:80px 24px;text-align:center;position:relative;overflow:hidden}
+.cta-sec::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:rgba(200,230,201,.04);top:-200px;left:-150px;pointer-events:none}
+.cta-sec::after{content:'';position:absolute;width:400px;height:400px;border-radius:50%;background:rgba(200,230,201,.04);bottom:-150px;right:-100px;pointer-events:none}
+.cta-sec h2{font-family:var(--fd);font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;color:#fff;margin-bottom:14px;line-height:1.15;position:relative;z-index:1}
+.cta-sec h2 i{font-style:italic;color:var(--mint)}
+.cta-sec p{color:rgba(255,255,255,.7);font-size:1rem;margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.75;position:relative;z-index:1}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+.btn-gold{background:var(--gold);color:var(--ink);padding:16px 36px;border-radius:50px;font-weight:700;font-size:.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .3s cubic-bezier(.4,0,.2,1);letter-spacing:.02em;box-shadow:0 8px 32px rgba(212,168,83,.35);border:2px solid rgba(255,255,255,.3)}
+.btn-gold:hover{background:#C49640;transform:translateY(-4px)}
+.btn-wh{background:rgba(255,255,255,.12);color:#fff;padding:15px 36px;border-radius:50px;border:2px solid rgba(255,255,255,.5);font-weight:700;font-size:.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .3s cubic-bezier(.4,0,.2,1)}
+.btn-wh:hover{border-color:#fff;background:rgba(255,255,255,.2);transform:translateY(-4px)}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);padding:28px 24px}
+.ft-inner{max-width:1040px;margin:0 auto}
+.ft-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.ft-logo{font-family:var(--fd);font-size:1rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
+.ft-copy{font-size:.78rem;color:rgba(255,255,255,.35)}
+.ft-credit{font-size:.78rem;color:rgba(255,255,255,.35)}
+.ft-credit a{color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
+.ft-credit a:hover{color:rgba(255,255,255,.8)}
+@media(max-width:600px){.ft-bottom{justify-content:center;text-align:center}}
+
+/* ── REVEAL ── */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  nav{top:10px;padding:0 8px 0 16px;height:54px;border-radius:14px;width:calc(100% - 24px)}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .pg-head{padding:132px 20px 64px}
+  .intro-grid{grid-template-columns:1fr;gap:32px}
+  .intro-grid img{height:260px;order:-1}
+  .promise-inner{grid-template-columns:1fr 1fr}
+  .inc-grid{grid-template-columns:1fr 1fr}
+  .admit-card{padding:28px 24px}
+}
+@media(max-width:540px){
+  .promise-inner{grid-template-columns:1fr 1fr}
+  .cta-btns{flex-direction:column;align-items:stretch}
+  .sec{padding:64px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- FLOATING NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="nl-icon">🕊️</div>
+    <span class="nl-name">Neighbor Care Homes</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#pricing">Levels &amp; Rates</a></li>
+    <li><a href="#included">What's Included</a></li>
+    <li><a href="#medicaid">Medicaid</a></li>
+    <li><a href="#more-resources">Resources</a></li>
+    <li><a href="#contact" class="nav-cta">Schedule Tour</a></li>
+  </ul>
+  <button class="hamburger" id="ham" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mob-overlay" id="ov" onclick="closeMob()"></div>
+<div class="mob-drawer" id="drawer">
+  <button class="mob-close" onclick="closeMob()">✕</button>
+  <a href="#pricing" onclick="closeMob()">Levels &amp; Rates</a>
+  <a href="#included" onclick="closeMob()">What's Included</a>
+  <a href="#how-we-assess" onclick="closeMob()">How Care Is Assessed</a>
+  <a href="#planning-ahead" onclick="closeMob()">Planning Ahead</a>
+  <a href="#medicaid" onclick="closeMob()">Medicaid &amp; Assistance</a>
+  <a href="#more-resources" onclick="closeMob()">More Resources</a>
+  <a href="tel:+18013696018" class="mob-ph">📞 (801) 369-6018</a>
+  <a href="#contact" class="mob-cta" onclick="closeMob()">Schedule a Free Tour</a>
+</div>
+
+<!-- PAGE HEADER -->
+<header class="pg-head">
+  <div class="pg-head-inner">
+    <div class="ew ew-wh"><span style="width:7px;height:7px;border-radius:50%;background:#6fcf97;display:inline-block"></span> Care &amp; Pricing Guide</div>
+    <h2 class="h2 h2-wh">Compassionate Care. <i>Straightforward Pricing.</i></h2>
+    <p class="lead lead-wh">Choosing an Adult Family Home is a significant decision, and understanding the cost of care shouldn't be complicated. Every family deserves clear pricing with no hidden fees or unexpected add-on costs.</p>
+  </div>
+</header>
+
+<!-- PROMISE STRIP -->
+<section class="promise">
+  <div class="promise-inner">
+    <div class="promise-item rv"><div class="pi">🩺</div><strong>RN Assessment First</strong><p>Every resident is assessed before admission to confirm the right level of care.</p></div>
+    <div class="promise-item rv"><div class="pi">💵</div><strong>No Hidden Fees</strong><p>One monthly rate covers care, meals, housekeeping, and more.</p></div>
+    <div class="promise-item rv"><div class="pi">⚖️</div><strong>Care-Based Pricing</strong><p>Rates reflect the support a resident needs — not age or diagnosis alone.</p></div>
+    <div class="promise-item rv"><div class="pi">🤝</div><strong>30 Days' Notice</strong><p>We discuss any rate change with your family well before it takes effect.</p></div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="sec">
+  <div class="wrap">
+    <div class="intro-grid">
+      <div class="rv">
+        <div class="ew">Our Approach</div>
+        <h2 class="h2">Understanding the <i>Cost of Care</i></h2>
+        <p class="lead">At Neighbor Care Homes, every prospective resident receives a comprehensive Registered Nurse assessment prior to admission. This required assessment helps us understand your loved one's unique needs, determine the appropriate level of care, and confirm our home is the right fit for your family.</p>
+        <p class="lead" style="margin-top:14px">Because every resident is different, monthly rates are based on the level of care, supervision, and caregiver support required — not simply a medical diagnosis or age. If you're unsure which level of care is appropriate, we're always happy to answer your questions and help you explore the best options for your loved one.</p>
+      </div>
+      <img class="rv" src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=900&q=85" alt="Caregiver sitting with a senior resident, reviewing care details together">
+    </div>
+  </div>
+</section>
+
+<!-- PRICING + LEVELS OF CARE (combined) -->
+<section class="sec price-bg" id="pricing">
+  <div class="wrap">
+    <div class="ew rv">Monthly Care Rates &amp; What Each Level Includes</div>
+    <h2 class="h2 rv">Our <i>Levels of Care</i></h2>
+    <p class="lead rv">Estimated monthly rate by level, with what's typically included. Your RN assessment will determine which level best fits your loved one's needs — tap a level for details.</p>
+
+    <div class="faq-grid rv">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text"><strong>Level 1 — Independent Living</strong><span>Largely independent, benefits from a supportive home environment</span></div>
+          <span class="faq-rate">Starting at $8,000/mo</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a"><p>Designed for residents who are largely independent but benefit from living in a supportive home environment.</p><ul><li>Meals and snacks</li><li>Housekeeping</li><li>Laundry</li><li>Activities</li><li>Minimal caregiver assistance</li></ul></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text"><strong>Level 2 — Assisted Independence</strong><span>Occasional assistance and wellness oversight</span></div>
+          <span class="faq-rate">$8,500 – $9,000/mo</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a"><p>Residents remain fairly independent but benefit from occasional assistance and oversight.</p><ul><li>Medication management</li><li>Health monitoring</li><li>Occasional assistance with bathing or dressing</li><li>Mobility assistance</li><li>Wellness supervision</li></ul></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text"><strong>Level 3 — Daily Personal Assistance</strong><span>Routine hands-on assistance throughout the day</span></div>
+          <span class="faq-rate">$9,000 – $10,000/mo</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a"><p>Residents require routine hands-on assistance throughout the day.</p><ul><li>Bathing and dressing assistance</li><li>Grooming and hygiene</li><li>Medication administration</li><li>Meal assistance</li><li>Incontinence care</li><li>Memory cueing</li><li>Increased supervision</li></ul></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text"><strong>Level 4 — Comprehensive Care</strong><span>Extensive physical, cognitive, or medical support</span></div>
+          <span class="faq-rate">$10,000 – $12,000/mo</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a"><p>Residents require extensive physical, cognitive, or medical support.</p><ul><li>Total assistance with activities of daily living</li><li>Hoyer lift assistance</li><li>Advanced dementia care</li><li>Behavioral support &amp; wandering prevention</li><li>Diabetes management</li><li>Catheter and ostomy care</li><li>Feeding tubes &amp; wound care</li><li>Nurse Delegation services</li><li>Complex medication management</li><li>Frequent nighttime assistance</li></ul></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text"><strong>Level 5 — Hospice &amp; Comfort Care</strong><span>Coordinated with a licensed hospice agency</span></div>
+          <span class="faq-rate">Individualized</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a"><p>Residents nearing the end of life may continue living in the comfort of our home while receiving hospice services. Hospice services are provided through a licensed hospice agency, while our caregivers continue providing personalized daily care, comfort, and support in partnership with the hospice team.</p><p>Our team works closely with hospice providers, physicians, and families to ensure care remains focused on comfort, dignity, and quality of life.</p></div>
+      </div>
+    </div>
+
+    <div class="admit-card rv">
+      <div class="admit-fee">
+        <div class="af-n">$1,500</div>
+        <div class="af-l">One-Time Admission Fee</div>
+      </div>
+      <div class="admit-text">
+        <p>This one-time fee covers the comprehensive preparation required for a safe, smooth, and personalized transition into our home.</p>
+        <ul class="chip-grid">
+          <li>RN assessment</li>
+          <li>Individualized care plan</li>
+          <li>Medication reconciliation</li>
+          <li>Physician coordination</li>
+          <li>Room preparation</li>
+          <li>Staff orientation</li>
+          <li>Nurse Delegation setup</li>
+          <li>Pharmacy coordination</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section class="sec" id="included">
+  <div class="wrap">
+    <div class="ew rv">No Surprise Add-Ons</div>
+    <h2 class="h2 rv">What's Included in <i>Your Monthly Rate</i></h2>
+    <p class="lead rv">Your monthly rate includes the comprehensive services and support needed for safe, personalized care.</p>
+
+    <div class="inc-grid">
+      <div class="inc-card rv"><div class="ic-icon">🩺</div><strong>Nursing &amp; Medication</strong><ul><li>RN oversight, initial &amp; annual reassessments</li><li>Medication administration &amp; oversight</li><li>Nurse Delegation for delegated tasks</li></ul></div>
+      <div class="inc-card rv"><div class="ic-icon">🏡</div><strong>Daily Living &amp; Care</strong><ul><li>24-hour personalized care &amp; supervision</li><li>Incontinence supplies</li><li>Routine haircuts &amp; non-diabetic nail care</li></ul></div>
+      <div class="inc-card rv"><div class="ic-icon">🍽️</div><strong>Meals &amp; Home Life</strong><ul><li>Three home-cooked meals, tailored to preference</li><li>Snacks &amp; beverages</li><li>Housekeeping &amp; laundry</li></ul></div>
+      <div class="inc-card rv"><div class="ic-icon">🎲</div><strong>Engagement</strong><ul><li>Activities &amp; social engagement</li><li>Furnished common living areas</li><li>Utilities &amp; Wi-Fi</li></ul></div>
+      <div class="inc-card rv"><div class="ic-icon">🤝</div><strong>Coordination of Care</strong><ul><li>Physicians, pharmacies, home health, hospice &amp; therapy</li><li>Assistance coordinating transportation</li></ul></div>
+      <div class="inc-card rv"><div class="ic-icon">❤️</div><strong>Family Communication</strong><ul><li>Ongoing updates on your loved one's care</li><li>A direct line to our team, always</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE DETERMINE LEVEL OF CARE -->
+<section class="sec price-bg" id="how-we-assess">
+  <div class="wrap">
+    <div class="ew rv">Our Nursing Assessment</div>
+    <h2 class="h2 rv">How We Determine a <i>Resident's Level of Care</i></h2>
+    <p class="lead rv">Every resident is unique. Our goal isn't simply to assign a price — it's to ensure each resident receives the level of care that allows them to live safely, comfortably, and with dignity. Our care levels reflect the overall level of care and supervision required, not any single diagnosis.</p>
+    <ul class="factors-grid rv">
+      <li>Assistance with bathing, dressing, grooming &amp; toileting</li>
+      <li>Mobility and transfer assistance</li>
+      <li>Medication administration &amp; management</li>
+      <li>Memory impairment or dementia</li>
+      <li>Wandering or exit-seeking behaviors</li>
+      <li>Fall risk</li>
+      <li>Diabetes management &amp; Nurse Delegation services</li>
+      <li>Catheter, ostomy, or feeding tube care</li>
+      <li>Incontinence care</li>
+      <li>Nighttime assistance or monitoring</li>
+      <li>Behavioral support and redirection</li>
+      <li>Overall caregiver time and supervision required</li>
+    </ul>
+  </div>
+</section>
+
+<!-- COMMITMENT -->
+<section class="sec commit-bg">
+  <div class="wrap-n" style="position:relative;z-index:1">
+    <div class="ew ew-wh rv">Our Commitment</div>
+    <h2 class="h2 h2-wh rv">Our Commitment to <i>Families</i></h2>
+    <div class="rv">
+      <p>We understand that a resident's care needs may change over time, and we also recognize that temporary illnesses, recovery from hospitalization, or other short-term setbacks do not always represent a permanent change in condition.</p>
+      <p>Before recommending a change in a resident's level of care or monthly rate, we carefully evaluate whether increased care needs represent a lasting change rather than a temporary illness or recovery period.</p>
+      <p>If a resident's care needs change over time, we will always discuss our assessment, our recommendations, and the reason for any proposed adjustment with the resident and family before changes to the monthly rate take effect. Whenever possible, we provide at least 30 days' notice, allowing families time to plan, ask questions, and prepare for the transition.</p>
+      <p>We are committed to providing exceptional care with honesty, transparency, and respect, so you can spend less time worrying about billing and more time focusing on your loved one.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PLANNING AHEAD -->
+<section class="sec" id="planning-ahead">
+  <div class="wrap-n">
+    <div class="ew rv">Planning Ahead</div>
+    <h2 class="h2 rv">What If Circumstances <i>Change?</i></h2>
+    <div class="rv">
+      <p style="color:var(--body);font-size:.95rem;line-height:1.85;margin-bottom:16px">Many families ask what happens if a resident's financial situation changes after moving into one of our homes.</p>
+      <p style="color:var(--body);font-size:.95rem;line-height:1.85;margin-bottom:16px">Neighbor Care Homes was intentionally designed to provide a higher level of support than is typically found in many residential care settings. Our care model includes Registered Nurse oversight, 24-hour awake caregivers, enhanced staffing, personalized care planning, and close coordination with healthcare providers. Maintaining this level of care requires a financial model that allows us to consistently invest in our residents, our caregivers, and the quality of services we provide.</p>
+    </div>
+
+    <div class="resource-note rv">
+      <p>At the same time, we understand that financial circumstances can change over the years. To help balance long-term sustainability with our desire to continue supporting residents who have made our home their home, <strong>each Neighbor Care Home may transition one resident to Medicaid after a minimum of three years of private-pay residency</strong>, provided Medicaid funding is available and the resident continues to be appropriate for our home.</p>
+    </div>
+
+    <p class="rv" style="color:var(--body);font-size:.95rem;line-height:1.85;margin-top:20px">This approach allows us to preserve the high standard of care our residents and families have come to expect while also creating an opportunity for long-term residents to remain in the home they know and love if their financial circumstances change.</p>
+  </div>
+</section>
+
+<!-- MEDICAID / LONG-TERM CARE OPTIONS -->
+<section class="sec price-bg" id="medicaid">
+  <div class="wrap">
+    <div class="ew rv">Exploring Your Options</div>
+    <h2 class="h2 rv">Medicaid &amp; <i>Long-Term Care Options</i></h2>
+    <p class="lead rv">Finding the right care for a loved one can feel overwhelming, especially when navigating the financial aspects of long-term care. While Neighbor Care Homes is primarily a private-pay community, we want every family to have access to helpful information and trusted resources, regardless of where they ultimately receive care.</p>
+    <p class="lead rv" style="margin-top:14px">If private-pay care is not the right fit for your family, Washington State offers long-term care Medicaid programs that may help cover the cost of care for individuals who qualify based on their financial situation and care needs.</p>
+
+    <div class="resource-note rv">
+      <p>A great place to begin is with <strong>Washington State Home and Community Services (HCS)</strong> through the Department of Social and Health Services (DSHS). HCS can help determine eligibility for long-term care Medicaid, explain available programs, and guide families through the application process.</p>
+    </div>
+
+    <div class="ew rv" style="margin-top:44px">Helpful Resources</div>
+    <div class="res-grid">
+      <a class="res-card rv" href="https://www.dshs.wa.gov/altsa/home-and-community-services/medicaid" target="_blank" rel="noopener">
+        <div class="res-ic">🏛️</div>
+        <div class="res-text"><strong>Washington State Home and Community Services (HCS)</strong><span>The best starting point for questions about long-term care Medicaid eligibility, services, and the application process.</span><span class="res-contact">dshs.wa.gov/altsa</span></div>
+      </a>
+      <a class="res-card rv" href="https://www.dshs.wa.gov/altsa/home-and-community-services/how-apply-medicaid" target="_blank" rel="noopener">
+        <div class="res-ic">📝</div>
+        <div class="res-text"><strong>How to Apply for Long-Term Care Medicaid</strong><span>Step-by-step information about eligibility requirements and how to apply for benefits.</span><span class="res-contact">dshs.wa.gov</span></div>
+      </a>
+      <a class="res-card rv" href="https://www.dshs.wa.gov/altsa" target="_blank" rel="noopener" style="grid-column:1 / -1">
+        <div class="res-ic">📋</div>
+        <div class="res-text"><strong>Washington State Long-Term Care Services</strong><span>Information about Medicaid-funded long-term care programs, care settings, and available services throughout Washington.</span><span class="res-contact">dshs.wa.gov/altsa</span></div>
+      </a>
+    </div>
+
+    <p class="lead rv" style="margin-top:32px">If you're unsure where to begin, we're always happy to answer questions, explain the process, and help point you in the right direction—even if Neighbor Care Homes isn't ultimately the right fit for your family. Our goal is for every family who reaches out to leave with greater clarity, confidence, and a better understanding of the resources available to them.</p>
+  </div>
+</section>
+
+<!-- MORE FAMILY RESOURCES -->
+<section class="sec" id="more-resources">
+  <div class="wrap-n">
+    <div class="ew rv">More Resources</div>
+    <h2 class="h2 rv">Other Topics We Can <i>Help With</i></h2>
+    <p class="lead rv">Cost is only one part of planning for a loved one's care. Tap any topic below for a quick answer and a trusted place to learn more — and we're always happy to talk through any of these with you directly.</p>
+
+    <div class="faq-grid rv">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text"><strong>How do I know when it's time for assisted living or an Adult Family Home?</strong><span>Common signs families notice first</span></div>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          <p>Common signs include needing regular help with bathing, dressing, or medications; recent falls or hospitalizations; missed or mismanaged medications; a noticeable decline in home upkeep or personal hygiene; increasing isolation; or a family caregiver who is feeling overwhelmed or burned out. None of these on its own means a move is required, but together they're worth a conversation. Our <a href="#how-we-assess" style="color:var(--forest);font-weight:600">free RN assessment</a> can help clarify what level of support is actually needed.</p>
+          <p><strong>Washington State Community Living Connections</strong> gives a free, no-obligation second opinion and can connect you with your local Area Agency on Aging.<br><span class="res-contact" style="margin-top:6px">1-855-567-0252 · <a href="https://www.waclc.org" target="_blank" rel="noopener" style="color:var(--forest)">waclc.org</a></span></p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text"><strong>Understanding dementia and memory care</strong><span>What changes as dementia progresses</span></div>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          <p>Dementia is a general term for a decline in memory and thinking that's severe enough to affect daily life; Alzheimer's disease is its most common cause. As it progresses, families often see more wandering or exit-seeking behavior, disorientation, difficulty recognizing loved ones, and a growing need for hands-on supervision and cueing — which is when a dedicated memory care setting, like our Level 4 Comprehensive Care, tends to become appropriate.</p>
+          <p>The <strong>Alzheimer's Association Washington State Chapter</strong> offers local support groups, education, and a free 24/7 dementia helpline in over 200 languages.<br><span class="res-contact" style="margin-top:6px">1.800.272.3900 · <a href="https://www.alz.org/alzwa" target="_blank" rel="noopener" style="color:var(--forest)">alz.org/alzwa</a></span></p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text"><strong>Long-term care insurance resources</strong><span>Including Washington's own public benefit</span></div>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          <p>If your loved one has a private long-term care insurance policy, check the daily/monthly benefit amount, the waiting period before benefits start, and whether Adult Family Home care is a covered setting. Washington also runs its own public long-term care benefit, <strong>WA Cares Fund</strong> — workers who've contributed through payroll deductions can access a lifetime benefit (currently $36,500, adjusted for inflation) that can help pay for care like ours once they qualify.</p>
+          <p><strong>WA Cares Fund</strong> (Washington State DSHS &amp; Employment Security Department) has eligibility details and how to apply for benefits.<br><span class="res-contact" style="margin-top:6px"><a href="https://wacaresfund.wa.gov" target="_blank" rel="noopener" style="color:var(--forest)">wacaresfund.wa.gov</a></span></p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text"><strong>Veterans benefits (Aid &amp; Attendance)</strong><span>A VA pension benefit many families miss</span></div>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          <p>Aid &amp; Attendance is a tax-free VA pension increase for wartime veterans, or their surviving spouses, who need help with everyday activities like bathing, dressing, or eating, or who are otherwise housebound. It isn't limited to combat veterans or nursing home residents, and the funds can be put toward Adult Family Home care.</p>
+          <p>The <strong>Washington State Department of Veterans Affairs (WDVA)</strong> provides free, one-on-one help filing Aid &amp; Attendance and other VA claims through local Veterans Service Officers.<br><span class="res-contact" style="margin-top:6px">1-800-562-2308 · <a href="https://dva.wa.gov" target="_blank" rel="noopener" style="color:var(--forest)">dva.wa.gov</a></span></p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text"><strong>Hospital discharge planning</strong><span>Moving safely from hospital to home</span></div>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          <p>When a loved one is hospitalized, Medicare requires the hospital to screen for discharge planning needs and help arrange safe next steps — whether that's home health, a rehab stay, or a residential care setting like ours. Ask to speak with the hospital's discharge planner or social worker early in the stay. We regularly coordinate directly with hospital discharge teams for residents moving into our home.</p>
+          <p>If you feel a discharge is happening too soon or have concerns about care after leaving a Washington facility, the <strong>Washington State Long-Term Care Ombudsman</strong> is a free, independent advocate for residents and families.<br><span class="res-contact" style="margin-top:6px"><a href="https://www.waombudsman.org" target="_blank" rel="noopener" style="color:var(--forest)">waombudsman.org</a></span></p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text"><strong>Choosing the right level of care</strong><span>Matching support to actual needs</span></div>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          <p>The right level of care depends on how much help someone needs with daily activities, supervision, and medical support — not on age or a single diagnosis. We walk every family through this with a comprehensive RN assessment before admission, which is how we determine which of our five care levels fits your loved one, and it's reassessed any time needs change.</p>
+          <p>See our <a href="#how-we-assess" style="color:var(--forest);font-weight:600">full breakdown of how we determine level of care</a> above. You can also verify any Washington Adult Family Home's license and inspection history through <strong>DSHS Residential Care Services</strong>.<br><span class="res-contact" style="margin-top:6px"><a href="https://www.dshs.wa.gov/altsa/residential-care-services/residential-care-services" target="_blank" rel="noopener" style="color:var(--forest)">dshs.wa.gov — Residential Care Services</a></span></p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text"><strong>Caregiver support groups</strong><span>You don't have to do this alone</span></div>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          <p>Caring for an aging parent or spouse is emotionally and physically demanding, and support groups — in person or online — are one of the most effective ways caregivers avoid burnout. Groups exist for general family caregiving as well as disease-specific situations like dementia or Parkinson's.</p>
+          <p>Washington's <strong>Family Caregiver Support Program</strong>, run through DSHS and your local Area Agency on Aging, offers free support groups, training, counseling, and even respite care for unpaid family caregivers statewide.<br><span class="res-contact" style="margin-top:6px"><a href="https://www.dshs.wa.gov/altsa/home-and-community-services/caregiver-resources" target="_blank" rel="noopener" style="color:var(--forest)">dshs.wa.gov — Caregiver Resources</a></span></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec" id="contact">
+  <h2>Have Questions About <i>Care or Cost?</i></h2>
+  <p>We're happy to walk through pricing, levels of care, or Medicaid options — no pressure, just honest answers.</p>
+  <div class="cta-btns">
+    <a href="tel:+18013696018" class="btn-gold">📞 Call (801) 369-6018</a>
+    <a href="#contact" class="btn-wh">Schedule a Free Tour</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-inner">
+    <div class="ft-bottom">
+      <div class="ft-logo">🕊️ Neighbor Care Homes</div>
+      <span class="ft-copy">© 2026 Neighbor Care Homes</span>
+      <span class="ft-credit"><a href="https://neighborcarehomes.com/careers.html" target="_blank" rel="noopener">We're Hiring Caregivers</a></span>
+      <span class="ft-credit">Designed by <a href="https://diwaspandey.com.np" target="_blank" rel="noopener">Diwas Pandey</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// FAQ / levels accordion — multiple can stay open independently
+function toggleFaq(el){
+  el.parentElement.classList.toggle('open');
+}
+
+// Mobile drawer
+const ham=document.getElementById('ham'),ov=document.getElementById('ov'),dr=document.getElementById('drawer');
+ham.addEventListener('click',()=>{ov.classList.add('open');dr.classList.add('open');document.body.style.overflow='hidden'});
+function closeMob(){ov.classList.remove('open');dr.classList.remove('open');document.body.style.overflow=''}
+
+// Smooth scroll for in-page anchors
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();const top=t.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top,behavior:'smooth'})}
+  });
+});
+
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}});
+},{threshold:0.1});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

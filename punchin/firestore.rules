@@ -1,0 +1,80 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function myProfile() {
+      return get(/databases/$(database)/documents/profiles/$(request.auth.uid)).data;
+    }
+    function isMaster() {
+      return signedIn() && myProfile().role == 'master';
+    }
+    function isAdminOf(cid) {
+      return signedIn() && myProfile().role == 'admin' && myProfile().companyId == cid;
+    }
+    function isSelf(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+    function inCompany(cid) {
+      return signedIn() && myProfile().companyId == cid;
+    }
+    // Company of the TARGET user, looked up via their profile doc rather than
+    // whatever doc we're currently reading. This lets an admin read/write a
+    // user's entries doc even before it exists (new employee, zero punches).
+    function targetCompanyOf(uid) {
+      return get(/databases/$(database)/documents/profiles/$(uid)).data.companyId;
+    }
+    function isAdminOfUser(uid) {
+      return signedIn() && myProfile().role == 'admin' && myProfile().companyId == targetCompanyOf(uid);
+    }
+
+    // One profile doc per person: { email, name, role: 'master'|'admin'|'user', companyId }
+    match /profiles/{uid} {
+      allow read: if isSelf(uid) || isMaster() || inCompany(resource.data.companyId);
+      allow create: if isMaster() || isAdminOf(request.resource.data.companyId);
+      allow update: if isMaster() || isAdminOf(resource.data.companyId);
+      allow delete: if isMaster() || isAdminOf(resource.data.companyId);
+    }
+
+    // { name } — one doc per business. Only the master creates/renames companies.
+    match /companies/{cid} {
+      allow read: if inCompany(cid) || isMaster();
+      allow write: if isMaster();
+    }
+
+    // { companyId, entries: [...] } — one doc per person's punch history.
+    // Uses isAdminOfUser (target's profile), NOT resource.data, so this works
+    // even when the entries doc doesn't exist yet.
+    match /entries/{uid} {
+      allow read: if isSelf(uid) || isAdminOfUser(uid) || isMaster();
+      allow create: if isSelf(uid) || isAdminOfUser(uid) || isMaster();
+      allow update: if isSelf(uid) || isAdminOfUser(uid) || isMaster();
+    }
+
+    // { grid: {...} } — one doc per company's shift schedule.
+    match /schedules/{cid} {
+      allow read: if inCompany(cid) || isMaster();
+      allow write: if isAdminOf(cid) || isMaster();
+    }
+
+    // { uid, companyId, type: 'add'|'edit'|'delete', idx (nullable for 'add'),
+    //   proposedClockIn, proposedClockOut (nullable),
+    //   originalClockIn, originalClockOut (nullable, only for 'edit'/'delete'),
+    //   status: 'pending'|'approved'|'rejected', createdAt,
+    //   reviewedAt, reviewedBy }
+    // A regular user can only file a request about themselves, and only as
+    // 'pending' — they can never set status directly to approved/rejected,
+    // and can never edit/delete a request after filing it (no update/delete
+    // allowed for isSelf). Only an admin of that user's company (or master)
+    // can resolve it.
+    match /editRequests/{reqId} {
+      allow read: if isSelf(resource.data.uid) || isAdminOfUser(resource.data.uid) || isMaster();
+      allow create: if isSelf(request.resource.data.uid)
+                    && request.resource.data.status == 'pending'
+                    && request.resource.data.companyId == myProfile().companyId;
+      allow update: if isAdminOfUser(resource.data.uid) || isMaster();
+      allow delete: if isAdminOfUser(resource.data.uid) || isMaster();
+    }
+  }
+}

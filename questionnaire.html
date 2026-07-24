@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Assessment Questionnaire | Neighbor Care Homes</title>
+<meta name="description" content="Secure pre-assessment questionnaire to help Tami Serpa, RN prepare for your loved one's nursing assessment.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --forest:#1E3A2F;--forest-mid:#2C5440;--moss:#4A7C59;--mint:#C8E6C9;--mint-pale:#EDF7EE;
+  --gold:#D4A853;--gold-pale:#FBF4E6;--blush:#F2ECE4;--ink:#111B14;--body:#374840;--sub:#5E7368;
+  --border:#D6E4D9;--white:#FFFFFF;--req:#B5453A;--fd:'Playfair Display',Georgia,serif;--fb:'Inter',system-ui,sans-serif;
+}
+body{font-family:var(--fb);background:var(--blush);color:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.hide{display:none!important}
+
+/* TOP BAR */
+.topbar{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.topbar-inner{max-width:820px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.tb-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-family:var(--fd);font-weight:700;color:var(--forest);font-size:.95rem;white-space:nowrap}
+.tb-logo .ic{width:30px;height:30px;background:var(--forest);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.tb-actions{display:flex;gap:8px}
+.tb-btn{font-size:.78rem;font-weight:600;padding:8px 14px;border-radius:100px;border:1.5px solid var(--border);background:#fff;color:var(--body);cursor:pointer;white-space:nowrap;transition:border-color .2s,color .2s}
+.tb-btn:hover{border-color:var(--moss);color:var(--forest)}
+
+/* PROGRESS */
+.progress-wrap{max-width:820px;margin:0 auto;padding:16px 20px 0}
+.progress-label{display:flex;justify-content:space-between;font-size:.76rem;color:var(--sub);font-weight:600;margin-bottom:8px}
+.progress-track{height:8px;background:var(--mint-pale);border-radius:100px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--moss),var(--forest));border-radius:100px;transition:width .4s cubic-bezier(.4,0,.2,1)}
+
+/* MAIN */
+main{max-width:820px;margin:0 auto;padding:32px 20px 140px}
+.card{background:#fff;border-radius:20px;border:1px solid var(--border);padding:40px 36px;box-shadow:0 8px 32px rgba(30,58,47,.06)}
+.step-eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--moss);margin-bottom:8px}
+.step-title{font-family:var(--fd);font-size:1.7rem;font-weight:700;color:var(--ink);margin-bottom:10px;line-height:1.25}
+.step-sub{font-size:.88rem;color:var(--sub);line-height:1.7;margin-bottom:8px}
+.step-sub + .step-sub{margin-top:-4px}
+
+.subsection{margin-top:32px;padding-top:28px;border-top:1px solid var(--border)}
+.subsection:first-of-type{margin-top:28px}
+.subsection-h{font-family:var(--fd);font-size:1.1rem;font-weight:700;color:var(--forest);margin-bottom:16px}
+
+.field{margin-top:22px}
+.field-label{display:block;font-size:.85rem;font-weight:600;color:var(--ink);margin-bottom:8px}
+.field-label .opt{font-weight:400;color:var(--sub);font-size:.78rem}
+.field-label .req-star{color:var(--req);font-weight:700;margin-left:2px}
+.field-hint{font-size:.78rem;color:var(--sub);margin-top:6px;line-height:1.6}
+input[type=text],input[type=date],textarea,select{
+  width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:.9rem;color:var(--ink);background:#fff;transition:border-color .2s;
+}
+input[type=text]:focus,input[type=date]:focus,textarea:focus,select:focus{outline:none;border-color:var(--moss)}
+input[type=text]:disabled,textarea:disabled{background:var(--mint-pale);color:var(--sub);cursor:not-allowed}
+textarea{min-height:90px;resize:vertical}
+
+.opt-grid{display:flex;flex-wrap:wrap;gap:8px}
+.opt-pill{position:relative}
+.opt-pill input{position:absolute;opacity:0;width:0;height:0}
+.opt-pill label{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border:1.5px solid var(--border);border-radius:100px;font-size:.82rem;color:var(--body);cursor:pointer;transition:all .18s;user-select:none}
+.opt-pill input:checked + label{background:var(--forest);border-color:var(--forest);color:#fff;font-weight:600}
+.opt-pill label:hover{border-color:var(--moss)}
+.opt-pill.pns-pill label{border-style:dashed;color:var(--sub)}
+.opt-pill.pns-pill input:checked + label{background:var(--sub);border-color:var(--sub);color:#fff}
+
+.pns-toggle{display:inline-flex;align-items:center;gap:7px;margin-top:9px;font-size:.78rem;color:var(--sub);cursor:pointer;user-select:none}
+.pns-toggle input{width:15px;height:15px;accent-color:var(--sub);cursor:pointer}
+.pns-toggle:hover{color:var(--ink)}
+
+/* REQUIRED / ERROR STATES */
+.field.has-error .field-label{color:var(--req)}
+.field.has-error input[type=text],.field.has-error input[type=date],.field.has-error textarea{border-color:var(--req);background:#FDF3F1}
+.field.has-error .opt-grid{outline:1.5px solid var(--req);outline-offset:6px;border-radius:14px}
+.field.has-error .rating-row{outline:1.5px solid var(--req);outline-offset:0;border-radius:8px;background:#FDF3F1}
+.field-error-msg{display:flex;align-items:center;gap:5px;color:var(--req);font-size:.78rem;font-weight:700;margin-top:8px}
+.step-alert{display:flex;align-items:flex-start;gap:10px;background:#FDF3F1;border:1.5px solid var(--req);color:#8A3020;border-radius:12px;padding:14px 16px;font-size:.85rem;font-weight:600;margin-bottom:24px}
+
+.rating-row{display:flex;flex-direction:column;gap:10px;padding:14px 0;border-bottom:1px solid var(--border)}
+.rating-row:last-child{border-bottom:none}
+.rating-row .rr-label{font-size:.86rem;font-weight:600;color:var(--ink)}
+.rating-row .opt-grid label{font-size:.75rem;padding:7px 12px}
+
+.repeater-item{border:1.5px dashed var(--border);border-radius:12px;padding:18px;margin-top:14px;position:relative}
+.repeater-item .rm-btn{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--sub);cursor:pointer;font-size:1rem;width:26px;height:26px;border-radius:50%}
+.repeater-item .rm-btn:hover{background:var(--gold-pale);color:var(--ink)}
+.repeater-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:560px){.repeater-grid{grid-template-columns:1fr}}
+.add-btn{margin-top:14px;background:var(--mint-pale);color:var(--forest);border:1.5px solid var(--mint);border-radius:10px;padding:10px 18px;font-size:.82rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:background .2s}
+.add-btn:hover{background:var(--mint)}
+
+.file-drop{display:block;border:2px dashed var(--border);border-radius:12px;padding:22px;text-align:center;cursor:pointer;transition:border-color .2s;background:var(--mint-pale)}
+.file-drop:hover{border-color:var(--moss)}
+.file-drop input{display:none}
+.file-drop .fd-label{font-size:.85rem;font-weight:600;color:var(--forest)}
+.file-drop .fd-sub{font-size:.74rem;color:var(--sub);margin-top:4px}
+.file-list{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.file-chip{display:flex;align-items:center;justify-content:space-between;background:var(--mint-pale);border-radius:8px;padding:8px 12px;font-size:.8rem;color:var(--ink)}
+.file-chip button{background:none;border:none;color:var(--sub);cursor:pointer;font-size:.9rem}
+
+.info-box{background:var(--gold-pale);border:1px solid var(--gold);border-radius:12px;padding:16px 18px;font-size:.82rem;color:var(--body);line-height:1.7;margin-top:22px}
+.highlight-box{background:var(--mint-pale);border:1.5px solid var(--moss);border-radius:14px;padding:20px}
+
+/* NAV BAR (bottom, sticky) */
+.navbar{position:sticky;bottom:0;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-top:1px solid var(--border);padding:16px 20px;z-index:90}
+.navbar-inner{max-width:820px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.btn{padding:13px 26px;border-radius:100px;font-weight:700;font-size:.85rem;border:none;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--forest);color:#fff}
+.btn-primary:hover{background:var(--forest-mid)}
+.btn-ghost{background:none;color:var(--body);border:1.5px solid var(--border)}
+.btn-ghost:hover{border-color:var(--moss);color:var(--forest)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* INTRO / OUTRO */
+.center-card{max-width:640px;margin:0 auto;text-align:center;background:#fff;border-radius:22px;border:1px solid var(--border);padding:56px 40px;box-shadow:0 12px 44px rgba(30,58,47,.08)}
+.center-card h1{font-family:var(--fd);font-size:2rem;font-weight:700;color:var(--ink);margin-bottom:16px;line-height:1.2}
+.center-card p{font-size:.94rem;color:var(--sub);line-height:1.8;margin-bottom:10px}
+.resume-box{margin-top:28px;padding-top:24px;border-top:1px solid var(--border)}
+.resume-box label.file-drop{display:block}
+
+.step-dots{display:flex;justify-content:center;gap:6px;margin-top:28px;flex-wrap:wrap}
+.step-dots span{width:8px;height:8px;border-radius:50%;background:var(--border)}
+.step-dots span.done{background:var(--moss)}
+
+/* PRINT / SUMMARY */
+#printArea{display:none}
+@media print{
+  body *{visibility:hidden}
+  #printArea, #printArea *{visibility:visible}
+  #printArea{display:block;position:absolute;top:0;left:0;width:100%}
+  .no-print{display:none!important}
+}
+.pv-title{font-family:var(--fd);font-size:1.6rem;font-weight:700;margin-bottom:4px}
+.pv-sub{font-size:.8rem;color:var(--sub);margin-bottom:20px}
+.pv-summary{border:2px solid var(--forest);border-radius:12px;padding:18px;margin-bottom:24px}
+.pv-summary h3{font-family:var(--fd);font-size:1.05rem;margin-bottom:10px}
+.pv-section{margin-bottom:20px;page-break-inside:avoid}
+.pv-section h4{font-family:var(--fd);font-size:1rem;color:var(--forest);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:8px}
+.pv-row{font-size:.82rem;margin-bottom:4px}
+.pv-row b{color:var(--ink)}
+
+@media(max-width:600px){
+  .card{padding:28px 20px}
+  main{padding:24px 14px 160px}
+  .center-card{padding:40px 24px}
+}
+
+/* ============================================================
+   GAMIFICATION & MOBILE-FRIENDLINESS ENHANCEMENTS
+   ============================================================ */
+
+/* Bigger, thumb-friendly tap targets everywhere on touch screens */
+.opt-pill label{padding:11px 18px;font-size:.86rem;min-height:44px;display:inline-flex}
+.pns-toggle{padding:4px 0;min-height:32px}
+.btn{min-height:48px}
+.tb-btn{min-height:38px;display:inline-flex;align-items:center}
+input[type=text],input[type=date],textarea,select{font-size:16px;padding:13px 14px} /* 16px prevents iOS zoom-on-focus */
+.file-drop{min-height:48px}
+
+/* Care Points chip in top bar */
+.points-chip{display:inline-flex;align-items:center;gap:6px;background:var(--gold-pale);border:1.5px solid var(--gold);color:var(--forest);font-weight:700;font-size:.78rem;padding:7px 13px;border-radius:100px;white-space:nowrap;transition:transform .25s}
+.points-chip.bump{animation:pointsBump .45s ease}
+@keyframes pointsBump{0%{transform:scale(1)}35%{transform:scale(1.18)}100%{transform:scale(1)}}
+.points-chip .pc-num{font-variant-numeric:tabular-nums}
+
+/* Badge rail beneath the progress bar */
+.badge-rail{max-width:820px;margin:12px auto 0;padding:0 20px;display:flex;gap:8px;flex-wrap:wrap}
+.badge-chip{display:inline-flex;align-items:center;gap:6px;background:var(--mint-pale);border:1.5px solid var(--mint);border-radius:100px;padding:6px 12px 6px 8px;font-size:.72rem;font-weight:700;color:var(--forest);opacity:0;transform:translateY(6px) scale(.9);animation:badgeIn .5s cubic-bezier(.2,.9,.3,1.3) forwards}
+.badge-chip .bc-icon{font-size:.95rem;line-height:1}
+@keyframes badgeIn{to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* Milestone step dots — richer, tappable-looking */
+.step-dots span{width:9px;height:9px;transition:background .3s,transform .3s}
+.step-dots span.done{background:var(--moss);transform:scale(1.15)}
+.step-dots span.current{background:var(--forest);box-shadow:0 0 0 4px var(--mint-pale)}
+
+/* Encouragement toast — celebratory, gentle, not flashy */
+#gamifyToast{position:fixed;left:50%;top:14px;transform:translateX(-50%) translateY(-140%);z-index:200;background:var(--forest);color:#fff;padding:14px 20px;border-radius:14px;box-shadow:0 10px 30px rgba(17,27,20,.25);display:flex;align-items:center;gap:10px;font-size:.86rem;font-weight:600;max-width:min(92vw,420px);transition:transform .45s cubic-bezier(.2,.9,.3,1.1);pointer-events:none}
+#gamifyToast.show{transform:translateX(-50%) translateY(0)}
+#gamifyToast .gt-icon{font-size:1.3rem;flex-shrink:0}
+
+/* Confetti canvas overlay for the final celebration */
+#confettiCanvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:150}
+
+/* Completion summary card in the thank-you screen */
+.badge-summary{margin-top:26px;padding-top:24px;border-top:1px solid var(--border)}
+.badge-summary-title{font-family:var(--fd);font-size:1rem;font-weight:700;color:var(--forest);margin-bottom:14px}
+.badge-summary-grid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.pdf-status{margin-top:18px;font-size:.8rem;color:var(--sub);display:flex;align-items:center;justify-content:center;gap:8px}
+.pdf-status.ready{color:var(--forest);font-weight:600}
+
+@media(max-width:600px){
+  .tb-logo span.tb-logo-text{display:none}
+  .topbar-inner{padding:12px 14px}
+  .tb-actions{gap:6px}
+  .navbar-inner{gap:8px}
+  .navbar .btn{flex:1;justify-content:center;padding:13px 14px}
+  .badge-rail{padding:0 14px}
+  .rating-row .opt-grid{gap:6px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar no-print" id="topbar">
+  <div class="topbar-inner">
+    <a href="https://neighborcarehomes.com" class="tb-logo"><span class="ic">🕊️</span> Neighbor Care Homes</a>
+    <div class="tb-actions">
+      <a href="tel:+18013696018" class="tb-btn" id="callBtn">📞 (801) 369-6018</a>
+      <button class="tb-btn hide" id="saveBtn">💾 Save &amp; Continue Later</button>
+    </div>
+  </div>
+  <div class="progress-wrap" id="progressWrap" style="display:none">
+    <div class="progress-label"><span id="progLabel">Step 1 of 11</span><span id="progPct">0%</span></div>
+    <div class="progress-track"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<main>
+
+  <!-- INTRO SCREEN -->
+  <div id="intro" class="center-card">
+    <div class="step-eyebrow" style="justify-content:center;display:flex">Pre-Assessment Questionnaire</div>
+    <h1>Thank You for Helping Us Get to Know Them</h1>
+    <p>The information you provide helps us prepare for the nursing assessment and spend more of our time together understanding your loved one's individual needs — rather than gathering basic information.</p>
+    <p>You do not need to know every answer. If you're unsure, simply choose <b>"I'm not sure"</b> — we'll review and verify during the assessment. Please answer based on how your loved one is functioning <i>now</i>, rather than how they functioned in the past.</p>
+    <p style="font-size:.8rem;color:var(--sub)">This takes most families one sitting to complete, but you can save your progress and come back anytime.</p>
+    <div style="margin-top:28px">
+      <button class="btn btn-primary" id="startBtn" style="width:100%;justify-content:center">Start the Questionnaire</button>
+    </div>
+    <div class="resume-box">
+      <p style="font-size:.82rem;margin-bottom:12px">Already started? Resume from a saved file:</p>
+      <label class="file-drop">
+        <input type="file" id="resumeInput" accept="application/json">
+        <div class="fd-label">📂 Choose your saved progress file</div>
+        <div class="fd-sub">The .json file you downloaded last time you saved</div>
+      </label>
+    </div>
+  </div>
+
+  <!-- FORM CARD -->
+  <div id="formCard" class="card hide"></div>
+
+  <!-- THANK YOU SCREEN -->
+  <div id="outro" class="center-card hide">
+    <div class="step-eyebrow" style="justify-content:center;display:flex">Submission Complete</div>
+    <h1>Thank You for Sharing Their Story</h1>
+    <p>We will review your questionnaire and any documents you've provided before the assessment.</p>
+    <p>Please remember: this questionnaire is not itself the completed nursing assessment. Information you've shared will be reviewed, clarified, and combined with the assessor's professional evaluation to complete the formal assessment.</p>
+    <div style="margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-primary" id="downloadJsonBtn">⬇ Download My Responses</button>
+      <button class="btn btn-ghost" id="printBtn">🖨 Print / Save as PDF</button>
+    </div>
+    <p style="font-size:.76rem;margin-top:20px;color:var(--sub)">A confirmation has been noted for your records. If you don't hear from us within one business day, please call us at <a href="tel:+18013696018" style="color:var(--forest);font-weight:600">(801) 369-6018</a> or email <a href="mailto:neighborcarehome@gmail.com" style="color:var(--forest);font-weight:600">neighborcarehome@gmail.com</a>.</p>
+  </div>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<div class="navbar no-print" id="navbar" style="display:none">
+  <div class="navbar-inner">
+    <button class="btn btn-ghost" id="backBtn">← Back</button>
+    <button class="btn btn-primary" id="nextBtn">Continue →</button>
+  </div>
+</div>
+
+<!-- PRINT AREA (populated on submit) -->
+<div id="printArea"></div>
+
+<script>
+/* ============================================================
+   FIELD HELPERS
+   ============================================================ */
+let answers = {};
+let currentStep = 0; // 0 = intro handled separately; 1..11 = steps
+let stepErrors = new Set();
+
+const PNS_TEXT = "🚫 Prefer not to share";
+
+function esc(s){
+  return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+function checked(id,val){ return (answers[id]||[]).includes(val); }
+function anyCheckedExcept(id,exclude){ const a=answers[id]||[]; return a.some(v=>!exclude.includes(v)); }
+function eq(id,val){ return answers[id]===val; }
+
+/* A field counts as "answered" if it has a value, OR the person explicitly
+   chose "Prefer not to share". File uploads and repeaters are always optional. */
+function isFieldFilled(f){
+  if(!fieldVisible(f)) return true;
+  if(f.type==="static" || f.type==="file" || f.type==="repeater") return true;
+  if(f.optional) return true;
+  if(f.type==="rating"){
+    return f.items.every((item,ri)=> !!answers[f.id+"__"+ri]);
+  }
+  if(f.type==="checkbox"){
+    return (answers[f.id]||[]).length>0;
+  }
+  const v = answers[f.id];
+  return v!==undefined && v!==null && String(v).trim().length>0;
+}
+
+function validateStep(){
+  const step = SCHEMA[currentStep];
+  const errors = [];
+  step.sections.forEach(sec=>sec.fields.forEach(f=>{
+    if(!isFieldFilled(f)) errors.push(f.id);
+  }));
+  return errors;
+}
+
+/* ============================================================
+   SCHEMA — 11 steps
+   ============================================================ */
+const SCHEMA = [
+{
+  title:"About the Person &amp; Placement",
+  sub:"Basic details, who's completing this form, and why you're exploring a move.",
+  sections:[
+    {h:"Basic Information", fields:[
+      {id:"resident_name", label:"Resident's legal name", type:"text"},
+      {id:"preferred_name", label:"Preferred name / nickname", type:"text"},
+      {id:"dob", label:"Date of birth", type:"date"},
+      {id:"current_address", label:"Current address / location", type:"textarea"},
+      {id:"living_situation", label:"Where is the person currently living?", type:"radio",
+        options:["Private home","Adult Family Home","Assisted living","Hospital","Skilled nursing / rehabilitation","Memory care","Other"]},
+      {id:"living_situation_other", label:"Please describe", type:"text", showIf:a=>eq("living_situation","Other")},
+      {id:"primary_language", label:"Primary language", type:"text"},
+      {id:"other_languages", label:"Other languages spoken", type:"text"},
+      {id:"birthplace", label:"Birthplace", type:"text"},
+      {id:"marital_status", label:"Marital status", type:"text"},
+      {id:"spouse_name", label:"Spouse / partner name", type:"text"},
+      {id:"height", label:"Height", type:"text"},
+      {id:"weight", label:"Approximate current weight", type:"text"},
+    ]},
+    {h:"Person Completing This Form", fields:[
+      {id:"your_name", label:"Your name", type:"text"},
+      {id:"your_relationship", label:"Relationship to resident", type:"text"},
+      {id:"your_phone", label:"Phone", type:"text"},
+      {id:"your_email", label:"Email", type:"text"},
+      {id:"decision_maker", label:"Are you the resident's legal decision-maker?", type:"radio",
+        options:["Yes","No","Shared responsibility","I'm not sure"]},
+      {id:"legal_docs", label:"Does the resident have any of the following?", type:"checkbox",
+        options:["Power of Attorney","Guardian","Healthcare representative","Advance Directive","POLST","None","I'm not sure"], noneOptions:["None","I'm not sure"]},
+      {id:"legal_docs_contact", label:"Name / contact information for the above", type:"textarea",
+        showIf:a=>anyCheckedExcept("legal_docs",["None","I'm not sure"])},
+      {id:"legal_docs_upload", label:"Upload document (optional)", type:"file",
+        showIf:a=>anyCheckedExcept("legal_docs",["None","I'm not sure"])},
+    ]},
+    {h:"Placement Information", fields:[
+      {id:"why_considering", label:"Why are you currently considering an Adult Family Home?", type:"textarea"},
+      {id:"admission_timing", label:"When are you hoping for admission?", type:"radio",
+        options:["Immediately","Within 1 week","Within 30 days","1–3 months","Planning ahead","I'm not sure"]},
+      {id:"already_selected", label:"Have you already selected an Adult Family Home?", type:"radio", options:["Yes","No"]},
+      {id:"selected_home_contact", label:"Home name / contact information", type:"text", showIf:a=>eq("already_selected","Yes")},
+    ]},
+  ]
+},
+{
+  title:"Health History &amp; Care Team",
+  sub:"Diagnoses, recent changes, allergies, and who's currently involved in their care.",
+  sections:[
+    {h:"Medical Diagnoses", fields:[
+      {id:"diagnoses", label:"What medical diagnoses or health conditions does your loved one currently have?", type:"textarea",
+        hint:"Describe these however feels natural — you don't need exact clinical terms."},
+    ]},
+    {h:"Recent Health Changes", fields:[
+      {id:"recent_changes", label:"Has your loved one had any of the following within the past year?", type:"checkbox",
+        options:["Hospitalization","Emergency room visit","Rehabilitation / SNF stay","Surgery","Significant fall","Infection","Significant weight loss / gain","New diagnosis","Major change in memory or behavior","None"], noneOptions:["None"]},
+      {id:"recent_changes_details", label:"Tell us what happened and approximately when.", type:"textarea",
+        showIf:a=>anyCheckedExcept("recent_changes",["None"])},
+    ]},
+    {h:"Allergies", fields:[
+      {id:"has_allergies", label:"Does your loved one have medication, food, or environmental allergies?", type:"radio", options:["Yes","No","I'm not sure"]},
+      {id:"allergies_list", label:"Allergies", type:"repeater", showIf:a=>eq("has_allergies","Yes"),
+        addLabel:"+ Add Another Allergy",
+        repeaterFields:[{id:"allergen",label:"Allergen",type:"text"},{id:"reaction",label:"Reaction",type:"text"}]},
+    ]},
+    {h:"Healthcare Providers", fields:[
+      {id:"pcp", label:"Primary care provider", type:"text"},
+      {id:"pharmacy", label:"Preferred pharmacy", type:"text"},
+      {id:"specialists", label:"Specialists currently involved", type:"checkbox",
+        options:["Neurology","Cardiology","Urology","Psychiatry / Mental Health","Oncology","Rheumatology","Wound care","Other"]},
+    ]},
+    {h:"Current Services", fields:[
+      {id:"current_services", label:"Does your loved one currently receive:", type:"checkbox",
+        options:["Hospice","Home health nursing","Physical therapy","Occupational therapy","Speech therapy","Palliative care","Private caregivers","Nurse delegation","None"], noneOptions:["None"]},
+      {id:"services_contact", label:"Agency / contact information if known", type:"textarea",
+        showIf:a=>anyCheckedExcept("current_services",["None"])},
+    ]},
+  ]
+},
+{
+  title:"Medications &amp; Treatments",
+  sub:"What they take, how they're managed, and any special treatments in place.",
+  sections:[
+    {h:"Medications", fields:[
+      {id:"med_list_upload", label:"Upload the most current medication list, if available", type:"file"},
+      {id:"medications", label:"Or add medications individually", type:"repeater", addLabel:"+ Add Medication",
+        repeaterFields:[
+          {id:"name",label:"Medication name",type:"text"},
+          {id:"dose",label:"Dose (if known)",type:"text"},
+          {id:"frequency",label:"How often",type:"text"},
+          {id:"used_for",label:"What it's used for (if known)",type:"text"},
+        ]},
+      {id:"med_help", label:"Does your loved one need help taking medications?", type:"checkbox",
+        options:["Takes independently","Needs reminders","Someone prepares medications","Someone hands / administers medications","Medications must be crushed or mixed with food","Refuses medications at times","I'm not sure"]},
+    ]},
+    {h:"Special Treatments", fields:[
+      {id:"treatments", label:"Does your loved one currently use or receive any of the following?", type:"checkbox",
+        options:["Insulin","Blood sugar monitoring","Oxygen","Inhalers / nebulizers","Catheter","Ostomy","Feeding tube","Wound care","Injections","Eye drops","Suppositories","Bladder irrigation","Dialysis","Infusions","CPAP / BiPAP","Other","None"], noneOptions:["None"]},
+      {id:"treatments_details", label:"For each item selected above, tell us the type, how often, who currently performs it, and any special instructions.", type:"textarea",
+        showIf:a=>anyCheckedExcept("treatments",["None"])},
+    ]},
+  ]
+},
+{
+  title:"Mobility, Transfers &amp; Falls",
+  sub:"How they get around, and any fall history or equipment in use.",
+  sections:[
+    {h:"", fields:[
+      {id:"mobility", label:"How does your loved one usually get around?", type:"radio",
+        options:["Walks independently","Walks with supervision","Walks with hands-on assistance","Walker","Cane","Wheelchair","Primarily bedbound","Other"]},
+      {id:"stand_up", label:"Can they stand up from a bed or chair?", type:"radio",
+        options:["Independently","Needs supervision / cueing","Needs one person to help","Needs two people","Mechanical / Hoyer lift","Varies","I'm not sure"]},
+      {id:"fallen", label:"Have they fallen within the past year?", type:"radio", options:["Yes","No","I'm not sure"]},
+      {id:"falls_details", label:"How many? Any injuries? What usually contributes to falls?", type:"textarea", showIf:a=>eq("fallen","Yes")},
+      {id:"reposition", label:"Can they reposition themselves in bed?", type:"radio", options:["Independent","Some help","Fully dependent","I'm not sure"]},
+      {id:"stairs", label:"Can they use stairs safely?", type:"radio", options:["Yes, independently","With assistance","No","I'm not sure"]},
+      {id:"equipment", label:"What equipment do they currently use?", type:"checkbox",
+        options:["Walker","Wheelchair","Cane","Hospital bed","Bedrails","Lift","Transfer pole","Shower chair","Other"]},
+    ]},
+  ]
+},
+{
+  title:"Daily Personal Care",
+  sub:"Bathing, dressing, toileting, and eating — rate how much help is needed with each.",
+  sections:[
+    {h:"Personal Care &amp; Daily Activities", fields:[
+      {id:"adl_ratings", label:"", type:"rating",
+        items:["Bathing / showering","Dressing","Grooming / hair care","Brushing teeth / dentures","Toileting","Eating","Getting in/out of bed or chair","Walking / mobility"],
+        scale:["Independent","Reminders/Setup","Some Hands-On Help","Most/All Care","Varies","Unsure"]},
+      {id:"personal_care_notes", label:"Tell us anything that makes personal care easier or more comfortable.", type:"textarea",
+        hint:"For example: preferred shower days/time, fear of water, prefers female caregivers, favorite products, routines, resistance to care, etc."},
+    ]},
+    {h:"Bladder &amp; Bowel", fields:[
+      {id:"bladder_bowel", label:"Does your loved one have:", type:"checkbox",
+        options:["Independent toileting","Occasional urinary incontinence","Frequent urinary incontinence","Bowel incontinence","Constipation","Recurrent UTIs","Urinary retention","Catheter","Ostomy","Uses briefs / pull-ups","Other"]},
+      {id:"catheter_type", label:"Type of catheter", type:"text", showIf:a=>checked("bladder_bowel","Catheter")},
+      {id:"catheter_changed", label:"How often changed", type:"text", showIf:a=>checked("bladder_bowel","Catheter")},
+      {id:"catheter_managed_by", label:"Who manages it", type:"text", showIf:a=>checked("bladder_bowel","Catheter")},
+      {id:"catheter_complications", label:"History of complications / UTIs", type:"textarea", showIf:a=>checked("bladder_bowel","Catheter")},
+      {id:"bowel_bladder_routines", label:"Any bowel / bladder routines we should know?", type:"textarea"},
+    ]},
+    {h:"Eating, Nutrition &amp; Swallowing", fields:[
+      {id:"feed_self", label:"Can your loved one feed themselves?", type:"radio",
+        options:["Independent","Setup only","Some assistance","Fully assisted","Varies"]},
+      {id:"eating_concerns", label:"Do they have:", type:"checkbox",
+        options:["Difficulty chewing","Difficulty swallowing","Coughing / choking while eating","Pocketing food","Dentures","Poor appetite","Recent weight loss","Special diet","Modified food texture","Thickened liquids","Food allergies","None"], noneOptions:["None"]},
+      {id:"swallow_precautions", label:"Has a speech therapist ever recommended swallowing precautions?", type:"radio", options:["Yes","No","I'm not sure"]},
+      {id:"fav_breakfast", label:"Favorite breakfast foods", type:"text"},
+      {id:"fav_lunch", label:"Favorite lunches", type:"text"},
+      {id:"fav_dinner", label:"Favorite dinners", type:"text"},
+      {id:"fav_snacks", label:"Favorite snacks", type:"text"},
+      {id:"fav_beverages", label:"Favorite beverages", type:"text"},
+      {id:"disliked_foods", label:"Foods they dislike", type:"text"},
+      {id:"comfort_foods", label:"Foods that bring comfort or have special meaning", type:"text"},
+      {id:"food_traditions", label:"Any cultural / family food traditions?", type:"textarea"},
+    ]},
+  ]
+},
+{
+  title:"Memory, Communication &amp; Mood",
+  sub:"How they think, communicate, and feel day to day.",
+  sections:[
+    {h:"Memory &amp; Thinking", fields:[
+      {id:"memory_diagnoses", label:"Has your loved one been diagnosed with:", type:"checkbox",
+        options:["Dementia","Alzheimer's disease","Mild cognitive impairment","Parkinson's-related cognitive changes","Brain injury","No diagnosis","Unsure / Other"]},
+      {id:"memory_difficulties", label:"Have you noticed difficulty with:", type:"checkbox",
+        options:["Short-term memory","Long-term memory","Knowing time / date","Knowing where they are","Recognizing people","Making safe decisions","Following instructions","Using the phone","Asking repetitive questions","Getting lost / wandering","None"], noneOptions:["None"]},
+      {id:"decision_making", label:"How well can they make everyday decisions?", type:"textarea"},
+      {id:"communicate_needs", label:"Can they communicate their needs reliably?", type:"radio",
+        options:["Always","Usually","Sometimes","Rarely","I'm not sure"]},
+    ]},
+    {h:"Communication, Vision &amp; Hearing", fields:[
+      {id:"communication_style", label:"How does your loved one communicate?", type:"checkbox",
+        options:["Speaks clearly","Needs simple / one-step directions","Difficulty finding words","Limited speech","Nonverbal","Uses communication device","Other"]},
+      {id:"vision", label:"Vision", type:"radio", options:["No concerns","Glasses","Significant impairment","Blind"]},
+      {id:"hearing", label:"Hearing", type:"radio", options:["No concerns","Hearing aids","Difficulty hearing","Deaf"]},
+      {id:"best_comm_method", label:"What is the best way to communicate with them when they are confused, tired, or upset?", type:"textarea"},
+    ]},
+    {h:"Mood, Anxiety &amp; Behavior", fields:[
+      {id:"mood_behaviors", label:"Has your loved one experienced:", type:"checkbox",
+        options:["Anxiety / worry","Depression / sadness","Tearfulness","Agitation","Restlessness","Repetitive questions / concerns","Hallucinations","Delusions / paranoia","Resistance to care","Verbal aggression","Physical aggression","Exit-seeking / wandering","Sundowning / evening difficulty","None"], noneOptions:["None"]},
+      {id:"distress_triggers", label:"What tends to trigger distress?", type:"textarea"},
+      {id:"what_helps", label:"What usually helps?", type:"textarea",
+        hint:"Examples: family phone call, music, favorite movie, walking, food, reassurance, quiet room, humor, prayer, familiar objects."},
+      {id:"what_to_avoid", label:"Is there anything caregivers should avoid because it tends to make things worse?", type:"textarea"},
+    ]},
+  ]
+},
+{
+  title:"Sleep, Pain &amp; Safety",
+  sub:"Nighttime patterns, comfort, and safety concerns.",
+  sections:[
+    {h:"Sleep &amp; Nighttime Care", fields:[
+      {id:"bedtime", label:"Usual bedtime", type:"text"},
+      {id:"wake_time", label:"Usual wake time", type:"text"},
+      {id:"naps", label:"Do they nap?", type:"text"},
+      {id:"night_frequency", label:"How often do they typically need assistance overnight?", type:"radio",
+        options:["Rarely","1 time","2–3 times","Frequently throughout night","I'm not sure"]},
+      {id:"night_needs", label:"At night, do they:", type:"checkbox",
+        options:["Need toileting assistance","Wander","Call out","Become confused","Experience nightmares","Need repositioning","Need medications / treatments","Need reassurance","Sleep well"]},
+      {id:"settle_sleep", label:"What helps them settle or return to sleep?", type:"textarea"},
+    ]},
+    {h:"Pain &amp; Comfort", fields:[
+      {id:"ongoing_pain", label:"Does your loved one experience ongoing pain?", type:"radio", options:["Yes","No","I'm not sure"]},
+      {id:"pain_location", label:"Where?", type:"text", showIf:a=>eq("ongoing_pain","Yes")},
+      {id:"pain_description", label:"What does the pain seem like?", type:"text", showIf:a=>eq("ongoing_pain","Yes")},
+      {id:"pain_worse", label:"What makes it worse?", type:"text", showIf:a=>eq("ongoing_pain","Yes")},
+      {id:"pain_helps", label:"What helps?", type:"checkbox", showIf:a=>eq("ongoing_pain","Yes"),
+        options:["Medication","Heat","Cold","Repositioning","Walking / movement","Massage","Distraction","Reassurance","Other"]},
+      {id:"pain_recognition", label:"How do you know when they are in pain if they cannot clearly tell you?", type:"textarea"},
+    ]},
+    {h:"Safety", fields:[
+      {id:"safety_history", label:"Has your loved one:", type:"checkbox",
+        options:["Wandered or become lost","Tried to leave a care setting unexpectedly","Forgotten to use mobility equipment","Fallen","Left stove / water running","Smoked unsafely","Had difficulty calling for help","Had unsafe behaviors related to memory","None"], noneOptions:["None"]},
+      {id:"emergency_exit", label:"Could they independently leave a home during an emergency?", type:"radio", options:["Yes","No","I'm not sure"]},
+      {id:"emergency_assistance", label:"What assistance / equipment would likely be needed?", type:"textarea"},
+    ]},
+  ]
+},
+{
+  title:"What Makes a Good Day",
+  sub:"Their rhythms, interests, and what brings them joy.",
+  sections:[
+    {h:"", fields:[
+      {id:"wake_pref", label:"What time do they usually like to wake up?", type:"text"},
+      {id:"active_time", label:"Are they more active in:", type:"radio", options:["Morning","Afternoon","Evening"]},
+      {id:"enjoys", label:"Do they enjoy:", type:"checkbox",
+        options:["Conversation","Quiet time","Groups","One-on-one activities","Children","Animals","Music","Movies / TV","Reading","Games / cards","Art / crafts","Gardening","Cooking","Exercise / walking","Outdoors","Computers / technology","Religious / spiritual activities","Other"]},
+      {id:"fav_movies", label:"Favorite movies / shows", type:"text"},
+      {id:"fav_music", label:"Favorite music / artists", type:"text"},
+      {id:"fav_games", label:"Favorite games", type:"text"},
+      {id:"fav_hobbies", label:"Favorite hobbies", type:"text"},
+      {id:"brings_comfort", label:"What brings comfort?", type:"textarea"},
+      {id:"good_day", label:"What makes a really good day for them?", type:"textarea"},
+    ]},
+  ]
+},
+{
+  title:"Know Me Before You Care for Me",
+  sub:"Before we ask what help they need, we want to know who they are. You don't need to write a biography — simply tell us the stories.",
+  sections:[
+    {h:"Their Story", fields:[
+      {id:"grew_up", label:"Where did they grow up? What was their childhood like?", type:"textarea"},
+      {id:"work_life", label:"What kind of work did they do? What did they love — or not love — about it?", type:"textarea"},
+      {id:"contribution", label:"How did they contribute to their family or community?", type:"textarea"},
+      {id:"important_people", label:"Who are the most important people in their life?", type:"textarea"},
+      {id:"love_story", label:"Tell us about their spouse / partner or an important love story.", type:"textarea"},
+      {id:"proud_of", label:"What are they most proud of?", type:"textarea"},
+      {id:"adventures", label:"What adventures have they had? Where have they traveled or lived?", type:"textarea"},
+      {id:"passions", label:"What hobbies or passions have shaped their life? What are they especially good at?", type:"textarea"},
+    ]},
+    {h:"Their Personality", fields:[
+      {id:"described_by_others", label:"How would the people who love them describe them?", type:"textarea"},
+      {id:"makes_laugh", label:"What makes them laugh? Any story that captures their sense of humor?", type:"textarea"},
+      {id:"would_surprise", label:"What would surprise someone meeting them today?", type:"textarea"},
+      {id:"stubborn_about", label:"What are they stubborn about? What has always mattered deeply to them?", type:"textarea"},
+    ]},
+    {h:"Their Wisdom", fields:[
+      {id:"challenges_overcome", label:"What challenges have they overcome? What life experiences shaped them?", type:"textarea"},
+      {id:"advice_sayings", label:"What advice, sayings, or lessons have they passed down?", type:"textarea"},
+      {id:"hope_for_others", label:"What do you hope younger generations could learn from their life?", type:"textarea"},
+    ]},
+    {h:"Most Important Question", fields:[
+      {id:"one_thing", label:"If their caregivers knew only one thing about who your loved one really is, what would you want them to know?", type:"textarea"},
+      {id:"photos", label:"Upload up to 3 favorite photographs that help tell their story", type:"file"},
+    ]},
+    {h:"Faith, Culture &amp; What Matters", fields:[
+      {id:"beliefs", label:"Are there religious, spiritual, or cultural beliefs important to your loved one?", type:"textarea"},
+      {id:"faith_opportunities", label:"Would they like opportunities for:", type:"checkbox",
+        options:["Prayer","Church / services","Scripture / devotional reading","Clergy visits","Religious music","Cultural traditions","None / not applicable","Other"]},
+      {id:"customs", label:"Are there customs, traditions, or personal values we should understand to care for them respectfully?", type:"textarea"},
+    ]},
+    {h:"Family &amp; Connection", fields:[
+      {id:"closest_people", label:"Who are the people they are closest to?", type:"textarea"},
+      {id:"turn_to_for_reassurance", label:"Who do they usually turn to for reassurance?", type:"textarea"},
+      {id:"reassurance_tips", label:"What are helpful things caregivers can do to reassure them when upset?", type:"textarea"},
+      {id:"stay_connected", label:"How does your loved one prefer to stay connected?", type:"checkbox",
+        options:["Phone","Video calls","Visits","Photos","Letters / cards","Other"]},
+      {id:"family_dynamics", label:"Are there important family dynamics or relationships that would help us understand them better?", type:"textarea", hint:"Optional", optional:true},
+    ]},
+  ]
+},
+{
+  title:"Document Uploads",
+  sub:"If available, please share any of the following. Nothing here is required.",
+  sections:[
+    {h:"", fields:[
+      {id:"doc_meds", label:"Current medication list", type:"file"},
+      {id:"doc_h_and_p", label:"Recent History &amp; Physical", type:"file"},
+      {id:"doc_discharge", label:"Hospital / SNF discharge summary", type:"file"},
+      {id:"doc_polst", label:"POLST", type:"file"},
+      {id:"doc_advance_directive", label:"Advance Directive", type:"file"},
+      {id:"doc_poa", label:"POA / guardianship documentation", type:"file"},
+      {id:"doc_existing_assessment", label:"Existing assessment / care plan", type:"file"},
+      {id:"doc_therapy", label:"Therapy recommendations", type:"file"},
+      {id:"doc_labs", label:"Recent lab / medical information relevant to care", type:"file"},
+      {id:"doc_other", label:"Other", type:"file"},
+    ]},
+  ]
+},
+{
+  title:"What Haven't We Asked?",
+  sub:"Sometimes the most important information doesn't fit neatly into a questionnaire.",
+  sections:[
+    {h:"", fields:[
+      {id:"anything_else", label:"Please share anything else about your loved one, your concerns, your hopes for their care, or anything you want to make sure we discuss during the assessment.", type:"textarea"},
+      {id:"three_concerns", label:"What are your three biggest concerns right now?", type:"textarea"},
+      {id:"success_looks_like", label:"What would a successful move into an Adult Family Home look like for your loved one — and for your family?", type:"textarea"},
+    ]},
+  ]
+},
+];
+
+const TOTAL_STEPS = SCHEMA.length;
+
+/* ============================================================
+   RENDERING
+   ============================================================ */
+function fieldVisible(f){ return !f.showIf || f.showIf(answers); }
+
+function renderField(f){
+  if(!fieldVisible(f)) return "";
+  const isRequired = f.type!=="static" && f.type!=="file" && f.type!=="repeater" && !f.optional;
+  const hasError = stepErrors.has(f.id);
+  const isPns = answers[f.id]===PNS_TEXT;
+  let out = `<div class="field${hasError?" has-error":""}" data-field="${f.id}">`;
+  if(f.type!=="static" && f.type!=="rating" && f.label){
+    out += `<label class="field-label">${esc(f.label)}${isRequired ? '<span class="req-star">*</span>' : ''}</label>`;
+  }
+
+  if(f.type==="text"){
+    out += `<input type="text" data-id="${f.id}" ${isPns?"disabled":""} value="${isPns?"":esc(answers[f.id]||"")}">`;
+    out += pnsToggle(f.id,isPns);
+  } else if(f.type==="date"){
+    out += `<input type="date" data-id="${f.id}" ${isPns?"disabled":""} value="${isPns?"":esc(answers[f.id]||"")}">`;
+    out += pnsToggle(f.id,isPns);
+  } else if(f.type==="textarea"){
+    out += `<textarea data-id="${f.id}" ${isPns?"disabled":""}>${isPns?"":esc(answers[f.id]||"")}</textarea>`;
+    out += pnsToggle(f.id,isPns);
+  } else if(f.type==="radio"){
+    const opts = f.options.concat([PNS_TEXT]);
+    out += `<div class="opt-grid">` + opts.map((o,i)=>{
+      const checkedAttr = eq(f.id,o) ? "checked" : "";
+      const pnsCls = o===PNS_TEXT ? " pns-pill" : "";
+      return `<div class="opt-pill${pnsCls}"><input type="radio" name="${f.id}" id="${f.id}_${i}" data-id="${f.id}" value="${esc(o)}" ${checkedAttr}><label for="${f.id}_${i}">${esc(o)}</label></div>`;
+    }).join("") + `</div>`;
+  } else if(f.type==="checkbox"){
+    const opts = f.options.concat([PNS_TEXT]);
+    out += `<div class="opt-grid">` + opts.map((o,i)=>{
+      const isChecked = checked(f.id,o) ? "checked" : "";
+      const pnsCls = o===PNS_TEXT ? " pns-pill" : "";
+      return `<div class="opt-pill${pnsCls}"><input type="checkbox" id="${f.id}_${i}" data-id="${f.id}" value="${esc(o)}" ${isChecked}><label for="${f.id}_${i}">${esc(o)}</label></div>`;
+    }).join("") + `</div>`;
+  } else if(f.type==="rating"){
+    const scaleOpts = f.scale.concat([PNS_TEXT]);
+    out += f.items.map((item,ri)=>{
+      const rid = f.id+"__"+ri;
+      return `<div class="rating-row"><div class="rr-label">${esc(item)}${isRequired ? '<span class="req-star">*</span>' : ''}</div><div class="opt-grid">` +
+        scaleOpts.map((o,i)=>{
+          const isChecked = eq(rid,o) ? "checked" : "";
+          const pnsCls = o===PNS_TEXT ? " pns-pill" : "";
+          return `<div class="opt-pill${pnsCls}"><input type="radio" name="${rid}" id="${rid}_${i}" data-id="${rid}" value="${esc(o)}" ${isChecked}><label for="${rid}_${i}">${esc(o)}</label></div>`;
+        }).join("") + `</div></div>`;
+    }).join("");
+  } else if(f.type==="file"){
+    const files = answers[f.id]||[];
+    out += `<label class="file-drop">
+        <input type="file" multiple data-id="${f.id}" data-filefield="1">
+        <div class="fd-label">📎 Click to choose file(s)</div>
+        <div class="fd-sub">PDF, photo, or document</div>
+      </label>
+      <div class="file-list">${files.map((fn,i)=>`<div class="file-chip"><span>📄 ${esc(fn)}</span><button type="button" data-removefile="${f.id}:${i}">✕</button></div>`).join("")}</div>`;
+  } else if(f.type==="repeater"){
+    const items = answers[f.id]||[];
+    out += items.map((item,ri)=>{
+      return `<div class="repeater-item" data-repeater="${f.id}:${ri}">
+        <button type="button" class="rm-btn" data-removerep="${f.id}:${ri}">✕</button>
+        <div class="repeater-grid">` +
+        f.repeaterFields.map(rf=>`<div><label class="field-label">${esc(rf.label)}</label><input type="text" data-rep="${f.id}:${ri}:${rf.id}" value="${esc(item[rf.id]||"")}"></div>`).join("") +
+        `</div></div>`;
+    }).join("") + `<button type="button" class="add-btn" data-addrep="${f.id}">${esc(f.addLabel||"+ Add Another")}</button>`;
+  } else if(f.type==="static"){
+    out += `<div class="info-box">ℹ️ ${f.text}</div>`;
+  }
+
+  if(hasError) out += `<div class="field-error-msg">⚠ Please answer this, or choose "Prefer not to share".</div>`;
+  if(f.hint) out += `<div class="field-hint">${esc(f.hint)}</div>`;
+  out += `</div>`;
+  return out;
+}
+
+function pnsToggle(id,isPns){
+  return `<label class="pns-toggle"><input type="checkbox" data-pns="${id}" ${isPns?"checked":""}><span>I'd rather not share this</span></label>`;
+}
+
+function renderStep(skipScrollTop,focusFieldId){
+  const preservedScrollY = skipScrollTop ? window.scrollY : null;
+  const prevVisibleIds = skipScrollTop
+    ? new Set(Array.from(document.querySelectorAll("#formCard [data-field]")).map(el=>el.dataset.field))
+    : null;
+  const step = SCHEMA[currentStep];
+  let html = `<div class="step-eyebrow">Step ${currentStep+1} of ${TOTAL_STEPS}</div>`;
+  html += `<div class="step-title">${step.title}</div>`;
+  html += `<div class="step-sub">${step.sub}</div>`;
+  if(stepErrors.size>0){
+    html += `<div class="step-alert">⚠ <span>Please answer every question below before continuing — or choose "Prefer not to share" for anything you'd rather not answer.</span></div>`;
+  }
+  step.sections.forEach((sec,si)=>{
+    const wrapClass = si===0 ? "subsection" : "subsection";
+    html += `<div class="${wrapClass}">`;
+    if(sec.h) html += `<div class="subsection-h">${sec.h}</div>`;
+    html += sec.fields.map(renderField).join("");
+    html += `</div>`;
+  });
+  document.getElementById("formCard").innerHTML = html;
+  attachFieldListeners();
+  updateProgress();
+  document.getElementById("backBtn").disabled = false;
+  document.getElementById("nextBtn").textContent = currentStep===TOTAL_STEPS-1 ? "Review & Submit →" : "Continue →";
+  if(skipScrollTop){
+    // Re-rendering swaps out the whole step's HTML, which can otherwise cause the
+    // browser to reset scroll position. Restore exactly where the person was first.
+    if(preservedScrollY!=null) window.scrollTo({top:preservedScrollY});
+
+    // Only move the page if something actually needs attention: a brand-new
+    // follow-up question appeared/disappeared as a result of the answer, or
+    // there's a validation error to show. Plain answer selections on fields
+    // with no follow-up (e.g. a simple checkbox list) should never cause a
+    // scroll — that was the jumpy/re-centering behavior on steps like this one.
+    const newVisibleIds = new Set(Array.from(document.querySelectorAll("#formCard [data-field]")).map(el=>el.dataset.field));
+    let revealedId = null;
+    newVisibleIds.forEach(id=>{ if(!prevVisibleIds.has(id) && !revealedId) revealedId = id; });
+    const errorEl = document.querySelector(".field.has-error");
+    const targetId = revealedId || (errorEl && errorEl.dataset.field);
+    const target = targetId ? document.querySelector(`[data-field="${targetId}"]`) : null;
+    if(target){
+      requestAnimationFrame(()=>target.scrollIntoView({behavior:"smooth",block:"nearest",inline:"nearest"}));
+    }
+  } else {
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+}
+
+function attachFieldListeners(){
+  const card = document.getElementById("formCard");
+  card.querySelectorAll("input[type=text],input[type=date],textarea").forEach(el=>{
+    el.addEventListener("input",e=>{
+      const id = e.target.dataset.id;
+      answers[id]=e.target.value;
+      if(stepErrors.has(id) && e.target.value.trim().length>0){
+        stepErrors.delete(id);
+        const wrap = e.target.closest(".field");
+        if(wrap){
+          wrap.classList.remove("has-error");
+          const msg = wrap.querySelector(".field-error-msg");
+          if(msg) msg.remove();
+        }
+      }
+    });
+  });
+  card.querySelectorAll("input[type=radio]:not([data-filefield])").forEach(el=>{
+    el.addEventListener("change",e=>{
+      const id=e.target.dataset.id;
+      answers[id]=e.target.value;
+      const baseId = id.includes("__") ? id.split("__")[0] : id;
+      const baseField = findFieldById(baseId);
+      if(baseField && baseField.type==="rating"){
+        if(isFieldFilled(baseField)) stepErrors.delete(baseId);
+      } else {
+        stepErrors.delete(id);
+      }
+      renderStep(true,baseId);
+    });
+  });
+  card.querySelectorAll("input[type=checkbox]").forEach(el=>{
+    el.addEventListener("change",e=>{
+      const id=e.target.dataset.id, val=e.target.value;
+      let arr = answers[id]||[];
+      const fieldDef = findFieldById(id);
+      const noneOpts = ((fieldDef&&fieldDef.noneOptions)||[]).concat([PNS_TEXT]);
+      if(e.target.checked){
+        if(noneOpts.includes(val)) arr = [val];
+        else arr = arr.filter(v=>!noneOpts.includes(v)).concat(val);
+      } else {
+        arr = arr.filter(v=>v!==val);
+      }
+      answers[id]=arr;
+      stepErrors.delete(id);
+      renderStep(true,id);
+    });
+  });
+  card.querySelectorAll("input[data-filefield]").forEach(el=>{
+    el.addEventListener("change",e=>{
+      const id=e.target.dataset.id;
+      const names = Array.from(e.target.files).map(f=>f.name);
+      answers[id] = (answers[id]||[]).concat(names);
+      renderStep(true,id);
+    });
+  });
+  card.querySelectorAll("[data-removefile]").forEach(el=>{
+    el.addEventListener("click",e=>{
+      const [id,idx]=e.target.dataset.removefile.split(":");
+      answers[id].splice(parseInt(idx),1);
+      renderStep(true,id);
+    });
+  });
+  card.querySelectorAll("[data-addrep]").forEach(el=>{
+    el.addEventListener("click",e=>{
+      const id=e.target.dataset.addrep;
+      answers[id]=answers[id]||[];
+      answers[id].push({});
+      renderStep(true,id);
+    });
+  });
+  card.querySelectorAll("[data-pns]").forEach(el=>{
+    el.addEventListener("change",e=>{
+      const id = e.target.dataset.pns;
+      answers[id] = e.target.checked ? PNS_TEXT : "";
+      stepErrors.delete(id);
+      renderStep(true,id);
+    });
+  });
+  card.querySelectorAll("[data-removerep]").forEach(el=>{
+    el.addEventListener("click",e=>{
+      const [id,idx]=e.target.dataset.removerep.split(":");
+      answers[id].splice(parseInt(idx),1);
+      renderStep(true,id);
+    });
+  });
+  card.querySelectorAll("[data-rep]").forEach(el=>{
+    el.addEventListener("input",e=>{
+      const [id,idx,sub]=e.target.dataset.rep.split(":");
+      answers[id][parseInt(idx)][sub]=e.target.value;
+    });
+  });
+}
+
+function findFieldById(id){
+  for(const step of SCHEMA) for(const sec of step.sections) for(const f of sec.fields) if(f.id===id) return f;
+  return null;
+}
+
+function updateProgress(){
+  const pct = Math.round(((currentStep+1)/TOTAL_STEPS)*100);
+  document.getElementById("progLabel").textContent = `Step ${currentStep+1} of ${TOTAL_STEPS}`;
+  document.getElementById("progPct").textContent = pct+"%";
+  document.getElementById("progFill").style.width = pct+"%";
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+document.getElementById("startBtn").addEventListener("click",()=>{
+  currentStep = 0;
+  document.getElementById("intro").classList.add("hide");
+  document.getElementById("formCard").classList.remove("hide");
+  document.getElementById("navbar").style.display="block";
+  document.getElementById("progressWrap").style.display="block";
+  document.getElementById("saveBtn").classList.remove("hide");
+  renderStep();
+});
+
+document.getElementById("backBtn").addEventListener("click",()=>{
+  if(currentStep>0){ stepErrors=new Set(); currentStep--; renderStep(); }
+});
+
+document.getElementById("nextBtn").addEventListener("click",()=>{
+  const errors = validateStep();
+  if(errors.length>0){
+    stepErrors = new Set(errors);
+    renderStep(true);
+    return;
+  }
+  stepErrors = new Set();
+  if(currentStep<TOTAL_STEPS-1){ currentStep++; renderStep(); }
+  else { submitForm(); }
+});
+
+document.getElementById("backBtn").disabled = true;
+
+/* ============================================================
+   SAVE & RESUME (client-side, no backend yet)
+   ============================================================ */
+document.getElementById("saveBtn").addEventListener("click",()=>{
+  const payload = { savedAt:new Date().toISOString(), currentStep, answers };
+  const blob = new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const namePart = (answers.resident_name||"assessment").replace(/[^a-z0-9]/gi,"-").toLowerCase();
+  a.href = url; a.download = `neighbor-care-progress-${namePart}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById("resumeInput").addEventListener("change",e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev=>{
+    try{
+      const data = JSON.parse(ev.target.result);
+      answers = data.answers||{};
+      currentStep = data.currentStep||0;
+      document.getElementById("intro").classList.add("hide");
+      document.getElementById("formCard").classList.remove("hide");
+      document.getElementById("navbar").style.display="block";
+      document.getElementById("progressWrap").style.display="block";
+      document.getElementById("saveBtn").classList.remove("hide");
+      renderStep();
+    }catch(err){ alert("This doesn't look like a valid saved progress file."); }
+  };
+  reader.readAsText(file);
+});
+
+/* ============================================================
+   SUBMIT → PRINT SUMMARY + THANK YOU
+   ============================================================ */
+function submitForm(){
+  buildPrintSummary();
+  document.getElementById("formCard").classList.add("hide");
+  document.getElementById("navbar").style.display="none";
+  document.getElementById("progressWrap").style.display="none";
+  document.getElementById("outro").classList.remove("hide");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function val(id){ return esc(answers[id]||""); }
+function list(id){ return esc((answers[id]||[]).join(", ")||"—"); }
+
+function buildPrintSummary(){
+  let html = `<div class="pv-title">Assessment Preparation Summary</div>
+  <div class="pv-sub">Generated ${esc(new Date().toLocaleDateString())} for ${val("resident_name")||"[Resident]"}</div>
+  <div class="pv-summary">
+    <h3>At a Glance</h3>
+    <div class="pv-row"><b>Currently living:</b> ${val("living_situation")}</div>
+    <div class="pv-row"><b>Diagnoses:</b> ${val("diagnoses")||"—"}</div>
+    <div class="pv-row"><b>Mobility:</b> ${val("mobility")}</div>
+    <div class="pv-row"><b>Recent health changes:</b> ${list("recent_changes")}</div>
+    <div class="pv-row"><b>Special treatments:</b> ${list("treatments")}</div>
+    <div class="pv-row"><b>Memory / cognition concerns:</b> ${list("memory_difficulties")}</div>
+    <div class="pv-row"><b>Behavioral concerns:</b> ${list("mood_behaviors")}</div>
+    <div class="pv-row"><b>Nighttime needs:</b> ${list("night_needs")}</div>
+    <div class="pv-row"><b>Biggest concerns:</b> ${val("three_concerns")||"—"}</div>
+  </div>`;
+
+  SCHEMA.forEach(step=>{
+    html += `<div class="pv-section"><h4>${esc(step.title)}</h4>`;
+    step.sections.forEach(sec=>{
+      sec.fields.forEach(f=>{
+        if(f.type==="static") return;
+        let display = "";
+        if(f.type==="repeater"){
+          const items = answers[f.id]||[];
+          if(items.length) display = items.map(it=>f.repeaterFields.map(rf=>it[rf.id]).filter(Boolean).join(" — ")).join("; ");
+        } else if(f.type==="file"){
+          display = (answers[f.id]||[]).join(", ");
+        } else if(f.type==="rating"){
+          display = f.items.map((item,ri)=>{
+            const v = answers[f.id+"__"+ri];
+            return v ? `${item}: ${v}` : null;
+          }).filter(Boolean).join(" · ");
+        } else if(Array.isArray(answers[f.id])){
+          display = answers[f.id].join(", ");
+        } else {
+          display = answers[f.id]||"";
+        }
+        if(display) html += `<div class="pv-row"><b>${esc(f.label||f.id)}:</b> ${esc(display)}</div>`;
+      });
+    });
+    html += `</div>`;
+  });
+
+  document.getElementById("printArea").innerHTML = html;
+}
+
+document.getElementById("printBtn").addEventListener("click",()=>{ window.print(); });
+
+document.getElementById("downloadJsonBtn").addEventListener("click",()=>{
+  const blob = new Blob([JSON.stringify(answers,null,2)],{type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const namePart = (answers.resident_name||"assessment").replace(/[^a-z0-9]/gi,"-").toLowerCase();
+  a.href = url; a.download = `neighbor-care-responses-${namePart}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+</script>
+</body>
+</html>

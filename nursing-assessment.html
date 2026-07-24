@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registered Nurse Assessments | Neighbor Care Homes</title>
+<meta name="description" content="Comprehensive pre-admission nursing assessments by Tami Serpa, RN — for families considering a Neighbor Care Home or any Washington Adult Family Home.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --forest:#1E3A2F;--forest-mid:#2C5440;--moss:#4A7C59;--mint:#C8E6C9;--mint-pale:#EDF7EE;
+  --gold:#D4A853;--gold-pale:#FBF4E6;--blush:#F2ECE4;--ink:#111B14;--body:#374840;--sub:#5E7368;
+  --border:#D6E4D9;--white:#FFFFFF;--fd:'Playfair Display',Georgia,serif;--fb:'Inter',system-ui,sans-serif;--r:16px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--white);color:var(--body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+
+/* NAV */
+nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:300;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.8);border-radius:100px;padding:0 10px 0 20px;display:flex;align-items:center;gap:8px;height:58px;box-shadow:0 8px 32px rgba(30,58,47,.12);width:calc(100% - 48px);max-width:960px}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:auto}
+.nl-icon{width:32px;height:32px;background:var(--forest);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.nl-name{font-family:var(--fd);font-size:1rem;font-weight:700;color:var(--forest);white-space:nowrap}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
+.nav-links a{text-decoration:none;font-size:.82rem;font-weight:500;color:var(--body);padding:7px 14px;border-radius:100px;transition:background .2s,color .2s}
+.nav-links a:hover{background:var(--mint-pale);color:var(--forest)}
+.nav-cta{background:var(--forest)!important;color:var(--white)!important;padding:9px 20px!important;border-radius:100px!important;font-weight:600!important;font-size:.82rem!important;white-space:nowrap;transition:background .2s!important}
+.nav-cta:hover{background:var(--forest-mid)!important}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;background:var(--forest);border:none;padding:10px 12px;border-radius:100px;margin-left:4px}
+.hamburger span{display:block;width:18px;height:1.5px;background:#fff;border-radius:2px}
+.mob-overlay{display:none;position:fixed;inset:0;background:rgba(17,27,20,.55);z-index:280;backdrop-filter:blur(4px)}
+.mob-overlay.open{display:block}
+.mob-drawer{position:fixed;top:0;right:-100%;width:80%;max-width:320px;height:100vh;background:var(--white);z-index:290;padding:80px 32px 40px;display:flex;flex-direction:column;gap:4px;transition:right .35s cubic-bezier(.4,0,.2,1);box-shadow:-8px 0 40px rgba(0,0,0,.12)}
+.mob-drawer.open{right:0}
+.mob-drawer a{display:block;padding:14px 0;font-size:1rem;font-weight:500;color:var(--body);text-decoration:none;border-bottom:1px solid var(--border);transition:color .2s}
+.mob-drawer a:hover{color:var(--forest)}
+.mob-cta{margin-top:24px;background:var(--forest);color:var(--white)!important;text-align:center;border-radius:10px;padding:16px!important;border:none!important;font-weight:700!important;font-size:1rem!important}
+.mob-ph{color:var(--gold)!important;border:none!important;font-weight:600!important;font-size:1.1rem!important}
+.mob-close{position:absolute;top:20px;right:20px;background:none;border:1.5px solid var(--border);border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:1.1rem;color:var(--body);display:flex;align-items:center;justify-content:center}
+
+/* PAGE HEADER */
+.pg-head{background:var(--forest);position:relative;overflow:hidden;padding:168px 24px 88px}
+.pg-head::before{content:'';position:absolute;top:-180px;right:-180px;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(212,168,83,.14) 0%,transparent 70%);pointer-events:none}
+.pg-head::after{content:'';position:absolute;bottom:-160px;left:-160px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(200,230,201,.08) 0%,transparent 70%);pointer-events:none}
+.pg-head-inner{max-width:760px;margin:0 auto;text-align:center;position:relative;z-index:1}
+.ew{font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--moss);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.ew-wh{color:var(--mint);justify-content:center}
+.h2{font-family:var(--fd);font-size:clamp(2rem,4vw,2.9rem);font-weight:700;line-height:1.15;color:var(--ink);margin-bottom:18px}
+.h2-wh{color:#fff}
+.h2 i{font-style:italic;color:var(--moss)}
+.h2-wh i{color:var(--mint)}
+.lead{font-size:1rem;color:var(--sub);line-height:1.82;max-width:560px}
+.lead-wh{color:rgba(255,255,255,.72);max-width:600px;margin:0 auto}
+
+/* SECTION BASE */
+.sec{padding:88px 24px}
+.wrap{max-width:1040px;margin:0 auto}
+.wrap-n{max-width:820px;margin:0 auto}
+
+/* CTA buttons (header) */
+.head-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:8px;position:relative;z-index:1}
+.btn-gold{background:var(--gold);color:var(--ink);padding:16px 32px;border-radius:50px;font-weight:700;font-size:.88rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .3s cubic-bezier(.4,0,.2,1);letter-spacing:.02em;box-shadow:0 8px 32px rgba(212,168,83,.35);border:2px solid rgba(255,255,255,.3)}
+.btn-gold:hover{background:#C49640;transform:translateY(-4px)}
+.btn-outline{background:rgba(255,255,255,.1);color:#fff;padding:15px 32px;border-radius:50px;border:2px solid rgba(255,255,255,.45);font-weight:700;font-size:.88rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .3s cubic-bezier(.4,0,.2,1)}
+.btn-outline:hover{border-color:#fff;background:rgba(255,255,255,.18);transform:translateY(-4px)}
+
+/* PHILOSOPHY */
+.philo-bg{background:var(--blush)}
+.philo-quote{font-family:var(--fd);font-style:italic;font-size:1.3rem;color:var(--forest);line-height:1.5;border-left:3px solid var(--gold);padding-left:24px;margin:28px 0}
+.wrap-n p{color:var(--sub);font-size:.95rem;line-height:1.85;margin-bottom:16px}
+.wrap-n p:last-child{margin-bottom:0}
+
+/* ASSESSMENT AREAS GRID */
+.factors-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 32px;margin-top:32px}
+.factors-grid li{list-style:none;font-size:.9rem;color:var(--body);display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--border)}
+.factors-grid li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--moss);flex-shrink:0;margin-top:8px}
+@media(max-width:700px){.factors-grid{grid-template-columns:1fr}}
+.req-note{margin-top:28px;background:var(--gold-pale);border:1px solid var(--gold);border-radius:14px;padding:18px 22px;font-size:.88rem;color:var(--body);line-height:1.7}
+
+/* PROCESS */
+.process-bg{background:var(--mint-pale)}
+.process-row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:52px}
+.ps-card{background:#fff;border-radius:20px;padding:32px 24px;text-align:left;border:1px solid var(--border);transition:box-shadow .25s}
+.ps-card:hover{box-shadow:0 12px 40px rgba(30,58,47,.1)}
+.ps-n{width:44px;height:44px;background:var(--forest);color:#fff;border-radius:12px;font-family:var(--fd);font-size:1.15rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.ps-card h3{font-family:var(--fd);font-size:1.08rem;font-weight:700;color:var(--ink);margin-bottom:10px}
+.ps-card p{font-size:.83rem;color:var(--sub);line-height:1.7}
+@media(max-width:900px){.process-row{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.process-row{grid-template-columns:1fr}}
+
+/* COST CARDS */
+.cost-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:44px}
+.cost-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:36px}
+.cost-card.highlight{border-color:var(--moss);background:var(--mint-pale)}
+.cost-card .cc-eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--moss);margin-bottom:10px}
+.cost-card .cc-price{font-family:var(--fd);font-size:2.2rem;font-weight:700;color:var(--ink);margin-bottom:14px}
+.cost-card .cc-price span{font-size:.9rem;font-weight:500;color:var(--sub);font-family:var(--fb)}
+.cost-card p{font-size:.88rem;color:var(--sub);line-height:1.7;margin-bottom:8px}
+@media(max-width:700px){.cost-grid{grid-template-columns:1fr}}
+
+/* CTA */
+.cta-sec{background:var(--forest);padding:80px 24px;text-align:center;position:relative;overflow:hidden}
+.cta-sec::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:rgba(200,230,201,.04);top:-200px;left:-150px;pointer-events:none}
+.cta-sec::after{content:'';position:absolute;width:400px;height:400px;border-radius:50%;background:rgba(200,230,201,.04);bottom:-150px;right:-100px;pointer-events:none}
+.cta-sec h2{font-family:var(--fd);font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;color:#fff;margin-bottom:14px;line-height:1.15;position:relative;z-index:1}
+.cta-sec h2 i{font-style:italic;color:var(--mint)}
+.cta-sec p{color:rgba(255,255,255,.7);font-size:1rem;margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.75;position:relative;z-index:1}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+
+/* FOOTER */
+footer{background:var(--ink);padding:28px 24px}
+.ft-inner{max-width:1040px;margin:0 auto}
+.ft-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.ft-logo{font-family:var(--fd);font-size:1rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
+.ft-copy{font-size:.78rem;color:rgba(255,255,255,.35)}
+.ft-credit{font-size:.78rem;color:rgba(255,255,255,.35)}
+.ft-credit a{color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
+.ft-credit a:hover{color:rgba(255,255,255,.8)}
+@media(max-width:600px){.ft-bottom{justify-content:center;text-align:center}}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+
+@media(max-width:900px){
+  nav{top:10px;padding:0 8px 0 16px;height:54px;border-radius:14px;width:calc(100% - 24px)}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .pg-head{padding:132px 20px 64px}
+}
+@media(max-width:540px){.sec{padding:64px 20px}}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="nl-icon">🕊️</div>
+    <span class="nl-name">Neighbor Care Homes</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#philosophy">Our Philosophy</a></li>
+    <li><a href="#what-is">The Assessment</a></li>
+    <li><a href="#process">The Process</a></li>
+    <li><a href="#cost">Cost</a></li>
+    <li><a href="tel:+18013696018" style="color:var(--forest);font-weight:700">📞 (801) 369-6018</a></li>
+    <li><a href="#contact" class="nav-cta">Schedule Assessment</a></li>
+  </ul>
+  <button class="hamburger" id="ham" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mob-overlay" id="ov" onclick="closeMob()"></div>
+<div class="mob-drawer" id="drawer">
+  <button class="mob-close" onclick="closeMob()">✕</button>
+  <a href="#philosophy" onclick="closeMob()">Our Philosophy</a>
+  <a href="#what-is" onclick="closeMob()">What Is the Assessment?</a>
+  <a href="#process" onclick="closeMob()">The Process</a>
+  <a href="#cost" onclick="closeMob()">Cost</a>
+  <a href="https://neighborcarehomes.com/careplan.html" onclick="closeMob()">Care &amp; Pricing Guide</a>
+  <a href="tel:+18013696018" class="mob-ph">📞 (801) 369-6018</a>
+  <a href="#contact" class="mob-cta" onclick="closeMob()">Schedule a Nursing Assessment</a>
+</div>
+
+<!-- PAGE HEADER -->
+<header class="pg-head">
+  <div class="pg-head-inner">
+    <div class="ew ew-wh"><span style="width:7px;height:7px;border-radius:50%;background:#6fcf97;display:inline-block"></span> Registered Nurse Assessments</div>
+    <h2 class="h2 h2-wh">Understand the Person. <i>Understand the Care They Need.</i></h2>
+    <p class="lead lead-wh">Choosing an Adult Family Home begins with understanding what a person needs — not only medically, but physically, cognitively, emotionally, and in the routines of everyday life. As a Registered Nurse and experienced Adult Family Home provider, Tami Serpa, RN, provides comprehensive pre-admission nursing assessments — whether you're considering one of our Neighbor Care Homes or have already selected another home.</p>
+    <div class="head-btns">
+      <a href="#contact" class="btn-gold">Schedule a Nursing Assessment</a>
+      <a href="pre-assessment-questionnaire.html" class="btn-outline">Complete the Pre-Assessment Questionnaire</a>
+    </div>
+  </div>
+</header>
+
+<!-- PHILOSOPHY -->
+<section class="sec philo-bg" id="philosophy">
+  <div class="wrap-n">
+    <div class="ew rv">Our Philosophy</div>
+    <h2 class="h2 rv">Knowing Someone's Story <i>Changes the Way We Care</i></h2>
+    <div class="rv">
+      <p class="philo-quote">A diagnosis tells us something about a person's health. It cannot tell us who they are.</p>
+      <p>Every person we meet brings with them a lifetime of experiences — the people they have loved, families they have raised, careers they have built, traditions they cherish, challenges they have overcome, and memories that continue to shape who they are.</p>
+      <p>We know the more we begin to understand someone, the more we begin to love them. That is why learning a person's story is an essential part of our assessment process. We want to know who someone was before illness, aging, or memory loss changed what others saw first — and who they continue to be today.</p>
+      <p>Our elders have so much to teach us. When we take the time to know one another, care becomes more than a service. It becomes a relationship built on dignity, respect, and genuine human connection.</p>
+      <p>Knowing someone's story also changes the practical way we care. A familiar song can bring comfort. A lifelong routine begins to make sense. A treasured photograph can spark conversation and unlock memories. A favorite movie can bring reassurance during an anxious evening.</p>
+      <p>Understanding the life behind the diagnosis helps us provide care that is not only clinically appropriate, but deeply personal. A caregiver begins to see not simply a person who needs assistance, but a whole human being whose life has meaning, history, and something still to contribute.</p>
+      <p>We may come into one another's lives as residents, families, caregivers, and neighbors — but over time, we often find ourselves in each other's care.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IS A NURSING ASSESSMENT -->
+<section class="sec" id="what-is">
+  <div class="wrap">
+    <div class="ew rv">Why It Matters</div>
+    <h2 class="h2 rv">What Is a Nursing Assessment <i>&amp; Why Is It Important?</i></h2>
+    <p class="lead rv">A nursing assessment is a comprehensive evaluation of a person's current health, functional abilities, cognitive and emotional needs, medical history, daily routines, and the assistance they require throughout the day and night. Rather than focusing solely on medical diagnoses, it looks at how a person is actually functioning in everyday life and the level of support needed to help them live safely, comfortably, and with dignity.</p>
+    <p class="lead rv" style="margin-top:14px">A thorough assessment helps families, healthcare providers, and prospective Adult Family Homes begin with the same understanding of a person's needs — clarifying the level of assistance required and confirming a home has the staffing, training, environment, and resources necessary to safely provide care.</p>
+
+    <p class="lead rv" style="margin-top:24px;font-weight:600;color:var(--ink)">The assessment may include evaluation of:</p>
+    <ul class="factors-grid rv">
+      <li>Medical history and diagnoses</li>
+      <li>Current medications, treatments &amp; allergies</li>
+      <li>Mobility, transfers &amp; fall risk</li>
+      <li>Nutrition, swallowing &amp; meal assistance</li>
+      <li>Bathing, dressing, grooming &amp; toileting</li>
+      <li>Continence, catheter &amp; ostomy care</li>
+      <li>Cognition, memory &amp; decision-making</li>
+      <li>Communication, vision &amp; hearing</li>
+      <li>Mood, anxiety &amp; behavioral needs</li>
+      <li>Sleep patterns &amp; nighttime care</li>
+      <li>Pain management &amp; comfort</li>
+      <li>Skin integrity</li>
+      <li>Nursing treatments &amp; therapies</li>
+      <li>Personal routines &amp; preferences</li>
+      <li>Social, emotional &amp; spiritual needs</li>
+      <li>Safety concerns</li>
+    </ul>
+
+    <div class="req-note rv">For individuals seeking private-pay admission to a Washington Adult Family Home, a qualifying pre-admission nursing assessment is required before admission. The completed assessment provides the foundation for developing an individualized care plan and helps ensure a safe, thoughtful transition into the next stage of care.</div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="sec process-bg" id="process">
+  <div class="wrap">
+    <div class="ew rv">How It Works</div>
+    <h2 class="h2 rv">What Does the <i>Assessment Process</i> Look Like?</h2>
+    <p class="lead rv">Four steps, from first questionnaire to a completed care plan.</p>
+
+    <div class="process-row">
+      <div class="ps-card rv"><div class="ps-n">1</div><h3>Complete the Pre-Assessment Questionnaire</h3><p>The prospective resident or someone who knows them well completes our secure questionnaire, sharing health history, medications, routines, preferences, and care needs. Families can upload medication lists, medical records, discharge paperwork, POLST, or Power of Attorney documents.</p></div>
+      <div class="ps-card rv"><div class="ps-n">2</div><h3>Meet &amp; Assess</h3><p>Tami meets with the prospective resident, reviews available records and medications, speaks with the family or representative, and personally evaluates current abilities and care needs — wherever the resident currently is.</p></div>
+      <div class="ps-card rv"><div class="ps-n">3</div><h3>Complete the Assessment</h3><p>Information from the resident, family, medical records, and current care team is combined into a comprehensive nursing assessment identifying needs, strengths, risks, preferences, and the assistance required for safe daily care.</p></div>
+      <div class="ps-card rv"><div class="ps-n">4</div><h3>Plan the Next Step</h3><p>Moving into a Neighbor Care Home? The assessment becomes the foundation of your care plan. Chosen another home? We share the completed assessment with them to help prepare for a successful admission.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- COST -->
+<section class="sec" id="cost">
+  <div class="wrap">
+    <div class="ew rv">Assessment Cost</div>
+    <h2 class="h2 rv">Straightforward <i>Pricing</i></h2>
+
+    <div class="cost-grid">
+      <div class="cost-card rv">
+        <div class="cc-eyebrow">For Another Adult Family Home</div>
+        <div class="cc-price">$500 <span>independent nursing assessment</span></div>
+        <p>For individuals preparing for private-pay admission to another Adult Family Home. Tami's completed assessment can be shared with that home to help determine fit and prepare for a smooth admission.</p>
+      </div>
+      <div class="cost-card highlight rv">
+        <div class="cc-eyebrow">Moving Into a Neighbor Care Home</div>
+        <div class="cc-price">Included <span>as part of admission</span></div>
+        <p>Your initial nursing assessment is included as part of our admission process. There's no separate $500 assessment fee for residents moving into one of our homes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec" id="contact">
+  <h2>Not Sure Whether an <i>Assessment Is Needed?</i></h2>
+  <p>We're happy to talk it through first — no pressure, just honest answers about what fits your family's situation.</p>
+  <div class="cta-btns">
+    <a href="tel:+18013696018" class="btn-gold">📞 Schedule an Informational Consultation</a>
+    <a href="pre-assessment-questionnaire.html" class="btn-outline">Complete the Questionnaire</a>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-inner">
+    <div class="ft-bottom">
+      <div class="ft-logo">🕊️ Neighbor Care Homes</div>
+      <span class="ft-copy">© 2026 Neighbor Care Homes</span>
+      <span class="ft-credit"><a href="https://neighborcarehomes.com/careers.html" target="_blank" rel="noopener">We're Hiring Caregivers</a></span>
+      <span class="ft-credit">Designed by <a href="https://diwaspandey.com.np" target="_blank" rel="noopener">Diwas Pandey</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const ham=document.getElementById('ham'),ov=document.getElementById('ov'),dr=document.getElementById('drawer');
+ham.addEventListener('click',()=>{ov.classList.add('open');dr.classList.add('open');document.body.style.overflow='hidden'});
+function closeMob(){ov.classList.remove('open');dr.classList.remove('open');document.body.style.overflow=''}
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();const top=t.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top,behavior:'smooth'})}
+  });
+});
+
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}});
+},{threshold:0.1});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

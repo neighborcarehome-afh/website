@@ -209,7 +209,7 @@ input[type=text],input[type=date],textarea,select{font-size:16px;padding:13px 14
     <a href="https://neighborcarehomes.com" class="tb-logo"><span class="ic">🕊️</span> Neighbor Care Homes</a>
     <div class="tb-actions">
       <a href="tel:+18013696018" class="tb-btn" id="callBtn">📞 (801) 369-6018</a>
-      <button class="tb-btn hide" id="saveBtn">💾 Save &amp; Continue Later</button>
+      <span class="tb-btn hide" id="saveStatusChip" style="cursor:default"><span id="saveStatus">Saved ✓</span></span>
     </div>
   </div>
   <div class="progress-wrap" id="progressWrap" style="display:none">
@@ -220,23 +220,54 @@ input[type=text],input[type=date],textarea,select{font-size:16px;padding:13px 14
 
 <main>
 
-  <!-- INTRO SCREEN -->
-  <div id="intro" class="center-card">
+  <!-- PHONE + PIN SIGN-IN SCREEN -->
+  <div id="phoneScreen" class="center-card">
+    <div class="step-eyebrow" style="justify-content:center;display:flex">Pre-Assessment Questionnaire</div>
+    <h1>Welcome — Let's Get Started</h1>
+    <p>Enter your phone number and 4-digit PIN. If you've started this before, we'll pick up right where you left off. If this is your first time, we'll set up a new profile for you.</p>
+    <div class="field" style="text-align:left;margin-top:24px">
+      <label class="field-label">Mobile Phone Number</label>
+      <div style="display:flex;gap:8px;align-items:stretch">
+        <span style="display:flex;align-items:center;padding:0 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--mint-pale);color:var(--forest);font-weight:600;font-size:.9rem;white-space:nowrap">+1</span>
+        <input type="text" id="phoneInput" placeholder="555 123 4567" autocomplete="tel-national" inputmode="numeric" maxlength="14" style="flex:1">
+      </div>
+      <div class="field-hint">10-digit US number.</div>
+    </div>
+    <div class="field" style="text-align:left">
+      <label class="field-label">4-Digit PIN</label>
+      <input type="text" id="pinInput" placeholder="••••" autocomplete="off" inputmode="numeric" maxlength="4" style="letter-spacing:.35em;text-align:center">
+      <div class="field-hint">Already started? Enter the PIN you created last time.</div>
+    </div>
+    <div id="phoneError" class="field-error-msg hide" style="justify-content:center"></div>
+    <div id="pinRetryActions" class="hide" style="margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-ghost" id="pinRetryBtn">Try Again</button>
+      <button class="btn btn-ghost" id="pinRestartBtn">Restart Application</button>
+    </div>
+    <div style="margin-top:20px">
+      <button class="btn btn-primary" id="continueBtn" style="width:100%;justify-content:center">Continue</button>
+    </div>
+  </div>
+
+  <!-- WELCOME BACK (existing saved progress found) -->
+  <div id="welcomeBackScreen" class="center-card hide">
+    <div class="step-eyebrow" style="justify-content:center;display:flex">Welcome Back</div>
+    <h1>Pick Up Where You Left Off</h1>
+    <p id="welcomeBackSub">We found your saved progress. You can continue from your last step, or start over if you'd like.</p>
+    <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-primary" id="resumeBtn">Continue Where I Left Off</button>
+      <button class="btn btn-ghost" id="restartBtn">Start Over</button>
+    </div>
+  </div>
+
+  <!-- INTRO SCREEN (new questionnaire, shown after phone verification) -->
+  <div id="intro" class="center-card hide">
     <div class="step-eyebrow" style="justify-content:center;display:flex">Pre-Assessment Questionnaire</div>
     <h1>Thank You for Helping Us Get to Know Them</h1>
     <p>The information you provide helps us prepare for the nursing assessment and spend more of our time together understanding your loved one's individual needs — rather than gathering basic information.</p>
     <p>You do not need to know every answer. If you're unsure, simply choose <b>"I'm not sure"</b> — we'll review and verify during the assessment. Please answer based on how your loved one is functioning <i>now</i>, rather than how they functioned in the past.</p>
-    <p style="font-size:.8rem;color:var(--sub)">This takes most families one sitting to complete, but you can save your progress and come back anytime.</p>
+    <p style="font-size:.8rem;color:var(--sub)">This takes most families one sitting to complete, and your progress is saved automatically as you go — safe to close the tab and come back anytime.</p>
     <div style="margin-top:28px">
       <button class="btn btn-primary" id="startBtn" style="width:100%;justify-content:center">Start the Questionnaire</button>
-    </div>
-    <div class="resume-box">
-      <p style="font-size:.82rem;margin-bottom:12px">Already started? Resume from a saved file:</p>
-      <label class="file-drop">
-        <input type="file" id="resumeInput" accept="application/json">
-        <div class="fd-label">📂 Choose your saved progress file</div>
-        <div class="fd-sub">The .json file you downloaded last time you saved</div>
-      </label>
     </div>
   </div>
 
@@ -249,11 +280,14 @@ input[type=text],input[type=date],textarea,select{font-size:16px;padding:13px 14
     <h1>Thank You for Sharing Their Story</h1>
     <p>We will review your questionnaire and any documents you've provided before the assessment.</p>
     <p>Please remember: this questionnaire is not itself the completed nursing assessment. Information you've shared will be reviewed, clarified, and combined with the assessor's professional evaluation to complete the formal assessment.</p>
-    <div style="margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-      <button class="btn btn-primary" id="downloadJsonBtn">⬇ Download My Responses</button>
-      <button class="btn btn-ghost" id="printBtn">🖨 Print / Save as PDF</button>
+    <div class="pdf-status" id="pdfStatus" style="margin-top:24px;font-size:.92rem"></div>
+    <div class="info-box" style="margin-top:24px;text-align:left">
+      <p style="margin-bottom:8px"><b>📞 Phone:</b> <a href="tel:+18013696018" style="color:var(--forest);font-weight:600">(801) 369-6018</a></p>
+      <p style="margin-bottom:8px"><b>✉️ Email:</b> <a href="mailto:neighborcarehome@gmail.com" style="color:var(--forest);font-weight:600">neighborcarehome@gmail.com</a></p>
+      <p style="margin-bottom:8px"><b>📍 Location:</b> Vancouver, WA 98661</p>
+      <p style="margin-bottom:0"><b>🕐 Office Hours:</b> Monday – Saturday, 8 AM – 6 PM</p>
     </div>
-    <p style="font-size:.76rem;margin-top:20px;color:var(--sub)">A confirmation has been noted for your records. If you don't hear from us within one business day, please call us at <a href="tel:+18013696018" style="color:var(--forest);font-weight:600">(801) 369-6018</a> or email <a href="mailto:neighborcarehome@gmail.com" style="color:var(--forest);font-weight:600">neighborcarehome@gmail.com</a>.</p>
+    <p style="font-size:.76rem;margin-top:20px;color:var(--sub)">If you don't hear from us within one business day, please reach out using the contact information above.</p>
   </div>
 
 </main>
@@ -268,6 +302,92 @@ input[type=text],input[type=date],textarea,select{font-size:16px;padding:13px 14
 
 <!-- PRINT AREA (populated on submit) -->
 <div id="printArea"></div>
+
+<!-- =============================================================
+     FIREBASE + PDF-LIB
+     ============================================================= -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+<script>
+/* ============================================================
+   FIREBASE CONFIG — REPLACE WITH YOUR PROJECT'S VALUES
+   Get this from Firebase Console > Project Settings > Your apps
+   ============================================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyDrw4oXbv8ckpwb_2P6ah5GSoTHzZWJ1eU",
+  authDomain: "assessment-f7396.firebaseapp.com",
+  projectId: "assessment-f7396",
+  storageBucket: "assessment-f7396.firebasestorage.app",
+  messagingSenderId: "106752409207",
+  appId: "1:106752409207:web:305d568de020342ac45072",
+  measurementId: "G-HVBPBFFJ31"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const storage = firebase.storage();
+
+/* This app no longer verifies phone numbers via SMS — but Firestore/Storage
+   security rules typically still require request.auth != null. Anonymous
+   Auth satisfies that requirement invisibly, with no phone/SMS involved. */
+let anonAuthReady = new Promise((resolve, reject)=>{
+  auth.onAuthStateChanged(user=>{
+    if(user){ resolve(user); }
+  });
+  auth.signInAnonymously().catch(err=>{
+    console.error("Anonymous sign-in failed:", err);
+    reject(err);
+  });
+});
+
+let currentPhone = null;     // the +1XXXXXXXXXX number the person signed in with
+let docRef = null;           // Firestore doc for this user's assessment
+let autosaveTimer = null;
+
+function phoneDocId(phone){
+  // Firestore doc IDs can't contain "/"; sanitize the phone number for use as a key.
+  return phone.replace(/[^0-9+]/g,"");
+}
+
+/* Simple one-way hash for the 4-digit PIN so it isn't stored in plain text.
+   This is a lightweight deterrent, not cryptographic-grade security — a
+   4-digit PIN has limited entropy no matter how it's hashed. */
+async function hashPin(pin){
+  const enc = new TextEncoder().encode("nch-pin-salt-"+pin);
+  const buf = await crypto.subtle.digest("SHA-256", enc);
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+
+function setSaveStatus(text){
+  const el = document.getElementById("saveStatus");
+  if(el) el.textContent = text;
+}
+
+/* Debounced autosave to Firestore — fires after answers or step change. */
+function scheduleAutosave(){
+  if(!docRef) return;
+  setSaveStatus("Saving…");
+  clearTimeout(autosaveTimer);
+  autosaveTimer = setTimeout(async ()=>{
+    try{
+      await docRef.set({
+        answers, currentStep,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        phone: currentPhone || null,
+        submitted: false
+      }, { merge:true });
+      setSaveStatus("Saved ✓");
+    }catch(err){
+      console.error(err);
+      setSaveStatus("Couldn't save — check connection");
+    }
+  }, 800);
+}
+</script>
 
 <script>
 /* ============================================================
@@ -681,11 +801,15 @@ function renderField(f){
   } else if(f.type==="file"){
     const files = answers[f.id]||[];
     out += `<label class="file-drop">
-        <input type="file" multiple data-id="${f.id}" data-filefield="1">
-        <div class="fd-label">📎 Click to choose file(s)</div>
-        <div class="fd-sub">PDF, photo, or document</div>
+        <input type="file" multiple accept="application/pdf" data-id="${f.id}" data-filefield="1">
+        <div class="fd-label">📎 Click to choose PDF file(s)</div>
+        <div class="fd-sub">PDF documents only</div>
       </label>
-      <div class="file-list">${files.map((fn,i)=>`<div class="file-chip"><span>📄 ${esc(fn)}</span><button type="button" data-removefile="${f.id}:${i}">✕</button></div>`).join("")}</div>`;
+      <div class="file-list">${files.map((fo,i)=>{
+        const label = typeof fo==="string" ? fo : fo.name;
+        const uploading = typeof fo==="object" && fo.uploading;
+        return `<div class="file-chip"><span>📄 ${esc(label)}${uploading?" (uploading…)":""}</span><button type="button" data-removefile="${f.id}:${i}">✕</button></div>`;
+      }).join("")}</div>`;
   } else if(f.type==="repeater"){
     const items = answers[f.id]||[];
     out += items.map((item,ri)=>{
@@ -728,8 +852,17 @@ function renderStep(skipScrollTop,focusFieldId){
     html += sec.fields.map(renderField).join("");
     html += `</div>`;
   });
-  document.getElementById("formCard").innerHTML = html;
+  const formCard = document.getElementById("formCard");
+  formCard.innerHTML = html;
   attachFieldListeners();
+  if(!formCard.dataset.autosaveBound){
+    formCard.addEventListener("input",scheduleAutosave);
+    formCard.addEventListener("change",scheduleAutosave);
+    formCard.addEventListener("click",e=>{
+      if(e.target.closest("[data-removefile],[data-addrep],[data-removerep]")) scheduleAutosave();
+    });
+    formCard.dataset.autosaveBound = "1";
+  }
   updateProgress();
   document.getElementById("backBtn").disabled = false;
   document.getElementById("nextBtn").textContent = currentStep===TOTAL_STEPS-1 ? "Review & Submit →" : "Continue →";
@@ -806,18 +939,49 @@ function attachFieldListeners(){
     });
   });
   card.querySelectorAll("input[data-filefield]").forEach(el=>{
-    el.addEventListener("change",e=>{
+    el.addEventListener("change",async e=>{
       const id=e.target.dataset.id;
-      const names = Array.from(e.target.files).map(f=>f.name);
-      answers[id] = (answers[id]||[]).concat(names);
+      const chosen = Array.from(e.target.files);
+      const rejected = chosen.filter(f=>f.type!=="application/pdf");
+      const valid = chosen.filter(f=>f.type==="application/pdf");
+      if(rejected.length>0){
+        alert(`Only PDF files are accepted. These weren't added: ${rejected.map(f=>f.name).join(", ")}`);
+      }
+      if(valid.length===0){ e.target.value=""; return; }
+
+      answers[id] = answers[id]||[];
+      const placeholders = valid.map(f=>({ name:f.name, uploading:true }));
+      answers[id] = answers[id].concat(placeholders);
       renderStep(true,id);
+
+      for(let i=0;i<valid.length;i++){
+        const file = valid[i];
+        const placeholder = placeholders[i];
+        try{
+          const path = `assessments/${phoneDocId(currentPhone)}/attachments/${Date.now()}-${file.name}`;
+          const ref = storage.ref().child(path);
+          await ref.put(file);
+          const url = await ref.getDownloadURL();
+          Object.assign(placeholder, { uploading:false, url, path });
+        }catch(err){
+          console.error(err);
+          Object.assign(placeholder, { uploading:false, error:true });
+        }
+        renderStep(true,id);
+      }
+      scheduleAutosave();
     });
   });
   card.querySelectorAll("[data-removefile]").forEach(el=>{
     el.addEventListener("click",e=>{
       const [id,idx]=e.target.dataset.removefile.split(":");
+      const removed = answers[id][parseInt(idx)];
+      if(removed && removed.path){
+        storage.ref().child(removed.path).delete().catch(err=>console.error(err));
+      }
       answers[id].splice(parseInt(idx),1);
       renderStep(true,id);
+      scheduleAutosave();
     });
   });
   card.querySelectorAll("[data-addrep]").forEach(el=>{
@@ -866,18 +1030,37 @@ function updateProgress(){
 /* ============================================================
    NAVIGATION
    ============================================================ */
-document.getElementById("startBtn").addEventListener("click",()=>{
-  currentStep = 0;
+function showFormUI(){
   document.getElementById("intro").classList.add("hide");
+  document.getElementById("welcomeBackScreen").classList.add("hide");
   document.getElementById("formCard").classList.remove("hide");
   document.getElementById("navbar").style.display="block";
   document.getElementById("progressWrap").style.display="block";
-  document.getElementById("saveBtn").classList.remove("hide");
+  document.getElementById("saveStatusChip").classList.remove("hide");
   renderStep();
+}
+
+document.getElementById("startBtn").addEventListener("click",()=>{
+  currentStep = 0;
+  answers = {};
+  showFormUI();
+  scheduleAutosave();
+});
+
+document.getElementById("resumeBtn").addEventListener("click",()=>{
+  showFormUI();
+});
+
+document.getElementById("restartBtn").addEventListener("click",()=>{
+  if(!confirm("This will clear your previously saved answers. Start over?")) return;
+  currentStep = 0;
+  answers = {};
+  showFormUI();
+  scheduleAutosave();
 });
 
 document.getElementById("backBtn").addEventListener("click",()=>{
-  if(currentStep>0){ stepErrors=new Set(); currentStep--; renderStep(); }
+  if(currentStep>0){ stepErrors=new Set(); currentStep--; renderStep(); scheduleAutosave(); }
 });
 
 document.getElementById("nextBtn").addEventListener("click",()=>{
@@ -888,79 +1071,188 @@ document.getElementById("nextBtn").addEventListener("click",()=>{
     return;
   }
   stepErrors = new Set();
-  if(currentStep<TOTAL_STEPS-1){ currentStep++; renderStep(); }
+  if(currentStep<TOTAL_STEPS-1){ currentStep++; renderStep(); scheduleAutosave(); }
   else { submitForm(); }
 });
 
 document.getElementById("backBtn").disabled = true;
 
 /* ============================================================
-   SAVE & RESUME (client-side, no backend yet)
+   PHONE NUMBER + 4-DIGIT PIN SIGN-IN (NO SMS / NO PHONE VERIFICATION)
+   Looks the phone number up directly in Firestore:
+     - number found + PIN matches  -> resume/load that profile
+     - number found + PIN wrong    -> show error, offer retry or restart
+     - number not found            -> create a brand-new profile
    ============================================================ */
-document.getElementById("saveBtn").addEventListener("click",()=>{
-  const payload = { savedAt:new Date().toISOString(), currentStep, answers };
-  const blob = new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  const namePart = (answers.resident_name||"assessment").replace(/[^a-z0-9]/gi,"-").toLowerCase();
-  a.href = url; a.download = `neighbor-care-progress-${namePart}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
+function showPhoneError(msg){
+  const el = document.getElementById("phoneError");
+  el.textContent = msg;
+  el.classList.remove("hide");
+}
+function hidePhoneError(){
+  document.getElementById("phoneError").classList.add("hide");
+}
+function showPinRetryActions(show){
+  document.getElementById("pinRetryActions").classList.toggle("hide", !show);
+}
+
+document.getElementById("continueBtn").addEventListener("click", handlePhonePinSubmit);
+
+async function handlePhonePinSubmit(){
+  hidePhoneError();
+  showPinRetryActions(false);
+
+  const digits = document.getElementById("phoneInput").value.replace(/\D/g,"");
+  const pin = document.getElementById("pinInput").value.trim();
+
+  if(digits.length!==10){
+    showPhoneError("Please enter a valid 10-digit phone number.");
+    return;
+  }
+  if(!/^\d{4}$/.test(pin)){
+    showPhoneError("Please enter a 4-digit PIN.");
+    return;
+  }
+
+  const phone = "+1"+digits;
+  const btn = document.getElementById("continueBtn");
+  btn.disabled = true; btn.textContent = "Checking…";
+
+  try{
+    await anonAuthReady; // make sure we're signed in (anonymously) before touching Firestore
+    const id = phoneDocId(phone);
+    const ref = db.collection("assessments").doc(id);
+    const snap = await ref.get();
+    const pinHash = await hashPin(pin);
+
+    if(snap.exists && snap.data()){
+      const data = snap.data();
+      if(data.pinHash !== pinHash){
+        showPhoneError("That PIN didn't match this phone number. Please try again, or restart to use a different number.");
+        showPinRetryActions(true);
+        return;
+      }
+      // PIN matches an existing profile — resume it.
+      currentPhone = phone;
+      docRef = ref;
+      if(!data.submitted){
+        answers = data.answers || {};
+        currentStep = data.currentStep || 0;
+        document.getElementById("phoneScreen").classList.add("hide");
+        document.getElementById("welcomeBackScreen").classList.remove("hide");
+      } else {
+        answers = {};
+        currentStep = 0;
+        document.getElementById("phoneScreen").classList.add("hide");
+        document.getElementById("intro").classList.remove("hide");
+      }
+    } else {
+      // No profile for this number yet — create a brand-new one.
+      currentPhone = phone;
+      docRef = ref;
+      answers = {};
+      currentStep = 0;
+      await docRef.set({
+        phone: currentPhone,
+        pinHash,
+        answers,
+        currentStep,
+        submitted:false,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      document.getElementById("phoneScreen").classList.add("hide");
+      document.getElementById("intro").classList.remove("hide");
+    }
+  }catch(err){
+    console.error(err);
+    showPhoneError("Something went wrong checking that number. Please try again.");
+  }finally{
+    btn.disabled = false; btn.textContent = "Continue";
+  }
+}
+
+/* "Try Again": stay on the same screen, just clear the PIN so they can retry. */
+document.getElementById("pinRetryBtn").addEventListener("click",()=>{
+  hidePhoneError();
+  showPinRetryActions(false);
+  const pinField = document.getElementById("pinInput");
+  pinField.value = "";
+  pinField.focus();
 });
 
-document.getElementById("resumeInput").addEventListener("change",e=>{
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ev=>{
-    try{
-      const data = JSON.parse(ev.target.result);
-      answers = data.answers||{};
-      currentStep = data.currentStep||0;
-      document.getElementById("intro").classList.add("hide");
-      document.getElementById("formCard").classList.remove("hide");
-      document.getElementById("navbar").style.display="block";
-      document.getElementById("progressWrap").style.display="block";
-      document.getElementById("saveBtn").classList.remove("hide");
-      renderStep();
-    }catch(err){ alert("This doesn't look like a valid saved progress file."); }
-  };
-  reader.readAsText(file);
+/* "Restart Application": clear everything and reload fresh. */
+document.getElementById("pinRestartBtn").addEventListener("click",()=>{
+  window.location.reload();
 });
 
 /* ============================================================
-   SUBMIT → PRINT SUMMARY + THANK YOU
+   SUBMIT → BUILD COMBINED PDF (summary + PDF attachments) → THANK YOU
    ============================================================ */
-function submitForm(){
-  buildPrintSummary();
-  document.getElementById("formCard").classList.add("hide");
-  document.getElementById("navbar").style.display="none";
-  document.getElementById("progressWrap").style.display="none";
-  document.getElementById("outro").classList.remove("hide");
-  window.scrollTo({top:0,behavior:"smooth"});
-}
+async function buildSummaryPdfBytes(){
+  const { PDFDocument, StandardFonts, rgb } = PDFLib;
+  const pdfDoc = await PDFDocument.create();
+  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+  const pageWidth = 612, pageHeight = 792, margin = 50;
+  let page = pdfDoc.addPage([pageWidth,pageHeight]);
+  let y = pageHeight - margin;
 
-function val(id){ return esc(answers[id]||""); }
-function list(id){ return esc((answers[id]||[]).join(", ")||"—"); }
+  function newPageIfNeeded(needed){
+    if(y - needed < margin){
+      page = pdfDoc.addPage([pageWidth,pageHeight]);
+      y = pageHeight - margin;
+    }
+  }
+  /* pdf-lib's standard fonts (Helvetica) only support WinAnsi encoding and
+     throw if asked to draw a character outside that range (e.g. emoji like
+     🚫). Strip any character a given font can't encode before drawing, so
+     PDF generation never crashes on unexpected input. */
+  function pdfSafeText(text, fontToUse){
+    const s = String(text==null?"":text);
+    let out = "";
+    for(const ch of s){
+      try{ fontToUse.widthOfTextAtSize(ch,10); out += ch; }
+      catch(e){ /* drop characters this font can't encode */ }
+    }
+    return out;
+  }
+  function wrapText(text,fontToUse,size,maxWidth){
+    const words = pdfSafeText(text,fontToUse).split(/\s+/);
+    const lines = []; let cur = "";
+    words.forEach(w=>{
+      const test = cur ? cur+" "+w : w;
+      if(fontToUse.widthOfTextAtSize(test,size)>maxWidth && cur){ lines.push(cur); cur=w; }
+      else cur = test;
+    });
+    if(cur) lines.push(cur);
+    return lines;
+  }
+  function drawHeading(text,size=16){
+    newPageIfNeeded(size+10);
+    page.drawText(pdfSafeText(text,boldFont),{x:margin,y,size,font:boldFont,color:rgb(0.12,0.23,0.18)});
+    y -= size+10;
+  }
+  function drawSubheading(text,size=12){
+    newPageIfNeeded(size+8);
+    page.drawText(pdfSafeText(text,boldFont),{x:margin,y,size,font:boldFont,color:rgb(0.17,0.33,0.25)});
+    y -= size+8;
+  }
+  function drawRow(label,value,size=10){
+    wrapText(`${pdfSafeText(label,font)}: ${pdfSafeText(value,font)}`,font,size,pageWidth-margin*2).forEach(line=>{
+      newPageIfNeeded(size+5);
+      page.drawText(line,{x:margin,y,size,font,color:rgb(0.05,0.05,0.05)});
+      y -= size+5;
+    });
+  }
 
-function buildPrintSummary(){
-  let html = `<div class="pv-title">Assessment Preparation Summary</div>
-  <div class="pv-sub">Generated ${esc(new Date().toLocaleDateString())} for ${val("resident_name")||"[Resident]"}</div>
-  <div class="pv-summary">
-    <h3>At a Glance</h3>
-    <div class="pv-row"><b>Currently living:</b> ${val("living_situation")}</div>
-    <div class="pv-row"><b>Diagnoses:</b> ${val("diagnoses")||"—"}</div>
-    <div class="pv-row"><b>Mobility:</b> ${val("mobility")}</div>
-    <div class="pv-row"><b>Recent health changes:</b> ${list("recent_changes")}</div>
-    <div class="pv-row"><b>Special treatments:</b> ${list("treatments")}</div>
-    <div class="pv-row"><b>Memory / cognition concerns:</b> ${list("memory_difficulties")}</div>
-    <div class="pv-row"><b>Behavioral concerns:</b> ${list("mood_behaviors")}</div>
-    <div class="pv-row"><b>Nighttime needs:</b> ${list("night_needs")}</div>
-    <div class="pv-row"><b>Biggest concerns:</b> ${val("three_concerns")||"—"}</div>
-  </div>`;
+  drawHeading("Assessment Preparation Summary");
+  drawRow("Generated", new Date().toLocaleDateString());
+  drawRow("Resident", answers.resident_name || "[Resident]");
+  y -= 6;
 
   SCHEMA.forEach(step=>{
-    html += `<div class="pv-section"><h4>${esc(step.title)}</h4>`;
+    drawSubheading(step.title);
     step.sections.forEach(sec=>{
       sec.fields.forEach(f=>{
         if(f.type==="static") return;
@@ -969,7 +1261,7 @@ function buildPrintSummary(){
           const items = answers[f.id]||[];
           if(items.length) display = items.map(it=>f.repeaterFields.map(rf=>it[rf.id]).filter(Boolean).join(" — ")).join("; ");
         } else if(f.type==="file"){
-          display = (answers[f.id]||[]).join(", ");
+          display = (answers[f.id]||[]).map(fo=>typeof fo==="string"?fo:fo.name).join(", ");
         } else if(f.type==="rating"){
           display = f.items.map((item,ri)=>{
             const v = answers[f.id+"__"+ri];
@@ -980,26 +1272,112 @@ function buildPrintSummary(){
         } else {
           display = answers[f.id]||"";
         }
-        if(display) html += `<div class="pv-row"><b>${esc(f.label||f.id)}:</b> ${esc(display)}</div>`;
+        if(display) drawRow(f.label||f.id, display);
       });
     });
-    html += `</div>`;
+    y -= 6;
   });
 
-  document.getElementById("printArea").innerHTML = html;
+  return pdfDoc.save();
 }
 
-document.getElementById("printBtn").addEventListener("click",()=>{ window.print(); });
+function collectAttachmentUrls(){
+  const urls = [];
+  SCHEMA.forEach(step=>step.sections.forEach(sec=>sec.fields.forEach(f=>{
+    if(f.type==="file"){
+      (answers[f.id]||[]).forEach(fo=>{ if(fo && fo.url) urls.push({name:fo.name,url:fo.url}); });
+    }
+  })));
+  return urls;
+}
 
-document.getElementById("downloadJsonBtn").addEventListener("click",()=>{
-  const blob = new Blob([JSON.stringify(answers,null,2)],{type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  const namePart = (answers.resident_name||"assessment").replace(/[^a-z0-9]/gi,"-").toLowerCase();
-  a.href = url; a.download = `neighbor-care-responses-${namePart}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
-});
+async function buildFinalMergedPdf(){
+  const { PDFDocument } = PDFLib;
+  const summaryBytes = await buildSummaryPdfBytes();
+  const merged = await PDFDocument.create();
+  const summaryDoc = await PDFDocument.load(summaryBytes);
+  (await merged.copyPages(summaryDoc, summaryDoc.getPageIndices())).forEach(p=>merged.addPage(p));
+
+  for(const att of collectAttachmentUrls()){
+    try{
+      const res = await fetch(att.url);
+      const bytes = await res.arrayBuffer();
+      const attDoc = await PDFDocument.load(bytes);
+      (await merged.copyPages(attDoc, attDoc.getPageIndices())).forEach(p=>merged.addPage(p));
+    }catch(err){
+      console.error("Couldn't merge attachment:", att.name, err);
+    }
+  }
+  return merged.save();
+}
+
+/* Converts a Blob to a base64 string (no data: prefix) for email attachments. */
+function blobToBase64(blob){
+  return new Promise((resolve,reject)=>{
+    const reader = new FileReader();
+    reader.onloadend = ()=> resolve(reader.result.split(",")[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function submitForm(){
+  document.getElementById("formCard").classList.add("hide");
+  document.getElementById("navbar").style.display="none";
+  document.getElementById("progressWrap").style.display="none";
+  document.getElementById("outro").classList.remove("hide");
+  window.scrollTo({top:0,behavior:"smooth"});
+
+  const statusEl = document.getElementById("pdfStatus");
+  statusEl.textContent = "⏳ Preparing and delivering your assessment (combining your answers and attachments)…";
+
+  try{
+    const mergedBytes = await buildFinalMergedPdf();
+    const blob = new Blob([mergedBytes],{type:"application/pdf"});
+    const namePart = (answers.resident_name||"assessment").replace(/[^a-z0-9]/gi,"-").toLowerCase();
+    const fileName = `neighbor-care-assessment-${namePart}.pdf`;
+
+    let pdfUrl = null;
+    if(docRef && currentPhone){
+      const path = `assessments/${phoneDocId(currentPhone)}/final-assessment.pdf`;
+      const ref = storage.ref().child(path);
+      await ref.put(blob);
+      pdfUrl = await ref.getDownloadURL();
+      await docRef.set({
+        answers, currentStep, submitted:true,
+        submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        pdfUrl
+      }, { merge:true });
+      setSaveStatus("Submitted ✓");
+    }
+
+    /* Email the combined PDF to the care team. This writes to a "mail"
+       collection watched by the Firebase "Trigger Email" extension
+       (https://extensions.dev/extensions/firebase/firestore-send-email),
+       which must be installed and configured on this Firebase project
+       for delivery to actually go out — this app does not run its own
+       mail server. The PDF is attached as base64. */
+    const base64Pdf = await blobToBase64(blob);
+    await db.collection("mail").add({
+      to: ["neighborcarehome@gmail.com"],
+      message: {
+        subject: `New Pre-Assessment Questionnaire — ${answers.resident_name || "Unnamed Resident"}`,
+        text: `A new pre-assessment questionnaire has been submitted.\n\nResident: ${answers.resident_name || "(not provided)"}\nSubmitted by phone: ${currentPhone || "(unknown)"}\n${pdfUrl ? "Stored PDF: "+pdfUrl : ""}\n\nThe combined PDF (answers + attachments) is included with this email.`,
+        attachments: [
+          { filename: fileName, content: base64Pdf, encoding: "base64" }
+        ]
+      },
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    statusEl.textContent = "✅ Your assessment has been delivered to our care team. They'll be in touch with you soon.";
+    statusEl.classList.add("ready");
+  }catch(err){
+    console.error(err);
+    statusEl.textContent = "⚠ Something went wrong delivering your assessment. Please try again, or contact us directly using the information below.";
+  }
+}
+
 </script>
 </body>
 </html>

@@ -695,7 +695,7 @@ html.is-loading{overflow:hidden}
   <a href="#contact" class="mob-cta" onclick="closeMob()">Schedule a Free Tour</a>
 </div>
 
-<!-- HERO — full-bleed with bento stats -->
+<!-- HERO: full-bleed with bento stats -->
 <section class="hero">
   <img class="hero-bg-img" src="https://raw.githubusercontent.com/neighborcarehome-afh/website/refs/heads/main/theme.png?w=1800&q=68" alt="Senior resident with caregiver walking together in a peaceful garden" loading="eager" />
   <div class="hero-overlay"></div>
@@ -703,7 +703,7 @@ html.is-loading{overflow:hidden}
     <div class="hero-left">
       <div class="hero-tag"><span style="width:7px;height:7px;border-radius:50%;background:#6fcf97;display:inline-block"></span> Currently Accepting Residents</div>
       <h1>Creating Homes<br>Where Families<br><span>Can Return to Being Family Again</span></h1>
-      <p class="hero-p">Six residents. Round-the-clock care. A real home — not a hallway. Neighbor Care Homes is where families find peace, and seniors find joy again.</p>
+      <p class="hero-p">Six residents. Round-the-clock care. A real home, not a hallway. Neighbor Care Homes is where families find peace, and seniors find joy again.</p>
       <!-- Mobile stats strip -->
       <div class="mob-stats">
         <div class="mob-stat"><div class="mob-stat-n">6</div><div class="mob-stat-l">Residents</div></div>
@@ -783,7 +783,7 @@ html.is-loading{overflow:hidden}
   </div>
 </section>
 
-<!-- SERVICES — dark section -->
+<!-- SERVICES: dark section -->
 <section class="sec services-bg" id="services">
   <div class="wrap">
     <div class="rv" style="text-align:center;max-width:580px;margin:0 auto 0">
@@ -1632,7 +1632,7 @@ function filterG(cat,btn){
 // Lightbox detail map
 const detailMap={
   care:{badge:'🩷 Care',desc:'Our dedicated caregivers provide round-the-clock, personalized care in a warm, home-like setting.'},
-  activity:{badge:'🎨 Activity',desc:'Enriching daily activities designed to engage body and mind — from art to music to garden therapy.'},
+  activity:{badge:'🎨 Activity',desc:'Enriching daily activities designed to engage body and mind, from art to music to garden therapy.'},
   event:{badge:'🎉 Celebration',desc:'Every milestone matters. We celebrate birthdays, holidays, and everyday moments with residents and families.'},
   outdoor:{badge:'🌿 Outdoors',desc:'Fresh air and nature are part of daily life. Morning walks and garden time support both mood and wellness.'},
 };
@@ -1680,7 +1680,7 @@ function goSlide(n){
   if(!vis.length)return;
   slideIdx=((n%vis.length)+vis.length)%vis.length;
   // slides with display:none are removed from the flex flow entirely,
-  // so visible slides sit at consecutive positions 0,1,2... in the track —
+  // so visible slides sit at consecutive positions 0,1,2... in the track:
   // use slideIdx directly rather than the slide's position in the full unfiltered list
   const w=document.getElementById('galSlider').offsetWidth;
   track.style.transform='translateX(-'+(slideIdx*w)+'px)';
@@ -1731,7 +1731,7 @@ function filterSlider(cat){
   });
 })();
 
-// init gallery on load — desktop grid shows 6 highlights on "All Moments"; mobile slider shows all 13
+// init gallery on load: desktop grid shows 6 highlights on "All Moments"; mobile slider shows all 13
 (function(){
   allItems.forEach(i=>{
     i.style.display=(i.dataset.highlight==='true')?'':'none';
@@ -1809,7 +1809,7 @@ resetTesti();
 </div>
 
 <script>
-// ── SLIDER DATA — replace placeholder URLs with your real images ──
+// ── SLIDER DATA: replace placeholder URLs with your real images ──
 const sliderData = {
   parkside: {
     title: 'Parkside Adult Family Home',
@@ -1842,7 +1842,7 @@ const sliderData = {
     ]
   },
   comingsoon: {
-    title: 'Opening Soon — Vancouver, WA',
+    title: 'Opening Soon in Vancouver, WA',
     images: [
       {src:'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=900&q=76',alt:'Coming soon home exterior'},
       {src:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=76',alt:'Interior preview'},
@@ -1940,11 +1940,11 @@ lsOverlay.addEventListener('touchend',e=>{
   var minTimeDone=false;
 
   var facts=[
-    'Every home is capped at just <b>6 residents</b> — small by design.',
+    'Every home is capped at just <b>6 residents</b>, small by design.',
     'Care is staffed <b>24/7</b>, day and night, every day of the year.',
     'Our caregivers bring over <b>10+ years</b> of experience serving families.',
     'Every home is <b>100% state licensed</b> and regularly inspected.',
-    'We believe in homes, not facilities — where family still feels like family.'
+    'We believe in homes, not facilities, where family still feels like family.'
   ];
   var factIdx=0;
   factEl.innerHTML='<span>'+facts[0]+'</span>';

@@ -284,6 +284,7 @@ input[type=text],input[type=date],textarea,select{font-size:16px;padding:13px 14
     <p>We will review your questionnaire and any documents you've provided before the assessment.</p>
     <p>Please remember: this questionnaire is not itself the completed nursing assessment. Information you've shared will be reviewed, clarified, and combined with the assessor's professional evaluation to complete the formal assessment.</p>
     <div class="pdf-status" id="pdfStatus" style="margin-top:24px;font-size:.92rem"></div>
+    <a id="pdfDownloadBtn" href="#" download style="display:none;margin-top:16px;padding:12px 24px;background:var(--forest);color:#fff;border-radius:8px;font-weight:600;text-decoration:none">⬇ Download Your Assessment PDF</a>
     <div class="info-box" style="margin-top:24px;text-align:left">
       <p style="margin-bottom:8px"><b>📞 Phone:</b> <a href="tel:+18013696018" style="color:var(--forest);font-weight:600">(801) 369-6018</a></p>
       <p style="margin-bottom:8px"><b>✉️ Email:</b> <a href="mailto:neighborcarehome@gmail.com" style="color:var(--forest);font-weight:600">neighborcarehome@gmail.com</a></p>
@@ -427,12 +428,8 @@ function isFieldFilled(f){
 }
 
 function validateStep(){
-  const step = SCHEMA[currentStep];
-  const errors = [];
-  step.sections.forEach(sec=>sec.fields.forEach(f=>{
-    if(!isFieldFilled(f)) errors.push(f.id);
-  }));
-  return errors;
+  // All fields are optional — nothing blocks step navigation.
+  return [];
 }
 
 /* ============================================================
@@ -759,7 +756,7 @@ function fieldVisible(f){ return !f.showIf || f.showIf(answers); }
 
 function renderField(f){
   if(!fieldVisible(f)) return "";
-  const isRequired = f.type!=="static" && f.type!=="file" && f.type!=="repeater" && !f.optional;
+  const isRequired = false; // all fields are optional now
   const hasError = stepErrors.has(f.id);
   const isPns = answers[f.id]===PNS_TEXT;
   let out = `<div class="field${hasError?" has-error":""}" data-field="${f.id}">`;
@@ -1332,7 +1329,7 @@ async function submitForm(){
   window.scrollTo({top:0,behavior:"smooth"});
 
   const statusEl = document.getElementById("pdfStatus");
-  statusEl.textContent = "⏳ Preparing and delivering your assessment (combining your answers and attachments)…";
+  statusEl.textContent = "⏳ Preparing your assessment PDF (combining your answers and attachments)…";
 
   try{
     const mergedBytes = await buildFinalMergedPdf();
@@ -1354,26 +1351,19 @@ async function submitForm(){
       setSaveStatus("Submitted ✓");
     }
 
-    /* Email the combined PDF to the care team. This writes to a "mail"
-       collection watched by the Firebase "Trigger Email" extension
-       (https://extensions.dev/extensions/firebase/firestore-send-email),
-       which must be installed and configured on this Firebase project
-       for delivery to actually go out — this app does not run its own
-       mail server. The PDF is attached as base64. */
-    const base64Pdf = await blobToBase64(blob);
-    await db.collection("mail").add({
-      to: ["neighborcarehome@gmail.com"],
-      message: {
-        subject: `New Pre-Assessment Questionnaire — ${answers.resident_name || "Unnamed Resident"}`,
-        text: `A new pre-assessment questionnaire has been submitted.\n\nResident: ${answers.resident_name || "(not provided)"}\nSubmitted by phone: ${currentPhone || "(unknown)"}\n${pdfUrl ? "Stored PDF: "+pdfUrl : ""}\n\nThe combined PDF (answers + attachments) is included with this email.`,
-        attachments: [
-          { filename: fileName, content: base64Pdf, encoding: "base64" }
-        ]
-      },
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
+    /* Make the combined PDF downloadable for the person filling out the
+       form. No email is sent to the care team — the PDF stays local to
+       this browser (plus the optional Firestore/Storage save above). */
+    const downloadUrl = URL.createObjectURL(blob);
+    const downloadBtn = document.getElementById("pdfDownloadBtn");
+    downloadBtn.href = downloadUrl;
+    downloadBtn.download = fileName;
+    downloadBtn.style.display = "inline-block";
 
-    statusEl.textContent = "✅ Your assessment has been delivered to our care team. They'll be in touch with you soon.";
+    // Trigger the download automatically as soon as it's ready.
+    downloadBtn.click();
+
+    statusEl.textContent = "✅ Your assessment PDF is ready. If the download didn't start automatically, use the button below.";
     statusEl.classList.add("ready");
   }catch(err){
     console.error(err);

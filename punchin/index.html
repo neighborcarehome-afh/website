@@ -393,6 +393,7 @@ let state = {
   accountsError: '',
   editingPunchIdx: null,  // admin: index (within employee's full entries array) of punch being edited
   editingUserPunchIdx: null, // user: index of their own punch they're drafting a change-request for
+  editingAccountUid: null, // admin: uid of the account whose name is being edited in Update Users
   requestError: ''
 };
 
@@ -1529,12 +1530,31 @@ function drawAddUsersScreen(){
 function drawUpdateUsersScreen(){
   const rows = Object.keys(ACCOUNTS).map(u => {
     const acc = ACCOUNTS[u];
+    const isEditing = state.editingAccountUid === u;
+    if (isEditing){
+      return `
+        <tr>
+          <td style="font-family:'IBM Plex Mono',monospace;">${escapeHtml(acc.email)}</td>
+          <td colspan="2">
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+              <input type="text" id="editNameInput_${escapeHtml(u)}" value="${escapeHtml(acc.name)}" style="padding:7px 9px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);background:rgba(255,255,255,0.85);color:var(--text-hi);font-family:'Inter',sans-serif;font-size:13px;" />
+              <button class="icon-btn" data-save-name="${escapeHtml(u)}">Save</button>
+              <button class="icon-btn" data-cancel-name="${escapeHtml(u)}">Cancel</button>
+            </div>
+          </td>
+          <td><button class="icon-btn" data-sendreset="${escapeHtml(u)}">Send reset email</button></td>
+        </tr>
+      `;
+    }
     return `
       <tr>
         <td style="font-family:'IBM Plex Mono',monospace;">${escapeHtml(acc.email)}</td>
         <td style="font-family:'Inter',sans-serif;">${escapeHtml(acc.name)}</td>
         <td><span class="role-badge ${acc.role}">${escapeHtml(acc.role)}</span></td>
-        <td><button class="icon-btn" data-sendreset="${escapeHtml(u)}">Send reset email</button></td>
+        <td>
+          <button class="icon-btn" data-edit-name="${escapeHtml(u)}">Edit name</button>
+          <button class="icon-btn" data-sendreset="${escapeHtml(u)}">Send reset email</button>
+        </td>
       </tr>
     `;
   }).join('');
@@ -1559,6 +1579,19 @@ function drawUpdateUsersScreen(){
   bindTopbarChrome();
   document.querySelectorAll('[data-sendreset]').forEach(btn => {
     btn.onclick = () => sendResetForUser(btn.dataset.sendreset);
+  });
+  document.querySelectorAll('[data-edit-name]').forEach(btn => {
+    btn.onclick = () => { state.editingAccountUid = btn.dataset.editName; state.accountsError = ''; renderAdmin(); };
+  });
+  document.querySelectorAll('[data-cancel-name]').forEach(btn => {
+    btn.onclick = () => { state.editingAccountUid = null; renderAdmin(); };
+  });
+  document.querySelectorAll('[data-save-name]').forEach(btn => {
+    btn.onclick = () => {
+      const uid = btn.dataset.saveName;
+      const input = document.getElementById(`editNameInput_${uid}`);
+      if (input) updateUserName(uid, input.value);
+    };
   });
 }
 
@@ -1687,6 +1720,36 @@ async function sendResetForUser(uid){
     state.accountsError = "Couldn't send the reset email — try again in a moment.";
     renderAdmin();
   }
+}
+
+/* Renames an employee/admin's display name. Requires the backend to
+   expose window.FB.setAccountName(uid, name) — add this alongside the
+   existing setAccountRole in firebase-backend.js if it's not there yet;
+   it should update the account's `name` field for this uid/company. */
+async function updateUserName(uid, newName){
+  const acc = ACCOUNTS[uid];
+  if (!acc) return;
+  const trimmed = (newName || '').trim();
+  if (!trimmed){
+    state.accountsError = 'Name cannot be empty.';
+    renderAdmin();
+    return;
+  }
+  if (trimmed === acc.name){
+    state.editingAccountUid = null;
+    renderAdmin();
+    return;
+  }
+  state.accountsError = '';
+  try{
+    await window.FB.setAccountName(uid, trimmed);
+    await loadCompanyRoster();
+    state.editingAccountUid = null;
+  }catch(e){
+    console.error('update name failed', e);
+    state.accountsError = "Couldn't update the name — try again.";
+  }
+  renderAdmin();
 }
 
 /* New accounts always start as an employee (never admin) unless the

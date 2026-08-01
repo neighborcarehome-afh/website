@@ -65,12 +65,6 @@ textarea{min-height:90px;resize:vertical}
 .opt-pill label{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border:1.5px solid var(--border);border-radius:100px;font-size:.82rem;color:var(--body);cursor:pointer;transition:all .18s;user-select:none}
 .opt-pill input:checked + label{background:var(--forest);border-color:var(--forest);color:#fff;font-weight:600}
 .opt-pill label:hover{border-color:var(--moss)}
-.opt-pill.pns-pill label{border-style:dashed;color:var(--sub)}
-.opt-pill.pns-pill input:checked + label{background:var(--sub);border-color:var(--sub);color:#fff}
-
-.pns-toggle{display:inline-flex;align-items:center;gap:7px;margin-top:9px;font-size:.78rem;color:var(--sub);cursor:pointer;user-select:none}
-.pns-toggle input{width:15px;height:15px;accent-color:var(--sub);cursor:pointer}
-.pns-toggle:hover{color:var(--ink)}
 
 /* REQUIRED / ERROR STATES */
 .field.has-error .field-label{color:var(--req)}
@@ -101,6 +95,10 @@ textarea{min-height:90px;resize:vertical}
 .file-list{margin-top:10px;display:flex;flex-direction:column;gap:6px}
 .file-chip{display:flex;align-items:center;justify-content:space-between;background:var(--mint-pale);border-radius:8px;padding:8px 12px;font-size:.8rem;color:var(--ink)}
 .file-chip button{background:none;border:none;color:var(--sub);cursor:pointer;font-size:.9rem}
+.file-chip-error{background:#fff0f0;border:1px solid #e53935}
+.file-chip-error span{color:#c62828;font-weight:600}
+.file-retry-btn{background:none;border:1px solid #c62828;color:#c62828;border-radius:6px;padding:3px 9px;cursor:pointer;font-size:.72rem;font-weight:600}
+.file-retry-btn:hover{background:#c62828;color:#fff}
 
 .info-box{background:var(--gold-pale);border:1px solid var(--gold);border-radius:12px;padding:16px 18px;font-size:.82rem;color:var(--body);line-height:1.7;margin-top:22px}
 .highlight-box{background:var(--mint-pale);border:1.5px solid var(--moss);border-radius:14px;padding:20px}
@@ -155,7 +153,6 @@ textarea{min-height:90px;resize:vertical}
 
 /* Bigger, thumb-friendly tap targets everywhere on touch screens */
 .opt-pill label{padding:11px 18px;font-size:.86rem;min-height:44px;display:inline-flex}
-.pns-toggle{padding:4px 0;min-height:32px}
 .btn{min-height:48px}
 .tb-btn{min-height:38px;display:inline-flex;align-items:center}
 input[type=text],input[type=date],textarea,select{font-size:16px;padding:13px 14px} /* 16px prevents iOS zoom-on-focus */
@@ -401,8 +398,6 @@ let answers = {};
 let currentStep = 0; // 0 = intro handled separately; 1..11 = steps
 let stepErrors = new Set();
 
-const PNS_TEXT = "🚫 Prefer not to share";
-
 function esc(s){
   return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
@@ -411,8 +406,8 @@ function checked(id,val){ return (answers[id]||[]).includes(val); }
 function anyCheckedExcept(id,exclude){ const a=answers[id]||[]; return a.some(v=>!exclude.includes(v)); }
 function eq(id,val){ return answers[id]===val; }
 
-/* A field counts as "answered" if it has a value, OR the person explicitly
-   chose "Prefer not to share". File uploads and repeaters are always optional. */
+/* A field counts as "answered" if it has a value. File uploads and
+   repeaters are always optional. */
 function isFieldFilled(f){
   if(!fieldVisible(f)) return true;
   if(f.type==="static" || f.type==="file" || f.type==="repeater") return true;
@@ -437,7 +432,7 @@ function validateStep(){
    ============================================================ */
 const SCHEMA = [
 {
-  title:"About the Person &amp; Placement",
+  title:"About the Person & Placement",
   sub:"Basic details, who's completing this form, and why you're exploring a move.",
   sections:[
     {h:"Basic Information", fields:[
@@ -480,7 +475,7 @@ const SCHEMA = [
   ]
 },
 {
-  title:"Health History &amp; Care Team",
+  title:"Health History & Care Team",
   sub:"Diagnoses, recent changes, allergies, and who's currently involved in their care.",
   sections:[
     {h:"Medical Diagnoses", fields:[
@@ -514,7 +509,7 @@ const SCHEMA = [
   ]
 },
 {
-  title:"Medications &amp; Treatments",
+  title:"Medications & Treatments",
   sub:"What they take, how they're managed, and any special treatments in place.",
   sections:[
     {h:"Medications", fields:[
@@ -538,7 +533,7 @@ const SCHEMA = [
   ]
 },
 {
-  title:"Mobility, Transfers &amp; Falls",
+  title:"Mobility, Transfers & Falls",
   sub:"How they get around, and any fall history or equipment in use.",
   sections:[
     {h:"", fields:[
@@ -559,14 +554,14 @@ const SCHEMA = [
   title:"Daily Personal Care",
   sub:"Bathing, dressing, toileting, and eating — rate how much help is needed with each.",
   sections:[
-    {h:"Personal Care &amp; Daily Activities", fields:[
+    {h:"Personal Care & Daily Activities", fields:[
       {id:"adl_ratings", label:"", type:"rating",
         items:["Bathing / showering","Dressing","Grooming / hair care","Brushing teeth / dentures","Toileting","Eating","Getting in/out of bed or chair","Walking / mobility"],
         scale:["Independent","Reminders/Setup","Some Hands-On Help","Most/All Care","Varies","Unsure"]},
       {id:"personal_care_notes", label:"Tell us anything that makes personal care easier or more comfortable.", type:"textarea",
         hint:"For example: preferred shower days/time, fear of water, prefers female caregivers, favorite products, routines, resistance to care, etc."},
     ]},
-    {h:"Bladder &amp; Bowel", fields:[
+    {h:"Bladder & Bowel", fields:[
       {id:"bladder_bowel", label:"Does your loved one have:", type:"checkbox",
         options:["Independent toileting","Occasional urinary incontinence","Frequent urinary incontinence","Bowel incontinence","Constipation","Recurrent UTIs","Urinary retention","Catheter","Ostomy","Uses briefs / pull-ups","Other"]},
       {id:"catheter_type", label:"Type of catheter", type:"text", showIf:a=>checked("bladder_bowel","Catheter")},
@@ -575,7 +570,7 @@ const SCHEMA = [
       {id:"catheter_complications", label:"History of complications / UTIs", type:"textarea", showIf:a=>checked("bladder_bowel","Catheter")},
       {id:"bowel_bladder_routines", label:"Any bowel / bladder routines we should know?", type:"textarea"},
     ]},
-    {h:"Eating, Nutrition &amp; Swallowing", fields:[
+    {h:"Eating, Nutrition & Swallowing", fields:[
       {id:"feed_self", label:"Can your loved one feed themselves?", type:"radio",
         options:["Independent","Setup only","Some assistance","Fully assisted","Varies"]},
       {id:"eating_concerns", label:"Do they have:", type:"checkbox",
@@ -593,10 +588,10 @@ const SCHEMA = [
   ]
 },
 {
-  title:"Memory, Communication &amp; Mood",
+  title:"Memory, Communication & Mood",
   sub:"How they think, communicate, and feel day to day.",
   sections:[
-    {h:"Memory &amp; Thinking", fields:[
+    {h:"Memory & Thinking", fields:[
       {id:"memory_diagnoses", label:"Has your loved one been diagnosed with:", type:"checkbox",
         options:["Dementia","Alzheimer's disease","Mild cognitive impairment","Parkinson's-related cognitive changes","Brain injury","No diagnosis","Unsure / Other"]},
       {id:"memory_difficulties", label:"Have you noticed difficulty with:", type:"checkbox",
@@ -605,14 +600,14 @@ const SCHEMA = [
       {id:"communicate_needs", label:"Can they communicate their needs reliably?", type:"radio",
         options:["Always","Usually","Sometimes","Rarely","I'm not sure"]},
     ]},
-    {h:"Communication, Vision &amp; Hearing", fields:[
+    {h:"Communication, Vision & Hearing", fields:[
       {id:"communication_style", label:"How does your loved one communicate?", type:"checkbox",
         options:["Speaks clearly","Needs simple / one-step directions","Difficulty finding words","Limited speech","Nonverbal","Uses communication device","Other"]},
       {id:"vision", label:"Vision", type:"radio", options:["No concerns","Glasses","Significant impairment","Blind"]},
       {id:"hearing", label:"Hearing", type:"radio", options:["No concerns","Hearing aids","Difficulty hearing","Deaf"]},
       {id:"best_comm_method", label:"What is the best way to communicate with them when they are confused, tired, or upset?", type:"textarea"},
     ]},
-    {h:"Mood, Anxiety &amp; Behavior", fields:[
+    {h:"Mood, Anxiety & Behavior", fields:[
       {id:"mood_behaviors", label:"Has your loved one experienced:", type:"checkbox",
         options:["Anxiety / worry","Depression / sadness","Tearfulness","Agitation","Restlessness","Repetitive questions / concerns","Hallucinations","Delusions / paranoia","Resistance to care","Verbal aggression","Physical aggression","Exit-seeking / wandering","Sundowning / evening difficulty","None"], noneOptions:["None"]},
       {id:"distress_triggers", label:"What tends to trigger distress?", type:"textarea"},
@@ -623,10 +618,10 @@ const SCHEMA = [
   ]
 },
 {
-  title:"Sleep, Pain &amp; Safety",
+  title:"Sleep, Pain & Safety",
   sub:"Nighttime patterns, comfort, and safety concerns.",
   sections:[
-    {h:"Sleep &amp; Nighttime Care", fields:[
+    {h:"Sleep & Nighttime Care", fields:[
       {id:"bedtime", label:"Usual bedtime", type:"text"},
       {id:"wake_time", label:"Usual wake time", type:"text"},
       {id:"naps", label:"Do they nap?", type:"text"},
@@ -636,7 +631,7 @@ const SCHEMA = [
         options:["Need toileting assistance","Wander","Call out","Become confused","Experience nightmares","Need repositioning","Need medications / treatments","Need reassurance","Sleep well"]},
       {id:"settle_sleep", label:"What helps them settle or return to sleep?", type:"textarea"},
     ]},
-    {h:"Pain &amp; Comfort", fields:[
+    {h:"Pain & Comfort", fields:[
       {id:"ongoing_pain", label:"Does your loved one experience ongoing pain?", type:"radio", options:["Yes","No","I'm not sure"]},
       {id:"pain_location", label:"Where?", type:"text", showIf:a=>eq("ongoing_pain","Yes")},
       {id:"pain_description", label:"What does the pain seem like?", type:"text", showIf:a=>eq("ongoing_pain","Yes")},
@@ -700,13 +695,13 @@ const SCHEMA = [
       {id:"one_thing", label:"If their caregivers knew only one thing about who your loved one really is, what would you want them to know?", type:"textarea"},
       {id:"photos", label:"Upload up to 3 favorite photographs that help tell their story", type:"file"},
     ]},
-    {h:"Faith, Culture &amp; What Matters", fields:[
+    {h:"Faith, Culture & What Matters", fields:[
       {id:"beliefs", label:"Are there religious, spiritual, or cultural beliefs important to your loved one?", type:"textarea"},
       {id:"faith_opportunities", label:"Would they like opportunities for:", type:"checkbox",
         options:["Prayer","Church / services","Scripture / devotional reading","Clergy visits","Religious music","Cultural traditions","None / not applicable","Other"]},
       {id:"customs", label:"Are there customs, traditions, or personal values we should understand to care for them respectfully?", type:"textarea"},
     ]},
-    {h:"Family &amp; Connection", fields:[
+    {h:"Family & Connection", fields:[
       {id:"closest_people", label:"Who are the people they are closest to?", type:"textarea"},
       {id:"turn_to_for_reassurance", label:"Who do they usually turn to for reassurance?", type:"textarea"},
       {id:"reassurance_tips", label:"What are helpful things caregivers can do to reassure them when upset?", type:"textarea"},
@@ -722,7 +717,7 @@ const SCHEMA = [
   sections:[
     {h:"", fields:[
       {id:"doc_meds", label:"Current medication list", type:"file"},
-      {id:"doc_h_and_p", label:"Recent History &amp; Physical", type:"file"},
+      {id:"doc_h_and_p", label:"Recent History & Physical", type:"file"},
       {id:"doc_discharge", label:"Hospital / SNF discharge summary", type:"file"},
       {id:"doc_polst", label:"POLST", type:"file"},
       {id:"doc_advance_directive", label:"Advance Directive", type:"file"},
@@ -758,44 +753,37 @@ function renderField(f){
   if(!fieldVisible(f)) return "";
   const isRequired = false; // all fields are optional now
   const hasError = stepErrors.has(f.id);
-  const isPns = answers[f.id]===PNS_TEXT;
   let out = `<div class="field${hasError?" has-error":""}" data-field="${f.id}">`;
   if(f.type!=="static" && f.type!=="rating" && f.label){
     out += `<label class="field-label">${esc(f.label)}${isRequired ? '<span class="req-star">*</span>' : ''}</label>`;
   }
 
   if(f.type==="text"){
-    out += `<input type="text" data-id="${f.id}" ${isPns?"disabled":""} value="${isPns?"":esc(answers[f.id]||"")}">`;
-    out += pnsToggle(f.id,isPns);
+    out += `<input type="text" data-id="${f.id}" value="${esc(answers[f.id]||"")}">`;
   } else if(f.type==="date"){
-    out += `<input type="date" data-id="${f.id}" ${isPns?"disabled":""} value="${isPns?"":esc(answers[f.id]||"")}">`;
-    out += pnsToggle(f.id,isPns);
+    out += `<input type="date" data-id="${f.id}" value="${esc(answers[f.id]||"")}">`;
   } else if(f.type==="textarea"){
-    out += `<textarea data-id="${f.id}" ${isPns?"disabled":""}>${isPns?"":esc(answers[f.id]||"")}</textarea>`;
-    out += pnsToggle(f.id,isPns);
+    out += `<textarea data-id="${f.id}">${esc(answers[f.id]||"")}</textarea>`;
   } else if(f.type==="radio"){
-    const opts = f.options.concat([PNS_TEXT]);
+    const opts = f.options;
     out += `<div class="opt-grid">` + opts.map((o,i)=>{
       const checkedAttr = eq(f.id,o) ? "checked" : "";
-      const pnsCls = o===PNS_TEXT ? " pns-pill" : "";
-      return `<div class="opt-pill${pnsCls}"><input type="radio" name="${f.id}" id="${f.id}_${i}" data-id="${f.id}" value="${esc(o)}" ${checkedAttr}><label for="${f.id}_${i}">${esc(o)}</label></div>`;
+      return `<div class="opt-pill"><input type="radio" name="${f.id}" id="${f.id}_${i}" data-id="${f.id}" value="${esc(o)}" ${checkedAttr}><label for="${f.id}_${i}">${esc(o)}</label></div>`;
     }).join("") + `</div>`;
   } else if(f.type==="checkbox"){
-    const opts = f.options.concat([PNS_TEXT]);
+    const opts = f.options;
     out += `<div class="opt-grid">` + opts.map((o,i)=>{
       const isChecked = checked(f.id,o) ? "checked" : "";
-      const pnsCls = o===PNS_TEXT ? " pns-pill" : "";
-      return `<div class="opt-pill${pnsCls}"><input type="checkbox" id="${f.id}_${i}" data-id="${f.id}" value="${esc(o)}" ${isChecked}><label for="${f.id}_${i}">${esc(o)}</label></div>`;
+      return `<div class="opt-pill"><input type="checkbox" id="${f.id}_${i}" data-id="${f.id}" value="${esc(o)}" ${isChecked}><label for="${f.id}_${i}">${esc(o)}</label></div>`;
     }).join("") + `</div>`;
   } else if(f.type==="rating"){
-    const scaleOpts = f.scale.concat([PNS_TEXT]);
+    const scaleOpts = f.scale;
     out += f.items.map((item,ri)=>{
       const rid = f.id+"__"+ri;
       return `<div class="rating-row"><div class="rr-label">${esc(item)}${isRequired ? '<span class="req-star">*</span>' : ''}</div><div class="opt-grid">` +
         scaleOpts.map((o,i)=>{
           const isChecked = eq(rid,o) ? "checked" : "";
-          const pnsCls = o===PNS_TEXT ? " pns-pill" : "";
-          return `<div class="opt-pill${pnsCls}"><input type="radio" name="${rid}" id="${rid}_${i}" data-id="${rid}" value="${esc(o)}" ${isChecked}><label for="${rid}_${i}">${esc(o)}</label></div>`;
+          return `<div class="opt-pill"><input type="radio" name="${rid}" id="${rid}_${i}" data-id="${rid}" value="${esc(o)}" ${isChecked}><label for="${rid}_${i}">${esc(o)}</label></div>`;
         }).join("") + `</div></div>`;
     }).join("");
   } else if(f.type==="file"){
@@ -808,7 +796,11 @@ function renderField(f){
       <div class="file-list">${files.map((fo,i)=>{
         const label = typeof fo==="string" ? fo : fo.name;
         const uploading = typeof fo==="object" && fo.uploading;
-        return `<div class="file-chip"><span>📄 ${esc(label)}${uploading?" (uploading…)":""}</span><button type="button" data-removefile="${f.id}:${i}">✕</button></div>`;
+        const failed = typeof fo==="object" && fo.error;
+        const statusText = uploading ? " (uploading…)" : failed ? " — upload failed" : "";
+        const chipCls = failed ? "file-chip file-chip-error" : "file-chip";
+        const retryBtn = failed ? `<button type="button" class="file-retry-btn" data-retryfile="${f.id}:${i}">↻ Retry</button>` : "";
+        return `<div class="${chipCls}"><span>📄 ${esc(label)}${esc(statusText)}</span><div style="display:flex;align-items:center;gap:8px">${retryBtn}<button type="button" data-removefile="${f.id}:${i}">✕</button></div></div>`;
       }).join("")}</div>`;
   } else if(f.type==="repeater"){
     const items = answers[f.id]||[];
@@ -823,14 +815,10 @@ function renderField(f){
     out += `<div class="info-box">ℹ️ ${f.text}</div>`;
   }
 
-  if(hasError) out += `<div class="field-error-msg">⚠ Please answer this, or choose "Prefer not to share".</div>`;
+  if(hasError) out += `<div class="field-error-msg">⚠ Please answer this.</div>`;
   if(f.hint) out += `<div class="field-hint">${esc(f.hint)}</div>`;
   out += `</div>`;
   return out;
-}
-
-function pnsToggle(id,isPns){
-  return `<label class="pns-toggle"><input type="checkbox" data-pns="${id}" ${isPns?"checked":""}><span>I'd rather not share this</span></label>`;
 }
 
 function renderStep(skipScrollTop,focusFieldId){
@@ -843,7 +831,7 @@ function renderStep(skipScrollTop,focusFieldId){
   html += `<div class="step-title">${step.title}</div>`;
   html += `<div class="step-sub">${step.sub}</div>`;
   if(stepErrors.size>0){
-    html += `<div class="step-alert">⚠ <span>Please answer every question below before continuing — or choose "Prefer not to share" for anything you'd rather not answer.</span></div>`;
+    html += `<div class="step-alert">⚠ <span>Please answer every question below before continuing.</span></div>`;
   }
   step.sections.forEach((sec,si)=>{
     const wrapClass = si===0 ? "subsection" : "subsection";
@@ -926,7 +914,7 @@ function attachFieldListeners(){
       const id=e.target.dataset.id, val=e.target.value;
       let arr = answers[id]||[];
       const fieldDef = findFieldById(id);
-      const noneOpts = ((fieldDef&&fieldDef.noneOptions)||[]).concat([PNS_TEXT]);
+      const noneOpts = (fieldDef&&fieldDef.noneOptions)||[];
       if(e.target.checked){
         if(noneOpts.includes(val)) arr = [val];
         else arr = arr.filter(v=>!noneOpts.includes(v)).concat(val);
@@ -938,6 +926,32 @@ function attachFieldListeners(){
       renderStep(true,id);
     });
   });
+  /* Cache the raw bytes (and File object) of every PDF the person picks,
+     keyed by a local key on the placeholder. This lets us merge the
+     attachment into the final combined PDF straight from memory —
+     independent of whether the Firebase Storage upload succeeds, and
+     without needing to re-fetch the file over the network (which can
+     fail due to Storage CORS configuration). The Storage upload still
+     happens in the background so a copy is saved for later lookup. */
+  window._localFileBytesCache = window._localFileBytesCache || new Map();
+  window._localFileObjectCache = window._localFileObjectCache || new Map();
+  window._fileKeyCounter = window._fileKeyCounter || 0;
+  function nextFileKey(){ window._fileKeyCounter++; return `lf_${Date.now()}_${window._fileKeyCounter}`; }
+
+  async function uploadFileToStorage(placeholder){
+    const file = window._localFileObjectCache.get(placeholder.localKey);
+    try{
+      const path = `assessments/${phoneDocId(currentPhone)}/attachments/${Date.now()}-${placeholder.name}`;
+      const ref = storage.ref().child(path);
+      await ref.put(file);
+      const url = await ref.getDownloadURL();
+      Object.assign(placeholder, { uploading:false, error:false, url, path });
+    }catch(err){
+      console.error("Storage upload failed (attachment is still cached locally and will be included in the PDF):", err);
+      Object.assign(placeholder, { uploading:false, error:true });
+    }
+  }
+
   card.querySelectorAll("input[data-filefield]").forEach(el=>{
     el.addEventListener("change",async e=>{
       const id=e.target.dataset.id;
@@ -950,25 +964,36 @@ function attachFieldListeners(){
       if(valid.length===0){ e.target.value=""; return; }
 
       answers[id] = answers[id]||[];
-      const placeholders = valid.map(f=>({ name:f.name, uploading:true }));
+      const placeholders = [];
+      for(const file of valid){
+        const localKey = nextFileKey();
+        window._localFileObjectCache.set(localKey, file);
+        try{
+          window._localFileBytesCache.set(localKey, await file.arrayBuffer());
+        }catch(err){
+          console.error("Couldn't read file locally:", file.name, err);
+        }
+        placeholders.push({ name:file.name, uploading:true, localKey });
+      }
       answers[id] = answers[id].concat(placeholders);
       renderStep(true,id);
 
-      for(let i=0;i<valid.length;i++){
-        const file = valid[i];
-        const placeholder = placeholders[i];
-        try{
-          const path = `assessments/${phoneDocId(currentPhone)}/attachments/${Date.now()}-${file.name}`;
-          const ref = storage.ref().child(path);
-          await ref.put(file);
-          const url = await ref.getDownloadURL();
-          Object.assign(placeholder, { uploading:false, url, path });
-        }catch(err){
-          console.error(err);
-          Object.assign(placeholder, { uploading:false, error:true });
-        }
+      for(const placeholder of placeholders){
+        await uploadFileToStorage(placeholder);
         renderStep(true,id);
       }
+      scheduleAutosave();
+    });
+  });
+  card.querySelectorAll("[data-retryfile]").forEach(el=>{
+    el.addEventListener("click",async e=>{
+      const [id,idx]=e.target.dataset.retryfile.split(":");
+      const placeholder = answers[id][parseInt(idx)];
+      if(!placeholder) return;
+      Object.assign(placeholder, { uploading:true, error:false });
+      renderStep(true,id);
+      await uploadFileToStorage(placeholder);
+      renderStep(true,id);
       scheduleAutosave();
     });
   });
@@ -978,6 +1003,10 @@ function attachFieldListeners(){
       const removed = answers[id][parseInt(idx)];
       if(removed && removed.path){
         storage.ref().child(removed.path).delete().catch(err=>console.error(err));
+      }
+      if(removed && removed.localKey){
+        window._localFileBytesCache && window._localFileBytesCache.delete(removed.localKey);
+        window._localFileObjectCache && window._localFileObjectCache.delete(removed.localKey);
       }
       answers[id].splice(parseInt(idx),1);
       renderStep(true,id);
@@ -989,14 +1018,6 @@ function attachFieldListeners(){
       const id=e.target.dataset.addrep;
       answers[id]=answers[id]||[];
       answers[id].push({});
-      renderStep(true,id);
-    });
-  });
-  card.querySelectorAll("[data-pns]").forEach(el=>{
-    el.addEventListener("change",e=>{
-      const id = e.target.dataset.pns;
-      answers[id] = e.target.checked ? PNS_TEXT : "";
-      stepErrors.delete(id);
       renderStep(true,id);
     });
   });
@@ -1286,7 +1307,9 @@ function collectAttachmentUrls(){
   const urls = [];
   SCHEMA.forEach(step=>step.sections.forEach(sec=>sec.fields.forEach(f=>{
     if(f.type==="file"){
-      (answers[f.id]||[]).forEach(fo=>{ if(fo && fo.url) urls.push({name:fo.name,url:fo.url,label:f.label||f.id}); });
+      (answers[f.id]||[]).forEach(fo=>{
+        if(fo && (fo.url || fo.localKey)) urls.push({name:fo.name,url:fo.url,label:f.label||f.id,localKey:fo.localKey});
+      });
     }
   })));
   return urls;
@@ -1325,16 +1348,23 @@ async function buildFinalMergedPdf(){
 
   for(const att of collectAttachmentUrls()){
     try{
-      const res = await fetch(att.url, { mode:"cors", cache:"no-store" });
-      if(!res.ok) throw new Error(`Fetch failed with status ${res.status}`);
-      const bytes = await res.arrayBuffer();
+      let bytes;
+      if(att.localKey && window._localFileBytesCache && window._localFileBytesCache.has(att.localKey)){
+        bytes = window._localFileBytesCache.get(att.localKey);
+      } else if(att.url){
+        const res = await fetch(att.url, { mode:"cors", cache:"no-store" });
+        if(!res.ok) throw new Error(`Fetch failed with status ${res.status}`);
+        bytes = await res.arrayBuffer();
+      } else {
+        throw new Error("No local copy or download URL available for this attachment");
+      }
       const attDoc = await PDFDocument.load(bytes, { ignoreEncryption:true });
       addDividerPage(att.label, att.name);
       (await merged.copyPages(attDoc, attDoc.getPageIndices())).forEach(p=>merged.addPage(p));
     }catch(err){
       console.error("Couldn't merge attachment:", att.name, err);
       failures.push(att);
-      addDividerPage(att.label, `${att.name} — could not be merged automatically. Original file: ${att.url}`);
+      addDividerPage(att.label, `${att.name} — could not be merged automatically.${att.url ? " Original file: "+att.url : ""}`);
     }
   }
   return { bytes: await merged.save(), failures };
@@ -1380,7 +1410,7 @@ async function submitForm(){
     downloadBtn.click();
 
     if(failures.length===0){
-      statusEl.textContent = "✅ Your assessment PDF is ready, with any uploaded documents combined into the same file. If the download didn't start automatically, use the button below.";
+      statusEl.textContent = "✅ Your assessment PDF is ready. Please email the PDF to our email address provided below and give us a call.";
     } else {
       statusEl.textContent = `✅ Your assessment PDF is ready. ${failures.length===1?"One uploaded file":`${failures.length} uploaded files`} couldn't be automatically combined (${failures.map(f=>f.name).join(", ")}) — a placeholder page notes this in the PDF. If the download didn't start automatically, use the button below.`;
     }

@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Registered Nurse Assessments | Neighbor Care Homes</title>
 <meta name="description" content="Comprehensive pre-admission nursing assessments by Tami Serpa, RN — for families considering a Neighbor Care Home or any Washington Adult Family Home.">
+<meta name="theme-color" content="#1E3A2F">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%231E3A2F'/%3E%3Ctext x='32' y='42' font-size='34' text-anchor='middle' dominant-baseline='middle'%3E%F0%9F%95%8A%EF%B8%8F%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -78,16 +80,58 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:300;back
 @media(max-width:700px){.factors-grid{grid-template-columns:1fr}}
 .req-note{margin-top:28px;background:var(--gold-pale);border:1px solid var(--gold);border-radius:14px;padding:18px 22px;font-size:.88rem;color:var(--body);line-height:1.7}
 
-/* PROCESS */
-.process-bg{background:var(--mint-pale)}
-.process-row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:52px}
-.ps-card{background:#fff;border-radius:20px;padding:32px 24px;text-align:left;border:1px solid var(--border);transition:box-shadow .25s}
-.ps-card:hover{box-shadow:0 12px 40px rgba(30,58,47,.1)}
-.ps-n{width:44px;height:44px;background:var(--forest);color:#fff;border-radius:12px;font-family:var(--fd);font-size:1.15rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
-.ps-card h3{font-family:var(--fd);font-size:1.08rem;font-weight:700;color:var(--ink);margin-bottom:10px}
-.ps-card p{font-size:.83rem;color:var(--sub);line-height:1.7}
-@media(max-width:900px){.process-row{grid-template-columns:1fr 1fr}}
-@media(max-width:540px){.process-row{grid-template-columns:1fr}}
+/* PROCESS — journey path w/ accordion cards */
+.process-bg{background:radial-gradient(ellipse 900px 500px at 85% 0%, rgba(200,230,201,.35), transparent 60%), var(--mint-pale);position:relative;overflow:hidden}
+
+.journey{position:relative;margin-top:80px}
+.path-svg{position:absolute;left:0;right:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.path-svg path{fill:none;stroke:var(--moss);stroke-width:2;stroke-dasharray:1 10;stroke-linecap:round;opacity:.55}
+
+.journey-row{display:grid;grid-template-columns:repeat(4,1fr);position:relative;z-index:2}
+.stop{display:flex;flex-direction:column;align-items:center;position:relative;padding:0 14px}
+.stop:nth-child(odd) .stop-inner{order:1;margin-bottom:22px}
+.stop:nth-child(odd) .marker-col{order:2}
+.stop:nth-child(even) .marker-col{order:1}
+.stop:nth-child(even) .stop-inner{order:2;margin-top:22px}
+.stop-inner{display:flex;flex-direction:column;align-items:flex-start;width:100%}
+
+.marker-col{display:flex;flex-direction:column;align-items:center;gap:0}
+.marker{width:52px;height:52px;border-radius:50%;background:var(--white);border:2px solid var(--moss);display:flex;align-items:center;justify-content:center;position:relative;z-index:3;box-shadow:0 6px 18px rgba(30,58,47,.12)}
+.marker span{font-family:var(--fd);font-weight:700;font-size:1.15rem;color:var(--forest)}
+.marker.final{background:var(--forest);border-color:var(--forest)}
+.marker.final svg{width:22px;height:22px;stroke:var(--mint)}
+.stem{width:2px;height:26px;background:repeating-linear-gradient(to bottom,var(--moss) 0 4px,transparent 4px 9px)}
+
+.card{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:22px 22px;max-width:250px;width:100%;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;user-select:none}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(30,58,47,.12)}
+.card.open{border-color:var(--moss)}
+.card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.card-ic{width:34px;height:34px;color:var(--forest);flex-shrink:0}
+.card-ic svg{width:100%;height:100%;stroke:var(--forest);fill:none;stroke-width:1.6}
+.card-toggle{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .35s ease,background .2s ease,border-color .2s ease}
+.card-toggle svg{width:11px;height:11px;stroke:var(--moss);stroke-width:2.4}
+.card.open .card-toggle{transform:rotate(45deg);background:var(--moss);border-color:var(--moss)}
+.card.open .card-toggle svg{stroke:#fff}
+.card h3{font-family:var(--fd);font-size:1.02rem;font-weight:700;color:var(--ink);margin-top:12px;line-height:1.32}
+.card-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .38s cubic-bezier(.4,0,.2,1)}
+.card-body-inner{overflow:hidden}
+.card.open .card-body{grid-template-rows:1fr}
+.card p{font-size:.83rem;color:var(--sub);line-height:1.68;padding-top:12px;margin-top:12px;border-top:1px solid var(--border)}
+
+@media(max-width:900px){
+  .path-svg{display:none}
+  .journey{margin-top:56px}
+  .journey-row{display:flex;flex-direction:column;gap:0}
+  .stop{flex-direction:row;align-items:flex-start;padding:0 0 32px}
+  .stop:last-child{padding-bottom:0}
+  .stop:nth-child(odd) .stop-inner,.stop:nth-child(even) .stop-inner{order:2;margin:0 0 0 20px}
+  .stop:nth-child(odd) .marker-col,.stop:nth-child(even) .marker-col{order:1}
+  .marker-col{position:relative}
+  .marker-col::after{content:'';position:absolute;top:52px;bottom:-32px;left:50%;transform:translateX(-50%);width:2px;background:repeating-linear-gradient(to bottom,var(--moss) 0 4px,transparent 4px 9px)}
+  .stop:last-child .marker-col::after{display:none}
+  .stem{display:none}
+  .card{max-width:none}
+}
 
 /* COST CARDS */
 .cost-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:44px}
@@ -171,9 +215,9 @@ footer{background:var(--ink);padding:28px 24px}
   </a>
   <ul class="nav-links">
     <li><a href="#philosophy">Our Philosophy</a></li>
-    <li><a href="#process">The Process</a></li>
+    <li><a href="#what-is">Assessment</a></li>
+    <li><a href="#process">Process</a></li>
     <li><a href="#cost">Cost</a></li>
-    <li><a href="tel:+18013696018" style="color:var(--forest);font-weight:700">📞 (801) 369-6018</a></li>
     <li><a href="#contact" class="nav-cta">Schedule Assessment</a></li>
   </ul>
   <button class="hamburger" id="ham" aria-label="Open menu">
@@ -185,11 +229,10 @@ footer{background:var(--ink);padding:28px 24px}
 <div class="mob-drawer" id="drawer">
   <button class="mob-close" onclick="closeMob()">✕</button>
   <a href="#philosophy" onclick="closeMob()">Our Philosophy</a>
-  <a href="#process" onclick="closeMob()">The Process</a>
+  <a href="#what-is" onclick="closeMob()">Assessment?</a>
+  <a href="#process" onclick="closeMob()">Process</a>
   <a href="#cost" onclick="closeMob()">Cost</a>
-  <a href="https://neighborcarehomes.com/careplan.html" onclick="closeMob()">Care &amp; Pricing Guide</a>
-  <a href="tel:+18013696018" class="mob-ph">📞 (801) 369-6018</a>
-  <a href="#contact" class="mob-cta" onclick="closeMob()">Schedule a Nursing Assessment</a>
+  <a href="#contact" class="mob-cta" onclick="closeMob()">Schedule Assessment</a>
 </div>
 
 <!-- PAGE HEADER -->
@@ -259,13 +302,90 @@ footer{background:var(--ink);padding:28px 24px}
   <div class="wrap">
     <div class="ew rv">How It Works</div>
     <h2 class="h2 rv">What Does the <i>Assessment Process</i> Look Like?</h2>
-    <p class="lead rv">Four steps, from first questionnaire to a completed care plan.</p>
 
-    <div class="process-row">
-      <div class="ps-card rv"><div class="ps-n">1</div><h3>Complete the Pre-Assessment Questionnaire</h3><p>The prospective resident or someone who knows them well completes our secure questionnaire, sharing health history, medications, routines, preferences, and care needs. Families can upload medication lists, medical records, discharge paperwork, POLST, or Power of Attorney documents.</p></div>
-      <div class="ps-card rv"><div class="ps-n">2</div><h3>Meet &amp; Assess</h3><p>Tami meets with the prospective resident, reviews available records and medications, speaks with the family or representative, and personally evaluates current abilities and care needs — wherever the resident currently is.</p></div>
-      <div class="ps-card rv"><div class="ps-n">3</div><h3>Complete the Assessment</h3><p>Information from the resident, family, medical records, and current care team is combined into a comprehensive nursing assessment identifying needs, strengths, risks, preferences, and the assistance required for safe daily care.</p></div>
-      <div class="ps-card rv"><div class="ps-n">4</div><h3>Plan the Next Step</h3><p>Moving into a Neighbor Care Home? The assessment becomes the foundation of your care plan. Chosen another home? We share the completed assessment with them to help prepare for a successful admission.</p></div>
+    <div class="journey">
+      <svg class="path-svg" viewBox="0 0 1000 90" preserveAspectRatio="none">
+        <path d="M60,20 C220,20 220,70 380,70 C540,70 540,20 700,20 C820,20 820,70 940,70"/>
+      </svg>
+      <div class="journey-row">
+
+        <div class="stop rv">
+          <div class="stop-inner">
+            <div class="card" data-card>
+              <div class="card-top">
+                <div class="card-ic"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6M9 9h1"/></svg></div>
+                <div class="card-toggle"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+              </div>
+              <h3>Complete the Pre-Assessment Questionnaire</h3>
+              <div class="card-body"><div class="card-body-inner">
+                <p>The prospective resident or someone who knows them well completes our secure questionnaire, sharing health history, medications, routines, preferences, and care needs. Families can upload medication lists, medical records, discharge paperwork, POLST, or Power of Attorney documents.</p>
+              </div></div>
+            </div>
+          </div>
+          <div class="marker-col">
+            <div class="stem"></div>
+            <div class="marker"><span>1</span></div>
+          </div>
+        </div>
+
+        <div class="stop rv">
+          <div class="marker-col">
+            <div class="marker"><span>2</span></div>
+            <div class="stem"></div>
+          </div>
+          <div class="stop-inner">
+            <div class="card" data-card>
+              <div class="card-top">
+                <div class="card-ic"><svg viewBox="0 0 24 24"><path d="M17 20h5v-2a4 4 0 0 0-3-3.87"/><path d="M9 20H4v-2a4 4 0 0 1 3-3.87"/><circle cx="9" cy="7" r="4"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                <div class="card-toggle"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+              </div>
+              <h3>Meet &amp; Assess</h3>
+              <div class="card-body"><div class="card-body-inner">
+                <p>Tami meets with the prospective resident, reviews available records and medications, speaks with the family or representative, and personally evaluates current abilities and care needs — wherever the resident currently is.</p>
+              </div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stop rv">
+          <div class="stop-inner">
+            <div class="card" data-card>
+              <div class="card-top">
+                <div class="card-ic"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/></svg></div>
+                <div class="card-toggle"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+              </div>
+              <h3>Complete the Assessment</h3>
+              <div class="card-body"><div class="card-body-inner">
+                <p>Information from the resident, family, medical records, and current care team is combined into a comprehensive nursing assessment identifying needs, strengths, risks, preferences, and the assistance required for safe daily care.</p>
+              </div></div>
+            </div>
+          </div>
+          <div class="marker-col">
+            <div class="stem"></div>
+            <div class="marker"><span>3</span></div>
+          </div>
+        </div>
+
+        <div class="stop rv">
+          <div class="marker-col">
+            <div class="marker final"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></div>
+            <div class="stem"></div>
+          </div>
+          <div class="stop-inner">
+            <div class="card" data-card>
+              <div class="card-top">
+                <div class="card-ic"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></div>
+                <div class="card-toggle"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+              </div>
+              <h3>Plan the Next Step</h3>
+              <div class="card-body"><div class="card-body-inner">
+                <p>Moving into a Neighbor Care Home? The assessment becomes the foundation of your care plan. Chosen another home? We share the completed assessment with them to help prepare for a successful admission.</p>
+              </div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </section>
@@ -441,6 +561,10 @@ const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}});
 },{threshold:0.1});
 document.querySelectorAll('.rv,.rv-l,.rv-r').forEach(el=>obs.observe(el));
+
+document.querySelectorAll('[data-card]').forEach(card=>{
+  card.addEventListener('click',()=>card.classList.toggle('open'));
+});
 </script>
 </body>
 </html>

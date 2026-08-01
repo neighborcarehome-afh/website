@@ -520,6 +520,106 @@ function hoursBetween(startIso, endIso){
 function fmtHours(h){
   return h.toFixed(2) + 'h';
 }
+
+/* ===================== Night-shift helpers =====================
+   Any time falling between 10:00 PM and 6:00 AM counts as "Night"
+   time. It is tracked in eighths of a night (the window is 8 hours
+   long, 10PM–6AM) rather than as regular hours, and is excluded
+   entirely from the regular hours total. E.g. clocking in at 9:50 PM
+   and out at 6:30 AM the next day = 1 Night & 40 Minutes (the 40
+   minutes being the 9:50–10:00 PM and 6:00–6:30 AM portions that fall
+   outside the night window, which is fully covered = 8/8 = 1 Night).
+   Clocking in at 8 PM and out at 2 AM only covers 10PM–2AM of the
+   window (4 of its 8 hours), so it shows as 4/8 Night & 2 Hours —
+   the 8–10 PM portion counts as plain hours. */
+const NIGHT_START_HOUR = 22; // 10 PM
+const NIGHT_END_HOUR = 6;    // 6 AM
+const NIGHT_WINDOW_HOURS = 8;
+
+/* Returns { nightHours, dayHours } for a single clockIn/clockOut pair.
+   `nightHours` = total hours worked inside 10PM–6AM window(s), used as
+   a fraction of NIGHT_WINDOW_HOURS (8) when displayed.
+   `dayHours` = total hours worked OUTSIDE those windows.
+
+   Night classification only kicks in for shifts that actually cross
+   into the next calendar day (a true overnight shift). A shift that
+   starts and ends on the SAME calendar day counts entirely as regular
+   hours, even if part of it falls after 10 PM — e.g. clocking in at
+   3 PM and out at 11 PM is 8 Hours, not 7 Hours + a sliver of a Night. */
+function nightsAndHours(startIso, endIso){
+  const start = new Date(startIso);
+  const end = new Date(endIso);
+  if (!(end > start)) return { nightHours: 0, dayHours: 0 };
+
+  if (fmtDate(start) === fmtDate(end)){
+    return { nightHours: 0, dayHours: (end - start) / 3600000 };
+  }
+
+  let nightMs = 0;
+
+  // Walk every calendar day that could produce a night window
+  // (10PM that day -> 6AM the next) overlapping [start, end).
+  const cursor = new Date(start);
+  cursor.setHours(0, 0, 0, 0);
+  cursor.setDate(cursor.getDate() - 1); // catch a window starting the day before `start`
+
+  while (cursor < end){
+    const winStart = new Date(cursor);
+    winStart.setHours(NIGHT_START_HOUR, 0, 0, 0);
+    const winEnd = new Date(winStart);
+    winEnd.setDate(winEnd.getDate() + 1);
+    winEnd.setHours(NIGHT_END_HOUR, 0, 0, 0);
+
+    const overlapStart = start > winStart ? start : winStart;
+    const overlapEnd = end < winEnd ? end : winEnd;
+    const overlapMs = overlapEnd - overlapStart;
+    if (overlapMs > 0){
+      nightMs += overlapMs;
+    }
+    cursor.setDate(cursor.getDate() + 1);
+  }
+
+  const totalMs = end - start;
+  const dayHours = Math.max(0, (totalMs - nightMs) / 3600000);
+  return { nightHours: nightMs / 3600000, dayHours };
+}
+
+// Trim a decimal to at most 2 places, dropping trailing zeros (4 -> "4", 3.5 -> "3.5")
+function trimDecimal(n){
+  return (Math.round(n * 100) / 100).toString();
+}
+
+/* Human-readable combined display. Whole nights show as "N Nights";
+   a partial night shows as a fraction of the 8-hour window, e.g.
+   "4/8 Night"; a mix shows as "1 Night & 4/8 Night". Examples:
+   "1 Night & 40 Minutes", "4/8 Night & 2 Hours", "8 Hours 30 Minutes" */
+function fmtNightHours(nightHours, hours){
+  const totalMins = Math.round((hours || 0) * 60);
+  const h = Math.floor(totalMins / 60);
+  const m = totalMins % 60;
+  const parts = [];
+  if (h > 0) parts.push(`${h} Hour${h === 1 ? '' : 's'}`);
+  if (m > 0 || (h === 0 && !(nightHours > 0))) parts.push(`${m} Minute${m === 1 ? '' : 's'}`);
+  const hoursPart = parts.join(' ');
+
+  const EPS = 1 / 120; // ~30-second tolerance for floating point
+  let nightsPart = '';
+  if (nightHours > EPS){
+    const wholeNights = Math.floor(nightHours / NIGHT_WINDOW_HOURS + 1e-9);
+    const remainder = nightHours - wholeNights * NIGHT_WINDOW_HOURS;
+    if (remainder > EPS){
+      const fracStr = trimDecimal(remainder);
+      nightsPart = wholeNights > 0
+        ? `${wholeNights} Night${wholeNights === 1 ? '' : 's'} & ${fracStr}/${NIGHT_WINDOW_HOURS} Night`
+        : `${fracStr}/${NIGHT_WINDOW_HOURS} Night`;
+    } else {
+      nightsPart = `${wholeNights} Night${wholeNights === 1 ? '' : 's'}`;
+    }
+  }
+
+  if (nightsPart && hoursPart) return `${nightsPart} & ${hoursPart}`;
+  return nightsPart || hoursPart || '0 Minutes';
+}
 function isSameDate(iso1, iso2){
   return fmtDate(new Date(iso1)) === fmtDate(new Date(iso2));
 }
@@ -580,14 +680,18 @@ function getPayPeriod(dateStr){
 }
 
 /* Group entries (completed + in-progress) by day, return map date -> {entries, totalHours, openNow} */
+/* totalHours below is DAY-ONLY hours (10PM–6AM excluded); totalNights
+   is the count of night windows (10PM–6AM) worked. */
 function summarizeByDay(entries){
   const days = {};
   entries.forEach(e => {
     const dateKey = fmtDate(new Date(e.clockIn));
-    if (!days[dateKey]) days[dateKey] = { entries: [], totalHours: 0, hasOpen: false };
+    if (!days[dateKey]) days[dateKey] = { entries: [], totalHours: 0, totalNights: 0, hasOpen: false };
     days[dateKey].entries.push(e);
     if (e.clockOut){
-      days[dateKey].totalHours += hoursBetween(e.clockIn, e.clockOut);
+      const { nightHours, dayHours } = nightsAndHours(e.clockIn, e.clockOut);
+      days[dateKey].totalHours += dayHours;
+      days[dateKey].totalNights += nightHours;
     } else {
       days[dateKey].hasOpen = true;
     }
@@ -599,8 +703,9 @@ function summarizeByWeek(dayMap){
   const weeks = {};
   Object.keys(dayMap).forEach(dateKey => {
     const ws = getWeekStart(dateKey);
-    if (!weeks[ws]) weeks[ws] = { start: ws, end: getWeekEnd(ws), totalHours: 0 };
+    if (!weeks[ws]) weeks[ws] = { start: ws, end: getWeekEnd(ws), totalHours: 0, totalNights: 0 };
     weeks[ws].totalHours += dayMap[dateKey].totalHours;
+    weeks[ws].totalNights += dayMap[dateKey].totalNights;
   });
   return weeks;
 }
@@ -609,8 +714,9 @@ function summarizeByPayPeriod(dayMap){
   const periods = {};
   Object.keys(dayMap).forEach(dateKey => {
     const pp = getPayPeriod(dateKey);
-    if (!periods[pp.key]) periods[pp.key] = { start: pp.start, end: pp.end, totalHours: 0, key: pp.key };
+    if (!periods[pp.key]) periods[pp.key] = { start: pp.start, end: pp.end, totalHours: 0, totalNights: 0, key: pp.key };
     periods[pp.key].totalHours += dayMap[dateKey].totalHours;
+    periods[pp.key].totalNights += dayMap[dateKey].totalNights;
   });
   return periods;
 }
@@ -877,10 +983,13 @@ function drawUserScreen(username, entries, myRequests){
 
   const today = fmtDate(new Date());
   const todayHours = dayMap[today] ? dayMap[today].totalHours : 0;
+  const todayNights = dayMap[today] ? dayMap[today].totalNights : 0;
   const thisWeekStart = getWeekStart(today);
   const weekHours = weekMap[thisWeekStart] ? weekMap[thisWeekStart].totalHours : 0;
+  const weekNights = weekMap[thisWeekStart] ? weekMap[thisWeekStart].totalNights : 0;
   const pp = getPayPeriod(today);
   const ppHours = ppMap[pp.key] ? ppMap[pp.key].totalHours : 0;
+  const ppNights = ppMap[pp.key] ? ppMap[pp.key].totalNights : 0;
 
   // A punch with an unresolved pending request against it shows a badge
   // instead of Edit/Delete buttons, so the employee can't file a second
@@ -918,7 +1027,7 @@ function drawUserScreen(username, entries, myRequests){
         <tr>
           <td>${fmtDateLabel(d)}</td>
           <td>${fmtTime(p.clockIn)} → ${p.clockOut ? fmtTime(p.clockOut) : '—'}${spansDay ? ' <span class="tag open" style="margin-left:4px;">+1d</span>' : ''}</td>
-          <td>${p.clockOut ? fmtHours(hoursBetween(p.clockIn, p.clockOut)) : '<span class="tag open">in progress</span>'}</td>
+          <td>${p.clockOut ? fmtNightHours(nightsAndHours(p.clockIn, p.clockOut).nightHours, nightsAndHours(p.clockIn, p.clockOut).dayHours) : '<span class="tag open">in progress</span>'}</td>
           <td>
             ${pending
               ? `<span class="tag open">Pending ${pending.type === 'delete' ? 'deletion' : 'change'}</span>`
@@ -961,9 +1070,9 @@ function drawUserScreen(username, entries, myRequests){
     </div>
 
     <div class="stat-row" style="margin-bottom:28px;">
-      <div class="stat"><div class="k">Today</div><div class="v">${fmtHours(todayHours)}</div></div>
-      <div class="stat"><div class="k">This week</div><div class="v">${fmtHours(weekHours)}</div></div>
-      <div class="stat"><div class="k">Pay period ${pp.start.slice(5)}–${pp.end.slice(5)}</div><div class="v">${fmtHours(ppHours)}</div></div>
+      <div class="stat"><div class="k">Today</div><div class="v">${fmtNightHours(todayNights, todayHours)}</div></div>
+      <div class="stat"><div class="k">This week</div><div class="v">${fmtNightHours(weekNights, weekHours)}</div></div>
+      <div class="stat"><div class="k">Pay period ${pp.start.slice(5)}–${pp.end.slice(5)}</div><div class="v">${fmtNightHours(ppNights, ppHours)}</div></div>
     </div>
 
     <div class="section">
@@ -1325,21 +1434,26 @@ function drawReportsScreen(allEntries){
   const pp = getPayPeriod(today);
 
   let totalWeekHours = 0;
+  let totalWeekNights = 0;
   const rows = employees.length ? employees.map(u => {
     const dayMap = summarizeByDay(allEntries[u] || []);
     const weekMap = summarizeByWeek(dayMap);
     const ppMap = summarizeByPayPeriod(dayMap);
     const todayHours = dayMap[today] ? dayMap[today].totalHours : 0;
+    const todayNights = dayMap[today] ? dayMap[today].totalNights : 0;
     const weekHours = weekMap[thisWeekStart] ? weekMap[thisWeekStart].totalHours : 0;
+    const weekNights = weekMap[thisWeekStart] ? weekMap[thisWeekStart].totalNights : 0;
     const ppHours = ppMap[pp.key] ? ppMap[pp.key].totalHours : 0;
+    const ppNights = ppMap[pp.key] ? ppMap[pp.key].totalNights : 0;
     const isOpen = (allEntries[u] || []).some(e => !e.clockOut);
     totalWeekHours += weekHours;
+    totalWeekNights += weekNights;
     return `
       <tr>
         <td style="font-family:'Inter',sans-serif;">${escapeHtml(ACCOUNTS[u].name)}${isOpen ? ' <span class="tag open">clocked in</span>' : ''}</td>
-        <td>${fmtHours(todayHours)}</td>
-        <td>${fmtHours(weekHours)}</td>
-        <td>${fmtHours(ppHours)}</td>
+        <td>${fmtNightHours(todayNights, todayHours)}</td>
+        <td>${fmtNightHours(weekNights, weekHours)}</td>
+        <td>${fmtNightHours(ppNights, ppHours)}</td>
       </tr>
     `;
   }).join('') : `<tr class="empty-row"><td colspan="4">No employees yet.</td></tr>`;
@@ -1349,7 +1463,7 @@ function drawReportsScreen(allEntries){
 
     <div class="stat-row" style="margin-bottom:28px;">
       <div class="stat"><div class="k">Employees</div><div class="v">${employees.length}</div></div>
-      <div class="stat"><div class="k">Team hours this week</div><div class="v">${fmtHours(totalWeekHours)}</div></div>
+      <div class="stat"><div class="k">Team hours this week</div><div class="v">${fmtNightHours(totalWeekNights, totalWeekHours)}</div></div>
     </div>
 
     <div class="section">
@@ -1655,7 +1769,7 @@ function drawTimeManagementScreen(allEntries){
         <tr>
           <td>${fmtDateLabel(d)}</td>
           <td>${fmtTime(p.clockIn)} → ${p.clockOut ? fmtTime(p.clockOut) : '—'}${spansDay ? ' <span class="tag open" style="margin-left:4px;">+1d</span>' : ''}</td>
-          <td>${p.clockOut ? fmtHours(hoursBetween(p.clockIn, p.clockOut)) : '<span class="tag open">in progress</span>'}</td>
+          <td>${p.clockOut ? fmtNightHours(nightsAndHours(p.clockIn, p.clockOut).nightHours, nightsAndHours(p.clockIn, p.clockOut).dayHours) : '<span class="tag open">in progress</span>'}</td>
           <td>
             <button class="icon-btn" data-edit-punch="${idx}">Edit</button>
             <button class="icon-btn" data-del-punch="${idx}">Delete</button>
@@ -1669,24 +1783,25 @@ function drawTimeManagementScreen(allEntries){
   const sortedWeeks = Object.keys(weekMap).sort().reverse();
   const weekRows = sortedWeeks.length ? sortedWeeks.map(ws => {
     const w = weekMap[ws];
-    return `<tr><td>${fmtDateLabel(w.start)} – ${fmtDateLabel(w.end)}</td><td>${fmtHours(w.totalHours)}</td></tr>`;
+    return `<tr><td>${fmtDateLabel(w.start)} – ${fmtDateLabel(w.end)}</td><td>${fmtNightHours(w.totalNights, w.totalHours)}</td></tr>`;
   }).join('') : `<tr class="empty-row"><td colspan="2">No data yet.</td></tr>`;
 
   const sortedPP = Object.keys(ppMap).sort().reverse();
   const ppRows = sortedPP.length ? sortedPP.map(k => {
     const p = ppMap[k];
-    return `<tr><td>${fmtDateLabel(p.start)} – ${fmtDateLabel(p.end)}</td><td>${fmtHours(p.totalHours)}</td></tr>`;
+    return `<tr><td>${fmtDateLabel(p.start)} – ${fmtDateLabel(p.end)}</td><td>${fmtNightHours(p.totalNights, p.totalHours)}</td></tr>`;
   }).join('') : `<tr class="empty-row"><td colspan="2">No data yet.</td></tr>`;
 
   const today = fmtDate(new Date());
   const todayHours = dayMap[today] ? dayMap[today].totalHours : 0;
+  const todayNights = dayMap[today] ? dayMap[today].totalNights : 0;
   const isOpen = entries.some(e => !e.clockOut);
 
   app.innerHTML = `
     ${topbarHtml(state.currentUser, false)}
 
     <div class="stat-row" style="margin-bottom:28px;">
-      <div class="stat"><div class="k">${escapeHtml(ACCOUNTS[sel].name)} — today</div><div class="v">${fmtHours(todayHours)} <span>${isOpen ? '· clocked in' : ''}</span></div></div>
+      <div class="stat"><div class="k">${escapeHtml(ACCOUNTS[sel].name)} — today</div><div class="v">${fmtNightHours(todayNights, todayHours)} <span>${isOpen ? '· clocked in' : ''}</span></div></div>
     </div>
 
     <div class="section">

@@ -108,6 +108,27 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:300;back
 .cta-sec p{color:rgba(255,255,255,.7);font-size:1rem;margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.75;position:relative;z-index:1}
 .cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
 
+/* CONTACT */
+.contact-bg{background:var(--blush)}
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:72px;align-items:start;margin-top:56px}
+.ci-head{font-size:1rem;color:var(--sub);line-height:1.82;margin-bottom:32px}
+.cd{display:flex;gap:14px;align-items:flex-start;margin-bottom:24px}
+.cd-ic{width:44px;height:44px;background:var(--forest);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.cd-t strong{display:block;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--moss);margin-bottom:4px}
+.cd-t a,.cd-t span{color:var(--ink);text-decoration:none;font-weight:600;font-size:.95rem;line-height:1.5}
+.cd-t a:hover{color:var(--forest)}
+.form-card{background:#fff;border-radius:20px;padding:40px 36px;border:1px solid var(--border);box-shadow:0 8px 32px rgba(30,58,47,.08)}
+.form-card label{display:block;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sub);margin-bottom:6px}
+.form-card input,.form-card textarea,.form-card select{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:var(--fb);font-size:.95rem;background:#fff;color:var(--ink);margin-bottom:18px;outline:none;transition:border-color .2s,box-shadow .2s;appearance:none}
+.form-card input:focus,.form-card textarea:focus,.form-card select:focus{border-color:var(--forest);box-shadow:0 0 0 3px rgba(30,58,47,.08)}
+.form-card input.invalid,.form-card textarea.invalid,.form-card select.invalid{border-color:#e53935;box-shadow:0 0 0 3px rgba(229,57,53,.1)}
+.field-err{display:none;color:#e53935;font-size:.75rem;font-weight:600;margin-top:-14px;margin-bottom:12px}
+.field-err.show{display:block}
+.form-card textarea{height:108px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-card button{width:100%;padding:16px;background:var(--forest);color:#fff;border:none;border-radius:12px;font-family:var(--fb);font-size:.95rem;font-weight:700;cursor:pointer;transition:background .2s,transform .15s;letter-spacing:.03em;margin-top:2px}
+.form-card button:hover{background:var(--forest-mid);transform:translateY(-1px)}
+
 /* FOOTER */
 footer{background:var(--ink);padding:28px 24px}
 .ft-inner{max-width:1040px;margin:0 auto}
@@ -122,14 +143,23 @@ footer{background:var(--ink);padding:28px 24px}
 /* REVEAL */
 .rv{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
 .rv.in{opacity:1;transform:none}
+.rv-l{opacity:0;transform:translateX(-28px);transition:opacity .6s ease,transform .6s ease}
+.rv-l.in{opacity:1;transform:none}
+.rv-r{opacity:0;transform:translateX(28px);transition:opacity .6s ease,transform .6s ease}
+.rv-r.in{opacity:1;transform:none}
 
 @media(max-width:900px){
   nav{top:10px;padding:0 8px 0 16px;height:54px;border-radius:14px;width:calc(100% - 24px)}
   .nav-links{display:none}
   .hamburger{display:flex}
   .pg-head{padding:132px 20px 64px}
+  .contact-grid{grid-template-columns:1fr;gap:40px}
 }
-@media(max-width:540px){.sec{padding:64px 20px}}
+@media(max-width:540px){
+  .sec{padding:64px 20px}
+  .form-row{grid-template-columns:1fr}
+  .form-card{padding:28px 22px}
+}
 </style>
 </head>
 <body>
@@ -172,7 +202,7 @@ footer{background:var(--ink);padding:28px 24px}
     <p class="lead lead-wh">Choosing an Adult Family Home begins with understanding what a person needs — not only medically, but physically, cognitively, emotionally, and in the routines of everyday life. As a Registered Nurse and experienced Adult Family Home provider, Tami Serpa, RN, provides comprehensive pre-admission nursing assessments — whether you're considering one of our Neighbor Care Homes or have already selected another home.</p>
     <div class="head-btns">
       <a href="#contact" class="btn-gold">Schedule a Nursing Assessment</a>
-      <a href="pre-assessment-questionnaire.html" class="btn-outline">Complete the Pre-Assessment Questionnaire</a>
+      <a href="https://neighborcarehomes.com/assessment.html" class="btn-outline">Complete the Pre-Assessment Questionnaire</a>
     </div>
   </div>
 </header>
@@ -264,12 +294,125 @@ footer{background:var(--ink);padding:28px 24px}
 </section>
 
 <!-- CTA -->
-<section class="cta-sec" id="contact">
+<section class="cta-sec" id="assessment-cta">
   <h2>Not Sure Whether an <i>Assessment Is Needed?</i></h2>
   <p>We're happy to talk it through first — no pressure, just honest answers about what fits your family's situation.</p>
   <div class="cta-btns">
     <a href="tel:+18013696018" class="btn-gold">📞 Schedule an Informational Consultation</a>
-    <a href="pre-assessment-questionnaire.html" class="btn-outline">Complete the Questionnaire</a>
+    <a href="https://neighborcarehomes.com/assessment.html" class="btn-outline">Complete the Questionnaire</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec contact-bg" id="contact">
+  <div class="wrap">
+    <div class="rv">
+      <p class="ew">Get in Touch</p>
+      <h2 class="h2">We'd Love to <i>Hear From You</i></h2>
+    </div>
+    <div class="contact-grid">
+      <div class="rv-l">
+        <p class="ci-head">Whether you have questions, want to tour, or simply need someone to talk to, we're here. No obligation. Just a warm, honest conversation.</p>
+        <div class="cd"><div class="cd-ic">📞</div><div class="cd-t"><strong>Phone</strong><a href="tel:+18013696018">(801) 369-6018</a></div></div>
+        <div class="cd"><div class="cd-ic">✉️</div><div class="cd-t"><strong>Email</strong><a href="mailto:neighborcarehome@gmail.com">neighborcarehome@gmail.com</a></div></div>
+        <div class="cd"><div class="cd-ic">📍</div><div class="cd-t"><strong>Location</strong><a href="https://maps.google.com" target="_blank" rel="noopener">Vancouver, WA 98661</a></div></div>
+        <div class="cd"><div class="cd-ic">🕐</div><div class="cd-t"><strong>Office Hours</strong><span>Monday – Saturday, 8 AM – 6 PM</span></div></div>
+      </div>
+      <div class="rv-r">
+        <div class="form-card">
+          <div id="fsok" style="display:none;padding:24px;background:var(--mint-pale);border-radius:14px;border:1.5px solid var(--mint)">
+            <p style="font-size:1.05rem;font-weight:700;color:var(--forest);margin-bottom:10px">✅ Form sent successfully!</p>
+            <p style="font-size:.9rem;color:var(--body);line-height:1.75;margin-bottom:14px">The Neighbor Care Homes team will be in touch with you soon.</p>
+            <p style="font-size:.85rem;color:var(--sub);line-height:1.75">If you have any questions in the meantime, feel free to email us at <a href="mailto:neighborcarehome@gmail.com" style="color:var(--forest);font-weight:600">neighborcarehome@gmail.com</a> or call us directly at <a href="tel:+18013696018" style="color:var(--forest);font-weight:600">(801) 369-6018</a>.</p>
+          </div>
+          <div id="fserr" style="display:none;color:red;font-size:.85rem;margin-bottom:12px;padding:12px;background:#fff0f0;border-radius:8px">Something went wrong. Please try again or call us at (564) 888-3396.</div>
+          <form id="cf">
+            <div class="form-row">
+              <div>
+                <label for="fn">First Name</label>
+                <input type="text" id="fn" name="first_name" placeholder="Margaret" required/>
+                <div class="field-err" id="err-fn">⚠ Please fill in your first name.</div>
+              </div>
+              <div>
+                <label for="ln">Last Name</label>
+                <input type="text" id="ln" name="last_name" placeholder="Johnson" required/>
+                <div class="field-err" id="err-ln">⚠ Please fill in your last name.</div>
+              </div>
+            </div>
+            <label for="ph">Phone Number</label>
+            <input type="tel" id="ph" name="phone" placeholder="(206) 555-0000" required/>
+            <div class="field-err" id="err-ph">⚠ Please fill in your phone number.</div>
+            <label for="em">Email Address</label>
+            <input type="email" id="em" name="email" placeholder="you@example.com" required/>
+            <div class="field-err" id="err-em">⚠ Please fill in a valid email address.</div>
+            <label for="msg">Message</label>
+            <textarea id="msg" name="message" placeholder="Tell us a little about your loved one and what kind of care they may need…" required></textarea>
+            <div class="field-err" id="err-msg">⚠ Please fill in your message.</div>
+            <button type="submit" id="cfbtn">Send Message & Request a Tour →</button>
+          </form>
+          <script>
+            const fields = [
+              {id:'fn', err:'err-fn'},
+              {id:'ln', err:'err-ln'},
+              {id:'ph', err:'err-ph'},
+              {id:'em', err:'err-em'},
+              {id:'msg', err:'err-msg'}
+            ];
+
+            // Clear error on input
+            fields.forEach(({id, err}) => {
+              document.getElementById(id).addEventListener('input', function(){
+                this.classList.remove('invalid');
+                document.getElementById(err).classList.remove('show');
+              });
+            });
+
+            document.getElementById('cf').addEventListener('submit', async function(e) {
+              e.preventDefault();
+
+              // Validate all fields
+              let valid = true;
+              fields.forEach(({id, err}) => {
+                const el = document.getElementById(id);
+                if (!el.value.trim()) {
+                  el.classList.add('invalid');
+                  document.getElementById(err).classList.add('show');
+                  valid = false;
+                } else {
+                  el.classList.remove('invalid');
+                  document.getElementById(err).classList.remove('show');
+                }
+              });
+              if (!valid) return;
+
+              const btn = document.getElementById('cfbtn');
+              btn.textContent = 'Sending…';
+              btn.disabled = true;
+              try {
+                const res = await fetch('https://formspree.io/f/mjgdqdyn', {
+                  method: 'POST',
+                  body: new FormData(this),
+                  headers: { Accept: 'application/json' }
+                });
+                if (res.ok) {
+                  document.getElementById('cf').style.display = 'none';
+                  document.getElementById('fserr').style.display = 'none';
+                  document.getElementById('fsok').style.display = 'block';
+                } else {
+                  document.getElementById('fserr').style.display = 'block';
+                  btn.textContent = 'Send Message & Request a Tour →';
+                  btn.disabled = false;
+                }
+              } catch(err) {
+                document.getElementById('fserr').style.display = 'block';
+                btn.textContent = 'Send Message & Request a Tour →';
+                btn.disabled = false;
+              }
+            });
+          </script>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -299,7 +442,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}});
 },{threshold:0.1});
-document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+document.querySelectorAll('.rv,.rv-l,.rv-r').forEach(el=>obs.observe(el));
 </script>
 </body>
 </html>

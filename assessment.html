@@ -1189,6 +1189,20 @@ document.getElementById("pinRestartBtn").addEventListener("click",()=>{
 /* ============================================================
    SUBMIT → BUILD COMBINED PDF (summary + PDF attachments) → THANK YOU
    ============================================================ */
+/* pdf-lib's standard fonts (Helvetica) only support WinAnsi encoding and
+   throw if asked to draw a character outside that range (e.g. emoji like
+   🚫). Strip any character a given font can't encode before drawing, so
+   PDF generation never crashes on unexpected input. */
+function pdfSafeText(text, fontToUse){
+  const s = String(text==null?"":text);
+  let out = "";
+  for(const ch of s){
+    try{ fontToUse.widthOfTextAtSize(ch,10); out += ch; }
+    catch(e){ /* drop characters this font can't encode */ }
+  }
+  return out;
+}
+
 async function buildSummaryPdfBytes(){
   const { PDFDocument, StandardFonts, rgb } = PDFLib;
   const pdfDoc = await PDFDocument.create();
@@ -1203,19 +1217,6 @@ async function buildSummaryPdfBytes(){
       page = pdfDoc.addPage([pageWidth,pageHeight]);
       y = pageHeight - margin;
     }
-  }
-  /* pdf-lib's standard fonts (Helvetica) only support WinAnsi encoding and
-     throw if asked to draw a character outside that range (e.g. emoji like
-     🚫). Strip any character a given font can't encode before drawing, so
-     PDF generation never crashes on unexpected input. */
-  function pdfSafeText(text, fontToUse){
-    const s = String(text==null?"":text);
-    let out = "";
-    for(const ch of s){
-      try{ fontToUse.widthOfTextAtSize(ch,10); out += ch; }
-      catch(e){ /* drop characters this font can't encode */ }
-    }
-    return out;
   }
   function wrapText(text,fontToUse,size,maxWidth){
     const words = pdfSafeText(text,fontToUse).split(/\s+/);
@@ -1285,30 +1286,58 @@ function collectAttachmentUrls(){
   const urls = [];
   SCHEMA.forEach(step=>step.sections.forEach(sec=>sec.fields.forEach(f=>{
     if(f.type==="file"){
-      (answers[f.id]||[]).forEach(fo=>{ if(fo && fo.url) urls.push({name:fo.name,url:fo.url}); });
+      (answers[f.id]||[]).forEach(fo=>{ if(fo && fo.url) urls.push({name:fo.name,url:fo.url,label:f.label||f.id}); });
     }
   })));
   return urls;
 }
 
 async function buildFinalMergedPdf(){
-  const { PDFDocument } = PDFLib;
+  const { PDFDocument, StandardFonts, rgb } = PDFLib;
   const summaryBytes = await buildSummaryPdfBytes();
   const merged = await PDFDocument.create();
   const summaryDoc = await PDFDocument.load(summaryBytes);
   (await merged.copyPages(summaryDoc, summaryDoc.getPageIndices())).forEach(p=>merged.addPage(p));
 
+  const boldFont = await merged.embedFont(StandardFonts.HelveticaBold);
+  const font = await merged.embedFont(StandardFonts.Helvetica);
+  const failures = [];
+
+  function addDividerPage(title, subtitle){
+    const page = merged.addPage([612,792]);
+    page.drawText("Attached Document", {x:50,y:730,size:11,font,color:rgb(0.36,0.45,0.41)});
+    page.drawText(pdfSafeText(title,boldFont), {x:50,y:695,size:18,font:boldFont,color:rgb(0.12,0.23,0.18)});
+    if(subtitle){
+      const safeSubtitle = pdfSafeText(subtitle,font);
+      const maxWidth = 612-100;
+      const words = safeSubtitle.split(/\s+/);
+      let line = "", lineY = 668;
+      words.forEach(w=>{
+        const test = line ? line+" "+w : w;
+        if(font.widthOfTextAtSize(test,11)>maxWidth && line){
+          page.drawText(line,{x:50,y:lineY,size:11,font,color:rgb(0.37,0.48,0.4)});
+          line = w; lineY -= 16;
+        } else line = test;
+      });
+      if(line) page.drawText(line,{x:50,y:lineY,size:11,font,color:rgb(0.37,0.48,0.4)});
+    }
+  }
+
   for(const att of collectAttachmentUrls()){
     try{
-      const res = await fetch(att.url);
+      const res = await fetch(att.url, { mode:"cors", cache:"no-store" });
+      if(!res.ok) throw new Error(`Fetch failed with status ${res.status}`);
       const bytes = await res.arrayBuffer();
-      const attDoc = await PDFDocument.load(bytes);
+      const attDoc = await PDFDocument.load(bytes, { ignoreEncryption:true });
+      addDividerPage(att.label, att.name);
       (await merged.copyPages(attDoc, attDoc.getPageIndices())).forEach(p=>merged.addPage(p));
     }catch(err){
       console.error("Couldn't merge attachment:", att.name, err);
+      failures.push(att);
+      addDividerPage(att.label, `${att.name} — could not be merged automatically. Original file: ${att.url}`);
     }
   }
-  return merged.save();
+  return { bytes: await merged.save(), failures };
 }
 
 /* Converts a Blob to a base64 string (no data: prefix) for email attachments. */
@@ -1332,7 +1361,7 @@ async function submitForm(){
   statusEl.textContent = "⏳ Preparing your assessment PDF (combining your answers and attachments)…";
 
   try{
-    const mergedBytes = await buildFinalMergedPdf();
+    const { bytes: mergedBytes, failures } = await buildFinalMergedPdf();
     const blob = new Blob([mergedBytes],{type:"application/pdf"});
     const namePart = (answers.resident_name||"assessment").replace(/[^a-z0-9]/gi,"-").toLowerCase();
     const fileName = `neighbor-care-assessment-${namePart}.pdf`;
@@ -1350,7 +1379,11 @@ async function submitForm(){
     // Trigger the download automatically as soon as it's ready.
     downloadBtn.click();
 
-    statusEl.textContent = "✅ Your assessment PDF is ready. If the download didn't start automatically, use the button below.";
+    if(failures.length===0){
+      statusEl.textContent = "✅ Your assessment PDF is ready, with any uploaded documents combined into the same file. If the download didn't start automatically, use the button below.";
+    } else {
+      statusEl.textContent = `✅ Your assessment PDF is ready. ${failures.length===1?"One uploaded file":`${failures.length} uploaded files`} couldn't be automatically combined (${failures.map(f=>f.name).join(", ")}) — a placeholder page notes this in the PDF. If the download didn't start automatically, use the button below.`;
+    }
     statusEl.classList.add("ready");
 
     /* Optional: also save a copy to Firestore/Storage so it can be

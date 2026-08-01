@@ -1,7 +1,7 @@
 // firebase-backend.js
 // Exposes window.FB with everything index.html calls: login, logout, onAuthChange,
 // getProfile, listCompanyAccounts, createAccount, sendReset, setAccountRole,
-// removeAccount, loadEntries, saveEntries, loadGrid, saveGrid.
+// setAccountName, removeAccount, loadEntries, saveEntries, loadGrid, saveGrid.
 //
 // >>> FILL THIS IN with your actual config from Firebase Console
 //     (Project settings -> General -> Your apps -> SDK setup and configuration) <<<
@@ -126,6 +126,14 @@ const FB = {
 
   async setAccountRole(uid, newRole) {
     await updateDoc(doc(db, "profiles", uid), { role: newRole });
+  },
+
+  // Updates an account's display name. Mirrors setAccountRole — same
+  // profiles/{uid} doc, just a different field. Firestore security rules
+  // need to allow an admin to update the `name` field the same way they
+  // already allow `role` updates (isMaster() || isAdminOf(companyId)).
+  async setAccountName(uid, newName) {
+    await updateDoc(doc(db, "profiles", uid), { name: newName });
   },
 
   // NOTE: this removes the Firestore profile (so they lose access to the app),

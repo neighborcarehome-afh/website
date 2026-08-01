@@ -589,18 +589,33 @@ function trimDecimal(n){
   return (Math.round(n * 100) / 100).toString();
 }
 
+/* ===================== Payroll rate helpers =====================
+   Nights are paid at a flat $100 per full night (8-hour 10PM–6AM
+   window); a partial night is paid proportionally (e.g. 4/8 Night =
+   $50). Regular hours are paid at $20/hour. */
+const NIGHT_RATE = 100; // $ per full night
+const HOUR_RATE = 20;   // $ per hour
+
+// nightHours is the raw accumulated hours inside the night window(s)
+// (see nightsAndHours); divide by NIGHT_WINDOW_HOURS to get an
+// equivalent "nights worked" count before applying the rate.
+function calcAmount(nightHours, hours){
+  return (nightHours / NIGHT_WINDOW_HOURS) * NIGHT_RATE + (hours || 0) * HOUR_RATE;
+}
+function fmtCurrency(n){
+  return '$' + (n || 0).toFixed(2);
+}
+
 /* Human-readable combined display. Whole nights show as "N Nights";
    a partial night shows as a fraction of the 8-hour window, e.g.
-   "4/8 Night"; a mix shows as "1 Night & 4/8 Night". Examples:
-   "1 Night & 40 Minutes", "4/8 Night & 2 Hours", "8 Hours 30 Minutes" */
+   "4/8 Night"; a mix shows as "1 Night & 4/8 Night". Regular hours are
+   shown as a decimal, not split into hours+minutes, e.g. "32.5 Hours"
+   instead of "32 Hours 30 Minutes". Examples: "1 Night & 0.67 Hours",
+   "4/8 Night & 2 Hours", "32.5 Hours" */
 function fmtNightHours(nightHours, hours){
-  const totalMins = Math.round((hours || 0) * 60);
-  const h = Math.floor(totalMins / 60);
-  const m = totalMins % 60;
-  const parts = [];
-  if (h > 0) parts.push(`${h} Hour${h === 1 ? '' : 's'}`);
-  if (m > 0 || (h === 0 && !(nightHours > 0))) parts.push(`${m} Minute${m === 1 ? '' : 's'}`);
-  const hoursPart = parts.join(' ');
+  const hoursTrimmed = trimDecimal(hours || 0);
+  const hoursNum = parseFloat(hoursTrimmed);
+  const hoursPart = hoursNum > 0 ? `${hoursTrimmed} Hour${hoursNum === 1 ? '' : 's'}` : '';
 
   const EPS = 1 / 120; // ~30-second tolerance for floating point
   let nightsPart = '';
@@ -618,7 +633,7 @@ function fmtNightHours(nightHours, hours){
   }
 
   if (nightsPart && hoursPart) return `${nightsPart} & ${hoursPart}`;
-  return nightsPart || hoursPart || '0 Minutes';
+  return nightsPart || hoursPart || '0 Hours';
 }
 function isSameDate(iso1, iso2){
   return fmtDate(new Date(iso1)) === fmtDate(new Date(iso2));
@@ -1780,17 +1795,20 @@ function drawTimeManagementScreen(allEntries){
     return punchRows;
   }).join('') : `<tr class="empty-row"><td colspan="4">No punches recorded for this employee.</td></tr>`;
 
-  const sortedWeeks = Object.keys(weekMap).sort().reverse();
-  const weekRows = sortedWeeks.length ? sortedWeeks.map(ws => {
-    const w = weekMap[ws];
-    return `<tr><td>${fmtDateLabel(w.start)} – ${fmtDateLabel(w.end)}</td><td>${fmtNightHours(w.totalNights, w.totalHours)}</td></tr>`;
-  }).join('') : `<tr class="empty-row"><td colspan="2">No data yet.</td></tr>`;
-
   const sortedPP = Object.keys(ppMap).sort().reverse();
   const ppRows = sortedPP.length ? sortedPP.map(k => {
     const p = ppMap[k];
     return `<tr><td>${fmtDateLabel(p.start)} – ${fmtDateLabel(p.end)}</td><td>${fmtNightHours(p.totalNights, p.totalHours)}</td></tr>`;
   }).join('') : `<tr class="empty-row"><td colspan="2">No data yet.</td></tr>`;
+
+  // Grand totals across all of this employee's punches, for the Total Pay section.
+  let grandNightHours = 0, grandDayHours = 0;
+  Object.keys(dayMap).forEach(d => {
+    grandNightHours += dayMap[d].totalNights;
+    grandDayHours += dayMap[d].totalHours;
+  });
+  const grandAmount = calcAmount(grandNightHours, grandDayHours);
+  const grandNightsDisplay = grandNightHours > (1 / 120) ? fmtNightHours(grandNightHours, 0) : '0 Nights';
 
   const today = fmtDate(new Date());
   const todayHours = dayMap[today] ? dayMap[today].totalHours : 0;
@@ -1825,18 +1843,26 @@ function drawTimeManagementScreen(allEntries){
     </div>
 
     <div class="section">
-      <div class="section-head"><h2>Weekly totals</h2></div>
-      <div class="panel-box"><div class="pad">
-        <table><thead><tr><th>Week</th><th>Total hours</th></tr></thead>
-        <tbody>${weekRows}</tbody></table>
-      </div></div>
-    </div>
-
-    <div class="section">
       <div class="section-head"><h2>Pay periods</h2><span class="sub">1–15 &amp; 16–end of month</span></div>
       <div class="panel-box"><div class="pad">
         <table><thead><tr><th>Period</th><th>Total hours</th></tr></thead>
         <tbody>${ppRows}</tbody></table>
+      </div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>Total pay — ${escapeHtml(ACCOUNTS[sel].name)}</h2><span class="sub">Nights × $${NIGHT_RATE} + Hours × $${HOUR_RATE}</span></div>
+      <div class="panel-box"><div class="pad">
+        <table>
+          <thead><tr><th>Nights</th><th>Hours</th><th>Amount</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>${grandNightsDisplay}</td>
+              <td>${fmtNightHours(0, grandDayHours)}</td>
+              <td style="font-weight:700;">${fmtCurrency(grandAmount)}</td>
+            </tr>
+          </tbody>
+        </table>
       </div></div>
     </div>
   `;

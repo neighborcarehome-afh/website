@@ -1337,23 +1337,10 @@ async function submitForm(){
     const namePart = (answers.resident_name||"assessment").replace(/[^a-z0-9]/gi,"-").toLowerCase();
     const fileName = `neighbor-care-assessment-${namePart}.pdf`;
 
-    let pdfUrl = null;
-    if(docRef && currentPhone){
-      const path = `assessments/${phoneDocId(currentPhone)}/final-assessment.pdf`;
-      const ref = storage.ref().child(path);
-      await ref.put(blob);
-      pdfUrl = await ref.getDownloadURL();
-      await docRef.set({
-        answers, currentStep, submitted:true,
-        submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
-        pdfUrl
-      }, { merge:true });
-      setSaveStatus("Submitted ✓");
-    }
-
     /* Make the combined PDF downloadable for the person filling out the
-       form. No email is sent to the care team — the PDF stays local to
-       this browser (plus the optional Firestore/Storage save above). */
+       form. This happens first and is NOT gated on Firestore/Storage —
+       no email is sent to the care team, and the download must not be
+       blocked by an unrelated storage failure. */
     const downloadUrl = URL.createObjectURL(blob);
     const downloadBtn = document.getElementById("pdfDownloadBtn");
     downloadBtn.href = downloadUrl;
@@ -1365,9 +1352,30 @@ async function submitForm(){
 
     statusEl.textContent = "✅ Your assessment PDF is ready. If the download didn't start automatically, use the button below.";
     statusEl.classList.add("ready");
+
+    /* Optional: also save a copy to Firestore/Storage so it can be
+       resumed/looked up later. Runs in its own try/catch so a failure
+       here (e.g. storage rules, network) never blocks the download
+       above, which has already happened by this point. */
+    if(docRef && currentPhone){
+      try{
+        const path = `assessments/${phoneDocId(currentPhone)}/final-assessment.pdf`;
+        const ref = storage.ref().child(path);
+        await ref.put(blob);
+        const pdfUrl = await ref.getDownloadURL();
+        await docRef.set({
+          answers, currentStep, submitted:true,
+          submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          pdfUrl
+        }, { merge:true });
+        setSaveStatus("Submitted ✓");
+      }catch(storageErr){
+        console.error("Optional Firestore/Storage save failed (download already succeeded):", storageErr);
+      }
+    }
   }catch(err){
     console.error(err);
-    statusEl.textContent = "⚠ Something went wrong delivering your assessment. Please try again, or contact us directly using the information below.";
+    statusEl.textContent = "⚠ Something went wrong preparing your assessment PDF. Please try again, or contact us directly using the information below.";
   }
 }
 

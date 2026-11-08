@@ -655,6 +655,46 @@ footer{background:var(--ink);padding:28px 24px}
 #siteContent{opacity:0;animation:contentFadeIn 1s ease forwards}
 @keyframes contentFadeIn{from{opacity:0}to{opacity:1}}
 
+/* ══ OUR HOMES (matches mockup) ══ */
+.homes{position:relative;background:var(--cream,#FAF6EE);overflow:hidden;padding:72px 24px 84px}
+.homes-leaf{position:absolute;top:0;width:190px;height:190px;pointer-events:none;opacity:.9}
+.homes-leaf.l{left:0}
+.homes-leaf.r{right:0;transform:scaleX(-1)}
+.homes-head{position:relative;text-align:center;max-width:760px;margin:0 auto 44px}
+.homes-eyebrow{display:flex;align-items:center;justify-content:center;gap:18px;font-size:.78rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--ink);margin-bottom:18px}
+.homes-eyebrow::before,.homes-eyebrow::after{content:'';width:90px;height:1px;background:rgba(30,58,47,.3)}
+.homes-head h2{font-family:var(--fd);font-weight:700;font-size:clamp(2rem,4.4vw,3.2rem);line-height:1.1;color:var(--ink);margin-bottom:16px}
+.homes-head p{font-size:.98rem;line-height:1.75;color:var(--body)}
+.homes-grid{position:relative;max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:44px}
+.home-col{display:flex;flex-direction:column;align-items:center;text-align:center}
+.home-photo{position:relative;width:100%;aspect-ratio:3/2;border-radius:6px;overflow:hidden;cursor:pointer;box-shadow:0 14px 36px rgba(30,58,47,.14)}
+.home-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.home-photo:hover img{transform:scale(1.04)}
+.home-mark{margin-top:-34px;position:relative;z-index:2;background:var(--cream,#FAF6EE);padding:12px 34px 4px;border-radius:40px 40px 0 0;display:flex;flex-direction:column;align-items:center;color:var(--forest)}
+.home-mark .hm-row{display:flex;align-items:center;gap:12px}
+.home-mark svg{width:46px;height:46px;flex-shrink:0}
+.home-mark .hm-name{font-family:var(--fd);font-weight:500;font-size:1.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--forest);white-space:nowrap}
+.home-mark .hm-sub{font-size:.55rem;letter-spacing:.32em;text-transform:uppercase;color:var(--sub);margin-top:2px}
+.home-tag{font-family:var(--fd);font-weight:700;font-size:1.15rem;color:var(--ink);margin:14px 0 10px}
+.home-desc{font-size:.88rem;line-height:1.7;color:var(--body);max-width:470px;margin-bottom:22px}
+.home-feats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%;max-width:480px;margin-bottom:22px}
+.hf{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:.72rem;line-height:1.3;color:var(--body)}
+.hf svg{width:30px;height:30px;color:var(--forest)}
+.home-thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;max-width:480px;margin-bottom:24px}
+.home-thumbs button{border:none;padding:0;background:none;cursor:pointer;border-radius:6px;overflow:hidden;aspect-ratio:4/3;box-shadow:0 6px 16px rgba(30,58,47,.14)}
+.home-thumbs img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.home-thumbs button:hover img{transform:scale(1.08)}
+.home-btn{display:inline-flex;align-items:center;gap:10px;background:var(--forest-mid);color:#fff;border:none;cursor:pointer;font-family:var(--fb);font-weight:600;font-size:.9rem;padding:14px 34px;border-radius:100px;transition:background .2s,transform .2s;box-shadow:0 8px 20px rgba(30,58,47,.22)}
+.home-btn:hover{background:var(--forest);transform:translateY(-2px)}
+.home-addr{margin-top:14px;font-size:.78rem;color:var(--sub)}
+@media(max-width:860px){
+  .homes{padding:56px 18px 64px}
+  .homes-grid{grid-template-columns:1fr;gap:64px}
+  .homes-leaf{width:110px;height:110px}
+  .homes-eyebrow::before,.homes-eyebrow::after{width:36px}
+  .home-mark .hm-name{font-size:1.35rem}
+}
+
 /* ══ FRONT PAGE v2 (matches mockup) ══ */
 :root{--cream:#FAF6EE;--sage-bar:#E7EADF}
 .topbar{position:fixed;top:0;left:0;right:0;z-index:300;height:84px;background:rgba(250,246,238,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:space-between;padding:0 56px;border-bottom:1px solid rgba(30,58,47,.06)}
@@ -976,43 +1016,62 @@ footer{background:var(--ink);padding:28px 24px}
   </div>
 </section>
 
-<!-- LOCATIONS -->
-<section class="sec" id="amenities">
-  <div class="wrap">
-    <div class="rv">
-      <p class="ew">Part of the Neighbor Care Homes Family</p>
-      <h2 class="h2">One Family, <i>Three</i> More Homes Across Washington</h2>
-         </div>
-    <div class="loc-grid">
-      <div class="loc-card rv" onclick="openSlider('parkside')" style="cursor:pointer">
-        <div class="loc-img"><img src="other/pafh.webp" alt="Parkside Adult Family Home in Vancouver WA" loading="lazy"/></div>
-        <div class="loc-body">
-          <h3>Parkside Adult Family Home</h3>
-          <p class="loc-addr">📍 6101 Texas Dr, Vancouver, WA 98661</p>
-          <a class="loc-phone" href="tel:+18013696018">📞 (801) 369-6018</a>
-        </div>
-      </div>
-      <div class="loc-card rv" onclick="openSlider('firstplace')" style="cursor:pointer">
-        <div class="loc-img"><img src="firstplace/fp-front.webp" alt="First Place Adult Family Home" loading="lazy"/></div>
-        <div class="loc-body">
-          <h3>First Place Adult Family Home</h3>
-          <p class="loc-addr">📍 14731 NE 11th St, Vancouver, WA 98684</p>
-          <a class="loc-phone" href="tel:+18013696018">📞 (801) 369-6018</a>
-        </div>
-      </div>
-
-      <div class="loc-card rv" onclick="openSlider('comingsoon')" style="cursor:pointer">
-        <div class="loc-img"><img src="https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=700&q=72" alt="Neighbor Care Homes in Auburn" loading="lazy"/></div>
-        <div class="loc-body">
-          <h3>Opening Soon ..!</h3>
-          <p class="loc-addr">📍 Vancouver, WA</p>
-          <a class="loc-phone" href="tel:+18013696018">📞 (801) 369-6018</a>
-        </div>
-      </div>
-    </div> 
+<!-- LOCATIONS / OUR HOMES -->
+<section class="homes" id="amenities">
+  <svg class="homes-leaf l" viewBox="0 0 190 190" fill="none" aria-hidden="true">
+  <path d="M0 20 C50 30 90 70 120 150" stroke="#6B8F6F" stroke-width="2" stroke-linecap="round"/>
+  <g fill="#8DAA8A">
+    <ellipse cx="30" cy="34" rx="22" ry="8" transform="rotate(20 30 34)"/>
+    <ellipse cx="55" cy="52" rx="22" ry="8" transform="rotate(35 55 52)" fill="#A3BCA0"/>
+    <ellipse cx="78" cy="78" rx="22" ry="8" transform="rotate(55 78 78)"/>
+    <ellipse cx="98" cy="108" rx="20" ry="7" transform="rotate(70 98 108)" fill="#A3BCA0"/>
+    <ellipse cx="112" cy="138" rx="18" ry="6.500" transform="rotate(80 112 138)"/>
+    <ellipse cx="22" cy="62" rx="18" ry="7" transform="rotate(-10 22 62)" fill="#A3BCA0"/>
+    <ellipse cx="48" cy="92" rx="18" ry="7" transform="rotate(10 48 92)"/>
+    <ellipse cx="72" cy="124" rx="16" ry="6.500" transform="rotate(25 72 124)" fill="#A3BCA0"/>
+  </g>
+</svg>
+  <svg class="homes-leaf r" viewBox="0 0 190 190" fill="none" aria-hidden="true">
+  <path d="M0 20 C50 30 90 70 120 150" stroke="#6B8F6F" stroke-width="2" stroke-linecap="round"/>
+  <g fill="#8DAA8A">
+    <ellipse cx="30" cy="34" rx="22" ry="8" transform="rotate(20 30 34)"/>
+    <ellipse cx="55" cy="52" rx="22" ry="8" transform="rotate(35 55 52)" fill="#A3BCA0"/>
+    <ellipse cx="78" cy="78" rx="22" ry="8" transform="rotate(55 78 78)"/>
+    <ellipse cx="98" cy="108" rx="20" ry="7" transform="rotate(70 98 108)" fill="#A3BCA0"/>
+    <ellipse cx="112" cy="138" rx="18" ry="6.500" transform="rotate(80 112 138)"/>
+    <ellipse cx="22" cy="62" rx="18" ry="7" transform="rotate(-10 22 62)" fill="#A3BCA0"/>
+    <ellipse cx="48" cy="92" rx="18" ry="7" transform="rotate(10 48 92)"/>
+    <ellipse cx="72" cy="124" rx="16" ry="6.500" transform="rotate(25 72 124)" fill="#A3BCA0"/>
+  </g>
+</svg>
+  <div class="homes-head rv">
+    <div class="homes-eyebrow">Our Homes</div>
+    <h2>Two Homes. One Approach to Care.</h2>
+    <p>Neighbor Care Homes includes two six-resident Adult Family Homes in Vancouver, Washington. Each home has its own personality, but both share the same commitment to personal care, familiar caregivers, and creating a place that truly feels like home.</p>
+  </div>
+  <div class="homes-grid">
+    <article class="home-col rv">
+      <div class="home-photo" onclick="openSlider('parkside')"><img src="other/pafh.webp" alt="Parkside Adult Family Home in Vancouver, WA" loading="lazy"/></div>
+      <div class="home-mark"><div class="hm-row"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="24" cy="18" r="14" fill="#8CC152" opacity=".85"/><circle cx="16" cy="22" r="8" fill="#6FA83C" opacity=".8"/><circle cx="32" cy="22" r="8" fill="#6FA83C" opacity=".8"/><path d="M24 46V22M24 30l-7-6M24 34l8-7" stroke="#1E3A2F" stroke-width="2.200" stroke-linecap="round"/></svg><span class="hm-name">Parkside</span></div><span class="hm-sub">Adult Family Home</span></div>
+      <h3 class="home-tag">Established. Personal. Familiar.</h3>
+      <p class="home-desc">Six private bedrooms with private half baths, a live-in Resident Care Manager, and enhanced weekday staffing. Conveniently located near I-205 and Highway 14, across from an ADA-accessible park and just minutes from PeaceHealth.</p>
+      <div class="home-feats"><div class="hf"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7v11h2v-3h14v3h2v-8a3 3 0 00-3-3h-7v5H5V7H3zm4 4.500a2 2 0 100-4 2 2 0 000 4z"/></svg><span>Private<br>Half Baths</span></div><div class="hf"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L2 12h3v8h5v-5h4v5h5v-8h3L12 3z"/></svg><span>Live-In<br>Care Manager</span></div><div class="hf"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7" r="3.200"/><circle cx="5.500" cy="9" r="2.400"/><circle cx="18.500" cy="9" r="2.400"/><path d="M12 11.500c-3.300 0-6 1.800-6 4.200V18h12v-2.300c0-2.400-2.700-4.200-6-4.200zM5.500 12.200C3.500 12.400 2 13.600 2 15.200V17h3.200v-1.300c0-1.400.4-2.600 1.100-3.500-.2 0-.5 0-.8 0zm13 0c-.3 0-.6 0-.8 0 .7.900 1.100 2.100 1.100 3.500V17H22v-1.800c0-1.600-1.500-2.800-3.500-3z"/></svg><span>Enhanced<br>Daytime Staffing</span></div><div class="hf"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-8-5.200-8-11.100A4.900 4.900 0 0112 7a4.900 4.900 0 018 2.900C20 15.800 12 21 12 21z"/></svg><span>24/7<br>RN On-Call</span></div></div>
+      <div class="home-thumbs"><button type="button" onclick="openSliderAt('parkside',0)" aria-label="View photo 1"><img src="interior/living-room.webp" alt="" loading="lazy"/></button><button type="button" onclick="openSliderAt('parkside',1)" aria-label="View photo 2"><img src="interior/bedroom.webp" alt="" loading="lazy"/></button><button type="button" onclick="openSliderAt('parkside',2)" aria-label="View photo 3"><img src="interior/dining-area.webp" alt="" loading="lazy"/></button></div>
+      <button type="button" class="home-btn" onclick="openSlider('parkside')">Explore Parkside <span aria-hidden="true">&rarr;</span></button>
+      <p class="home-addr">6101 Texas Dr, Vancouver, WA 98661</p>
+    </article>
+    <article class="home-col rv">
+      <div class="home-photo" onclick="openSlider('firstplace')"><img src="firstplace/fp-front.webp" alt="First Place Adult Family Home in Vancouver, WA" loading="lazy"/></div>
+      <div class="home-mark"><div class="hm-row"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M6 44C14 30 24 18 40 6" stroke="#4A7C59" stroke-width="2" stroke-linecap="round"/><g fill="#6B9A78"><ellipse cx="14" cy="32" rx="8" ry="3.500" transform="rotate(-50 14 32)"/><ellipse cx="22" cy="24" rx="8" ry="3.500" transform="rotate(-50 22 24)"/><ellipse cx="30" cy="16" rx="8" ry="3.500" transform="rotate(-50 30 16)"/><ellipse cx="22" cy="34" rx="7" ry="3" transform="rotate(10 22 34)"/><ellipse cx="32" cy="26" rx="7" ry="3" transform="rotate(10 32 26)"/></g></svg><span class="hm-name">First Place</span></div><span class="hm-sub">Adult Family Home</span></div>
+      <h3 class="home-tag">Spacious. Private. Thoughtfully Designed.</h3>
+      <p class="home-desc">Six large private bedrooms, each with a full bathroom and private walk-in shower, plus secure gated outdoor space. A dedicated Resident Care Manager, two daytime caregivers seven days a week, awake night care, and 24/7 RN on-call support.</p>
+      <div class="home-feats"><div class="hf"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7v11h2v-3h14v3h2v-8a3 3 0 00-3-3h-7v5H5V7H3zm4 4.500a2 2 0 100-4 2 2 0 000 4z"/></svg><span>Private<br>Full Baths</span></div><div class="hf"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a6 6 0 00-6 6v1h2V8a4 4 0 018 0v1h2V8a6 6 0 00-6-6zm-5 9v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v2h2v-2h-2zM9 15v2h2v-2H9zm4 0v2h2v-2h-2zm-2 4v2h2v-2h-2z"/></svg><span>Walk-In<br>Showers</span></div><div class="hf"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7" r="3.200"/><circle cx="5.500" cy="9" r="2.400"/><circle cx="18.500" cy="9" r="2.400"/><path d="M12 11.500c-3.300 0-6 1.800-6 4.200V18h12v-2.300c0-2.400-2.700-4.200-6-4.200zM5.500 12.200C3.500 12.400 2 13.600 2 15.200V17h3.200v-1.300c0-1.400.4-2.600 1.100-3.500-.2 0-.5 0-.8 0zm13 0c-.3 0-.6 0-.8 0 .7.900 1.100 2.100 1.100 3.500V17H22v-1.800c0-1.600-1.500-2.800-3.500-3z"/></svg><span>2 Daytime Caregivers<br>(7 Days a Week)</span></div><div class="hf"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 14.500A8.500 8.500 0 019.500 4 8.500 8.500 0 1020 14.500z"/></svg><span>Awake<br>Night Care</span></div></div>
+      <div class="home-thumbs"><button type="button" onclick="openSliderAt('firstplace',0)" aria-label="View photo 1"><img src="firstplace/living.webp" alt="" loading="lazy"/></button><button type="button" onclick="openSliderAt('firstplace',1)" aria-label="View photo 2"><img src="firstplace/master.webp" alt="" loading="lazy"/></button><button type="button" onclick="openSliderAt('firstplace',2)" aria-label="View photo 3"><img src="firstplace/first-place-dinning.webp" alt="" loading="lazy"/></button></div>
+      <button type="button" class="home-btn" onclick="openSlider('firstplace')">Explore First Place <span aria-hidden="true">&rarr;</span></button>
+      <p class="home-addr">14731 NE 11th St, Vancouver, WA 98684</p>
+    </article>
   </div>
 </section>
-
 
 <!-- GALLERY -->
 <section class="sec gal-bg" id="gallery">
@@ -1922,6 +1981,8 @@ function openSlider(key){
   lsOverlay.classList.add('open');
   document.body.style.overflow='hidden';
 }
+
+function openSliderAt(key,i){openSlider(key);showSlide(i)}
 
 function closeSlider(){
   lsOverlay.classList.remove('open');

@@ -773,6 +773,57 @@ footer{background:var(--ink);padding:28px 24px}
   .affil-item.l{text-align:center}
   .affil-mark{text-align:center}
 }
+
+/* ══ MOBILE HERO (cinematic, like original) ══ */
+@media(max-width:900px){
+  .hero2{margin-top:68px;height:calc(100vh - 68px);height:calc(100svh - 68px);min-height:560px;display:flex;flex-direction:column;justify-content:flex-end;background:#10281c}
+  .hero2-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 25%}
+  .hero2::before{display:block;content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(10,25,18,.94) 0%,rgba(10,25,18,.78) 42%,rgba(10,25,18,.25) 72%,rgba(10,25,18,0) 100%)}
+  .hero2-inner{position:relative;z-index:2;padding:0 22px 16px;max-width:none}
+  .hero2-tag{background:rgba(255,255,255,.12);color:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.2);font-size:.62rem;letter-spacing:.14em;padding:6px 13px;margin-bottom:14px}
+  .hero2 h1{color:#fff;font-size:clamp(2.2rem,9.5vw,3rem);line-height:1.05;margin-bottom:12px}
+  .hero2 h1 em{color:var(--mint)}
+  .hero2-rule,.hero2-copy p+p{display:none}
+  .hero2-copy p{color:rgba(255,255,255,.82);font-size:.95rem;line-height:1.6;margin-bottom:0;max-width:none}
+  .hero2-copy p strong{color:#fff}
+  .hero2-btns{flex-direction:column;gap:10px;margin-top:18px}
+  .btn-dark{background:var(--gold);color:var(--ink);width:100%;justify-content:space-between;padding:17px 22px;border-radius:14px;box-shadow:0 8px 24px rgba(212,168,83,.35)}
+  .btn-dark:hover{background:#C49640}
+  .btn-light{display:none}
+  .hero2-stats{position:relative;z-index:2;transform:none;top:auto;right:auto;width:auto;margin:0 22px 22px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding:12px 4px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:14px}
+  .hs-card{background:none;box-shadow:none;border-radius:0;padding:0 4px;color:#fff;border-right:1px solid rgba(255,255,255,.14)}
+  .hs-card:last-child{border-right:none}
+  .hs-card svg{display:none}
+  .hs-n{color:#fff;font-size:1.2rem}
+  .hs-l{color:rgba(255,255,255,.6);font-size:.54rem;letter-spacing:.06em;text-transform:uppercase;line-height:1.25}
+  .hs-l br{display:none}
+  .trust2{padding:18px 20px}
+  .trust2-inner{flex-direction:column;align-items:flex-start;gap:12px}
+  .t2-item{justify-content:flex-start;font-size:.74rem;gap:12px}
+  .t2-item svg{width:26px;height:26px}
+}
+@media(max-width:380px){
+  .hero2 h1{font-size:2rem}
+  .hs-l{font-size:.5rem}
+}
+
+@media(max-width:900px){
+  .trust2,.affil{display:none}
+}
+
+/* ── STAFF: one-at-a-time slider on mobile ── */
+.staff-nav{display:none}
+@media(max-width:860px){
+  .staff-slider{margin-top:36px}
+  .staff-grid{display:flex;gap:16px;margin-top:0;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .staff-grid::-webkit-scrollbar{display:none}
+  .staff-card{flex:0 0 100%;min-width:0;scroll-snap-align:center}
+  .staff-card.rv{opacity:1;transform:none}
+  .staff-nav{display:flex;align-items:center;justify-content:center;gap:22px;margin-top:22px}
+  .staff-arrow{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--border);background:#fff;color:var(--forest);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+  .staff-arrow:hover,.staff-arrow:active{background:var(--forest);border-color:var(--forest);color:#fff}
+  .staff-count{font-size:.8rem;font-weight:600;letter-spacing:.08em;color:var(--sub);min-width:48px;text-align:center}
+}
 </style>
 </head>
 <body>
@@ -1357,7 +1408,8 @@ footer{background:var(--ink);padding:28px 24px}
       <p class="ew">The People Behind the Care</p>
       <h2 class="h2">Meet Our <i>Caregiving Team</i></h2>
     </div>
-    <div class="staff-grid">
+    <div class="staff-slider">
+    <div class="staff-grid" id="staffGrid">
       
       <div class="staff-card rv">
         <img class="staff-img" src="other/carlos1.webp" alt="James Reyes, Lead Caregiver" loading="lazy"/>
@@ -1387,6 +1439,12 @@ footer{background:var(--ink);padding:28px 24px}
         </div>
       </div>
 
+    </div>
+    <div class="staff-nav" aria-label="Team members">
+      <button type="button" class="staff-arrow" id="staffPrev" aria-label="Previous team member">&#8592;</button>
+      <span class="staff-count" id="staffCount">1 / 3</span>
+      <button type="button" class="staff-arrow" id="staffNext" aria-label="Next team member">&#8594;</button>
+    </div>
     </div>
   </div>
 </section>
@@ -2035,5 +2093,23 @@ lsOverlay.addEventListener('touchend',e=>{
 
 
 </div>
+
+<script>
+// Staff slider (mobile): arrows + counter on a scroll-snap row
+(function(){
+  var g=document.getElementById('staffGrid');
+  if(!g)return;
+  var cards=[].slice.call(g.querySelectorAll('.staff-card'));
+  var cnt=document.getElementById('staffCount');
+  function idx(){var w=g.clientWidth||1;return Math.max(0,Math.min(cards.length-1,Math.round(g.scrollLeft/(w+16))))}
+  function upd(){cnt.textContent=(idx()+1)+' / '+cards.length}
+  function go(n){n=(n+cards.length)%cards.length;g.scrollTo({left:n*(g.clientWidth+16),behavior:'smooth'})}
+  document.getElementById('staffPrev').onclick=function(){go(idx()-1)};
+  document.getElementById('staffNext').onclick=function(){go(idx()+1)};
+  g.addEventListener('scroll',upd,{passive:true});
+  window.addEventListener('resize',upd);
+  upd();
+})();
+</script>
 </body>
 </html>

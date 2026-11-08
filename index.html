@@ -184,9 +184,9 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:300;back
 .nav-cta:hover{background:var(--forest-mid)!important}
 .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;background:var(--forest);border:none;padding:10px 12px;border-radius:100px;margin-left:4px}
 .hamburger span{display:block;width:18px;height:1.5px;background:#fff;border-radius:2px}
-.mob-overlay{display:none;position:fixed;inset:0;background:rgba(17,27,20,.55);z-index:280;backdrop-filter:blur(4px)}
+.mob-overlay{display:none;position:fixed;inset:0;background:rgba(17,27,20,.55);z-index:380;backdrop-filter:blur(4px)}
 .mob-overlay.open{display:block}
-.mob-drawer{position:fixed;top:0;right:-100%;width:80%;max-width:320px;height:100vh;background:var(--white);z-index:290;padding:80px 32px 40px;display:flex;flex-direction:column;gap:4px;transition:right .35s cubic-bezier(.4,0,.2,1);box-shadow:-8px 0 40px rgba(0,0,0,.12)}
+.mob-drawer{position:fixed;top:0;right:-100%;width:80%;max-width:320px;height:100vh;background:var(--white);z-index:390;padding:80px 32px 40px;display:flex;flex-direction:column;gap:4px;transition:right .35s cubic-bezier(.4,0,.2,1);box-shadow:-8px 0 40px rgba(0,0,0,.12)}
 .mob-drawer.open{right:0}
 .mob-drawer a{display:block;padding:14px 0;font-size:1rem;font-weight:500;color:var(--body);text-decoration:none;border-bottom:1px solid var(--border);transition:color .2s}
 .mob-drawer a:hover{color:var(--forest)}
@@ -654,6 +654,85 @@ footer{background:var(--ink);padding:28px 24px}
 /* ── SIMPLE PAGE FADE-IN (loader removed) ── */
 #siteContent{opacity:0;animation:contentFadeIn 1s ease forwards}
 @keyframes contentFadeIn{from{opacity:0}to{opacity:1}}
+
+/* ══ FRONT PAGE v2 (matches mockup) ══ */
+:root{--cream:#FAF6EE;--sage-bar:#E7EADF}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:300;height:84px;background:rgba(250,246,238,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:space-between;padding:0 56px;border-bottom:1px solid rgba(30,58,47,.06)}
+.brand{display:flex;flex-direction:column;align-items:center;text-decoration:none;color:var(--forest);line-height:1}
+.brand svg{width:132px;height:40px;display:block}
+.brand-name{font-family:var(--fd);font-weight:500;font-size:1.2rem;letter-spacing:.03em;text-transform:uppercase;margin-top:3px;white-space:nowrap}
+.brand-sub{font-size:.52rem;letter-spacing:.34em;text-transform:uppercase;margin-top:4px;white-space:nowrap}
+.top-links{display:flex;gap:4px;list-style:none;margin-left:auto}
+.top-links a{text-decoration:none;font-size:.88rem;font-weight:500;color:var(--ink);padding:10px 20px;border-radius:100px;transition:background .2s,color .2s}
+.top-links a:hover{background:var(--mint-pale);color:var(--forest)}
+.topbar .hamburger{margin-left:auto}
+
+.hero2{position:relative;margin-top:84px;min-height:600px;background:var(--cream);overflow:hidden;display:flex;align-items:center}
+.hero2-img{position:absolute;top:0;right:0;width:72%;height:100%;object-fit:cover;object-position:center 22%;display:block}
+.hero2::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(to right,var(--cream) 0%,var(--cream) 32%,rgba(250,246,238,.88) 42%,rgba(250,246,238,.35) 56%,rgba(250,246,238,0) 68%)}
+.hero2-inner{position:relative;z-index:2;width:100%;max-width:1320px;margin:0 auto;padding:56px}
+.hero2-copy{max-width:520px}
+.hero2-tag{display:inline-block;background:rgba(30,58,47,.09);color:var(--forest);font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:8px 18px;border-radius:100px;margin-bottom:22px}
+.hero2 h1{font-family:var(--fd);font-weight:500;font-size:clamp(2.5rem,4.6vw,4.1rem);line-height:1.05;color:var(--ink);letter-spacing:-.01em;margin-bottom:22px}
+.hero2 h1 em{display:block;font-style:italic;color:var(--forest-mid)}
+.hero2-rule{width:56px;height:2px;background:var(--forest);margin-bottom:22px}
+.hero2-copy p{font-size:1rem;line-height:1.7;color:var(--ink);margin-bottom:12px;max-width:470px}
+.hero2-copy p strong{font-weight:700}
+.hero2-btns{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+.btn-dark,.btn-light{display:inline-flex;align-items:center;gap:10px;padding:17px 34px;border-radius:100px;font-weight:600;font-size:.95rem;text-decoration:none;transition:transform .25s,box-shadow .25s,background .2s}
+.btn-dark{background:var(--forest);color:#fff;box-shadow:0 8px 22px rgba(30,58,47,.28)}
+.btn-dark:hover{background:var(--forest-mid);transform:translateY(-3px)}
+.btn-light{background:#fff;color:var(--ink);box-shadow:0 8px 22px rgba(30,58,47,.12)}
+.btn-light:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(30,58,47,.2)}
+.btn-light svg{width:18px;height:18px;color:var(--forest)}
+
+.hero2-stats{position:absolute;right:28px;top:50%;transform:translateY(-50%);z-index:3;display:flex;flex-direction:column;gap:12px;width:150px}
+.hs-card{background:rgba(250,246,238,.94);border-radius:14px;padding:16px 10px 14px;text-align:center;box-shadow:0 6px 20px rgba(30,58,47,.12);color:var(--forest)}
+.hs-card svg{width:30px;height:30px;display:block;margin:0 auto 4px}
+.hs-n{font-family:var(--fd);font-size:1.6rem;font-weight:500;color:var(--ink);line-height:1.1}
+.hs-l{font-size:.74rem;line-height:1.3;color:var(--ink);margin-top:2px}
+
+.trust2{background:var(--sage-bar);padding:24px}
+.trust2-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.t2-item{flex:1;display:flex;align-items:center;justify-content:center;gap:16px;font-size:.82rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.t2-item svg{width:34px;height:34px;color:var(--forest);flex-shrink:0}
+.t2-div{width:1px;height:34px;background:rgba(30,58,47,.25)}
+
+.affil{background:var(--cream);padding:30px 24px 38px;text-align:center}
+.affil-title{max-width:1020px;margin:0 auto 22px;display:flex;align-items:center;gap:22px;font-size:.78rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--ink)}
+.affil-title::before,.affil-title::after{content:'';flex:1;height:1px;background:rgba(30,58,47,.3)}
+.affil-row{display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap}
+.affil-item{display:flex;align-items:center;gap:16px;font-size:.88rem;color:var(--ink);text-align:right;line-height:1.35}
+.affil-item.l{text-align:left}
+.affil-mark{font-family:var(--fb);font-weight:700;color:#1F4E8C;line-height:1.2;text-align:left;font-size:1rem}
+.affil-mark small{display:block;font-weight:500;letter-spacing:.14em;font-size:.68rem;text-transform:uppercase}
+.affil-mark.sw{font-size:1.9rem;letter-spacing:-.02em;color:var(--ink)}
+.affil-sep{width:1px;height:48px;background:rgba(30,58,47,.25)}
+
+@media(max-width:900px){
+  .topbar{height:68px;padding:0 18px}
+  .top-links{display:none}
+  .brand svg{width:104px;height:32px}
+  .brand-name{font-size:.95rem}
+  .brand-sub{font-size:.46rem}
+  .hero2{margin-top:68px;min-height:0;display:block}
+  .hero2-img{position:relative;width:100%;height:300px;display:block}
+  .hero2::before{display:none}
+  .hero2-inner{padding:30px 22px 22px}
+  .hero2-copy{max-width:none}
+  .hero2-btns{flex-direction:column}
+  .hero2-btns a{justify-content:center}
+  .hero2-stats{position:static;transform:none;width:auto;display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 22px 30px}
+  .trust2-inner{flex-direction:column;align-items:flex-start;gap:14px}
+  .t2-div{display:none}
+  .t2-item{justify-content:flex-start;font-size:.78rem}
+  .affil-title{letter-spacing:.14em;font-size:.68rem;gap:12px}
+  .affil-sep{display:none}
+  .affil-row{gap:24px;flex-direction:column}
+  .affil-item{text-align:center;flex-direction:column;gap:6px}
+  .affil-item.l{text-align:center}
+  .affil-mark{text-align:center}
+}
 </style>
 </head>
 <body>
@@ -668,24 +747,32 @@ footer{background:var(--ink);padding:28px 24px}
   </a>
 </div>
 
-<!-- FLOATING NAV -->
-<nav>
-  <a href="#" class="nav-logo">
-    <div class="nl-icon">🕊️</div>
-    <span class="nl-name">Neighbor Care Homes</span>
+<!-- TOP BAR -->
+<header class="topbar">
+  <a href="index.html" class="brand" aria-label="Neighbor Care Homes home">
+    <svg viewBox="0 0 132 40" fill="none" aria-hidden="true">
+      <path d="M8 36 L66 5 L124 36" stroke="#1E3A2F" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <ellipse cx="52" cy="24" rx="6" ry="2.8" transform="rotate(-30 52 24)" fill="#4A7C59"/>
+      <ellipse cx="62" cy="20" rx="6" ry="2.8" transform="rotate(-10 62 20)" fill="#6B9A78"/>
+      <ellipse cx="73" cy="21" rx="6" ry="2.8" transform="rotate(15 73 21)" fill="#4A7C59"/>
+      <ellipse cx="84" cy="25" rx="6" ry="2.8" transform="rotate(30 84 25)" fill="#6B9A78"/>
+      <rect x="62" y="26" width="8" height="8" fill="#1E3A2F"/>
+    </svg>
+    <span class="brand-name">Neighbor Care Homes</span>
+    <span class="brand-sub">Adult Family Homes</span>
   </a>
-  <ul class="nav-links">
+  <ul class="top-links">
     <li><a href="#about">About</a></li>
+    <li><a href="#amenities">Our Homes</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#pricing-cta">Pricing</a></li>
-    <li><a href="https://neighborcarehomes.com/careers.html">Careers</a></li>
     <li><a href="https://neighborcarehomes.com/assessment_intro.html">Assessment</a></li>
-    <li><a href="#contact" class="nav-cta">Schedule Tour</a></li>
+    <li><a href="https://neighborcarehomes.com/careers.html">Careers</a></li>
   </ul>
   <button class="hamburger" id="ham" aria-label="Open menu">
     <span></span><span></span><span></span>
   </button>
-</nav>
+</header>
 
 <div class="mob-overlay" id="ov" onclick="closeMob()"></div>
 <div class="mob-drawer" id="drawer">
@@ -701,53 +788,56 @@ footer{background:var(--ink);padding:28px 24px}
   <a href="#contact" class="mob-cta" onclick="closeMob()">Schedule a Free Tour</a>
 </div>
 
-<!-- HERO: full-bleed with bento stats -->
-<section class="hero">
-  <img class="hero-bg-img" src="theme.webp" alt="Senior resident with caregiver walking together in a peaceful garden" loading="eager" fetchpriority="high" />
-  <div class="hero-overlay"></div>
-  <div class="hero-inner">
-    <div class="hero-left">
-      <div class="hero-tag"><span style="width:7px;height:7px;border-radius:50%;background:#6fcf97;display:inline-block"></span> Currently Accepting Residents</div>
-      <h1>Creating Homes<br>Where Families<br><span>Can Return to Being Family Again</span></h1>
-      <p class="hero-p">Six residents. Round-the-clock care. A real home, not a hallway. Neighbor Care Homes is where families find peace, and seniors find joy again.</p>
-      <!-- Mobile stats strip -->
-      <div class="mob-stats">
-        <div class="mob-stat"><div class="mob-stat-n">6</div><div class="mob-stat-l">Residents</div></div>
-        <div class="mob-stat-div"></div>
-        <div class="mob-stat"><div class="mob-stat-n">24/7</div><div class="mob-stat-l">Care</div></div>
-        <div class="mob-stat-div"></div>
-        <div class="mob-stat"><div class="mob-stat-n">10+</div><div class="mob-stat-l">Yrs</div></div>
-        <div class="mob-stat-div"></div>
-        <div class="mob-stat"><div class="mob-stat-n">2+</div><div class="mob-stat-l">Homes</div></div>
-      </div>
-      <div class="hero-btns">
-        <a href="#contact" class="btn-gold">Schedule a Free Tour <span style="width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.18);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.85rem">→</span></a>
-        <a href="tel:+18013696018" class="btn-wh"><span style="width:26px;height:26px;border-radius:50%;background:#e75480;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg></span> Contact Us</a>
+<!-- HERO -->
+<section class="hero2">
+  <img class="hero2-img" src="IMG_9219.webp" alt="The Neighbor Care Homes caregiving team" loading="eager" fetchpriority="high" />
+  <div class="hero2-inner">
+    <div class="hero2-copy">
+      <span class="hero2-tag">Currently Accepting Residents</span>
+      <h1>Creating homes where families <em>can simply be family.</em></h1>
+      <div class="hero2-rule"></div>
+      <p>As someone who grew up in an adult family home and became the primary caregiver for my own grandmother, <strong>I understand</strong> how overwhelming it can be to carry the responsibility of someone you love.</p>
+      <p><strong>I help</strong> families feel confident that the day-to-day care is in good hands, giving them more time and space to focus on what matters most&mdash;their relationship.</p>
+      <div class="hero2-btns">
+        <a href="#contact" class="btn-dark">Schedule a Tour <span aria-hidden="true">&rarr;</span></a>
+        <a href="tel:+18013696018" class="btn-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg> Talk With Tami</a>
       </div>
     </div>
-    <div class="hero-right-stats">
-      <div class="stats-bento">
-        <div class="stat-card"><div class="stat-n">6</div><div class="stat-l">Max Residents</div></div>
-        <div class="stat-card"><div class="stat-n">24/7</div><div class="stat-l">Staffed Care</div></div>
-        <div class="stat-card"><div class="stat-n">10+</div><div class="stat-l">Yrs Serving </div></div>
-        <div class="stat-card"><div class="stat-n">2+</div><div class="stat-l">Homes</div></div>
-      </div>
-    </div>
+  </div>
+  <div class="hero2-stats">
+    <div class="hs-card"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7" r="3.2"/><circle cx="5.5" cy="9" r="2.4"/><circle cx="18.5" cy="9" r="2.4"/><path d="M12 11.5c-3.3 0-6 1.8-6 4.2V18h12v-2.3c0-2.4-2.7-4.2-6-4.2zM5.5 12.2C3.5 12.4 2 13.6 2 15.2V17h3.2v-1.3c0-1.4.4-2.6 1.1-3.5-.2 0-.5 0-.8 0zm13 0c-.3 0-.6 0-.8 0 .7.9 1.1 2.1 1.1 3.5V17H22v-1.8c0-1.6-1.5-2.8-3.5-3z"/></svg><div class="hs-n">6</div><div class="hs-l">Max Residents</div></div>
+    <div class="hs-card"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5v5.2l3.6 2.1-.8 1.3L11 13V7h2z"/></svg><div class="hs-n">24/7</div><div class="hs-l">Awake Care</div></div>
+    <div class="hs-card"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-8-5.2-8-11.1A4.9 4.9 0 0112 7a4.9 4.9 0 018 2.9C20 15.8 12 21 12 21z"/></svg><div class="hs-n">16+</div><div class="hs-l">Years Serving<br>Our Community</div></div>
+    <div class="hs-card"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L2 12h3v8h5v-5h4v5h5v-8h3L12 3z"/></svg><div class="hs-n">2</div><div class="hs-l">Neighborhood Homes<br>in Vancouver, WA</div></div>
   </div>
 </section>
 
 <!-- TRUST BAR -->
-<div class="trust-bar">
-  <div class="trust-bar-inner">
-    <div class="tb-item"><span>✅</span> WA State Licensed · #WA-AFH-XXXXX</div>
-    <div class="tb-div"></div>
-    <div class="tb-item"><span>🏛️</span> DSHS Certified & Inspected</div>
-    <div class="tb-div"></div>
-    <div class="tb-item"><span>🩺</span> Licensed Caregivers On-Site 24/7</div>
-
+<div class="trust2">
+  <div class="trust2-inner">
+    <div class="t2-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 4.5L12 2l4 2.5-.5 1.500h-7z"/><circle cx="12" cy="9" r="3"/><path d="M5 21c0-4 3-6.500 7-6.500s7 2.500 7 6.500H5z"/></svg>RN Owned &amp; Operated</div>
+    <div class="t2-div"></div>
+    <div class="t2-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4 5v6c0 5 3.4 9.2 8 11 4.6-1.8 8-6 8-11V5l-8-3zm-1.2 14L7 12.2l1.4-1.4 2.4 2.4 4.8-4.8L17 9.8 10.8 16z"/></svg>Citation Free</div>
+    <div class="t2-div"></div>
+    <div class="t2-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7" r="3.2"/><circle cx="5.5" cy="9" r="2.4"/><circle cx="18.5" cy="9" r="2.4"/><path d="M12 11.5c-3.3 0-6 1.8-6 4.2V18h12v-2.3c0-2.4-2.7-4.2-6-4.2zM5.5 12.2C3.5 12.4 2 13.6 2 15.2V17h3.2v-1.3c0-1.4.4-2.6 1.1-3.5-.2 0-.5 0-.8 0zm13 0c-.3 0-.6 0-.8 0 .7.9 1.1 2.1 1.1 3.5V17H22v-1.8c0-1.6-1.5-2.8-3.5-3z"/></svg>Dedicated, Long-Term Caregivers</div>
   </div>
 </div>
 
+<!-- AFFILIATIONS -->
+<section class="affil" aria-label="Professional affiliations and technology">
+  <div class="affil-title">Professional Affiliations &amp; Technology</div>
+  <div class="affil-row">
+    <div class="affil-item l">
+      <span>Proud Member of the</span>
+      <span class="affil-mark">Adult Family Home Council<small>of Washington State</small></span>
+    </div>
+    <div class="affil-sep"></div>
+    <div class="affil-item">
+      <span>Digital Care<br>Documentation with</span>
+      <span class="affil-mark sw">Synkwise</span>
+    </div>
+  </div>
+</section>
 
 <!-- ABOUT -->
 <section class="sec" id="about">

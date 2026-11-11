@@ -140,7 +140,6 @@ fieldset legend{font-family:var(--fd);font-weight:600;color:var(--forest);paddin
 .radio-option{display:flex;align-items:center;gap:7px;font-size:.9rem;color:var(--ink);background:var(--white);border:1.5px solid var(--border);padding:10px 15px;border-radius:10px;cursor:pointer;transition:border-color .2s,background .2s}
 .radio-option:hover{border-color:var(--forest)}
 .radio-option input{accent-color:var(--forest)}
-#other-availability-wrap{display:none;margin-top:12px}
 .file-field{border:2px dashed var(--forest);border-radius:14px;padding:24px;text-align:center;background:var(--white);transition:border-color .2s,background .2s}
 .file-field label{color:var(--forest)}
 .file-field input{margin-top:8px}
@@ -154,6 +153,28 @@ fieldset legend{font-family:var(--fd);font-weight:600;color:var(--forest);paddin
 .submit-row .btn-gold,.submit-row .btn-forest{width:100%;justify-content:center;font-size:1.02rem;padding:16px}
 .privacy-note{text-align:center;font-size:.8rem;color:var(--sub);margin-top:16px}
 #success-msg{display:none;background:var(--white);border:2px solid var(--forest);color:var(--forest);border-radius:12px;padding:20px;margin-top:18px;font-weight:600;text-align:center}
+
+
+/* ── WEEKLY AVAILABILITY ── */
+.form-row.sched-wrap{grid-template-columns:1fr}
+.sched{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:6px 16px}
+.sched-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px solid var(--border)}
+.sched-row:last-child{border-bottom:none}
+.sched-day{font-weight:600;color:var(--forest);font-size:.92rem;min-width:100px}
+.sched-opts{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.sched-opt{cursor:pointer;margin:0!important;text-transform:none!important;letter-spacing:0!important}
+.sched-opt input{position:absolute;opacity:0;pointer-events:none}
+.sched-opt span{display:inline-block;min-width:64px;text-align:center;padding:8px 14px;border-radius:100px;border:1.5px solid var(--border);background:var(--white);font-size:.84rem;font-weight:600;color:var(--body);transition:all .15s}
+.sched-opt:hover span{border-color:var(--forest)}
+.sched-opt input:checked+span{background:var(--forest);border-color:var(--forest);color:#fff}
+.sched-opt.off input:checked+span{background:var(--gold-pale);border-color:var(--gold);color:var(--gold-dark)}
+.sched-opt input:focus-visible+span{outline:2px solid var(--gold);outline-offset:2px}
+@media(max-width:480px){
+  .sched-row{flex-direction:column;align-items:flex-start;gap:8px}
+  .sched-opts{justify-content:flex-start;width:100%}
+  .sched-opt{flex:1}
+  .sched-opt span{display:block;min-width:0;padding:9px 6px}
+}
 
 /* ── FOOTER ── */
 footer{background:var(--ink);padding:24px 24px}
@@ -408,20 +429,79 @@ footer{background:var(--ink);padding:24px 24px}
 
       <fieldset>
         <legend>Availability &amp; Pay</legend>
-        <div class="form-row">
+        <div class="form-row full">
           <div class="field">
             <label for="startdate">Earliest Day You Can Start</label>
             <input type="date" id="startdate" name="fi-date-startDate" required>
           </div>
+        </div>
+        <div class="form-row full">
           <div class="field">
-            <label>Preferred Shift Availability</label>
-            <div class="radio-group" id="avail-group">
-              <label class="radio-option"><input type="radio" name="fi-radio-availability" value="weekday" required> Weekday</label>
-              <label class="radio-option"><input type="radio" name="fi-radio-availability" value="weekend"> Weekend</label>
-              <label class="radio-option"><input type="radio" name="fi-radio-availability" value="other"> Other</label>
+            <label>Preferred Shift Availability <span class="hint">(choose all that apply for each day)</span></label>
+            <div class="sched" id="sched">
+            <div class="sched-row">
+              <span class="sched-day">Monday</span>
+              <div class="sched-opts" data-day="monday">
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-monday" value="AM"><span>AM</span></label>
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-monday" value="PM"><span>PM</span></label>
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-monday" value="Night"><span>Night</span></label>
+                <label class="sched-opt off"><input type="checkbox" name="fi-checkbox-monday" value="OFF" checked><span>OFF</span></label>
+              </div>
             </div>
-            <div id="other-availability-wrap">
-              <input type="text" id="other-availability" name="fi-text-otherAvailability" placeholder="Please describe your availability">
+            <div class="sched-row">
+              <span class="sched-day">Tuesday</span>
+              <div class="sched-opts" data-day="tuesday">
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-tuesday" value="AM"><span>AM</span></label>
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-tuesday" value="PM"><span>PM</span></label>
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-tuesday" value="Night"><span>Night</span></label>
+                <label class="sched-opt off"><input type="checkbox" name="fi-checkbox-tuesday" value="OFF" checked><span>OFF</span></label>
+              </div>
+            </div>
+            <div class="sched-row">
+              <span class="sched-day">Wednesday</span>
+              <div class="sched-opts" data-day="wednesday">
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-wednesday" value="AM"><span>AM</span></label>
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-wednesday" value="PM"><span>PM</span></label>
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-wednesday" value="Night"><span>Night</span></label>
+                <label class="sched-opt off"><input type="checkbox" name="fi-checkbox-wednesday" value="OFF" checked><span>OFF</span></label>
+              </div>
+            </div>
+            <div class="sched-row">
+              <span class="sched-day">Thursday</span>
+              <div class="sched-opts" data-day="thursday">
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-thursday" value="AM"><span>AM</span></label>
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-thursday" value="PM"><span>PM</span></label>
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-thursday" value="Night"><span>Night</span></label>
+                <label class="sched-opt off"><input type="checkbox" name="fi-checkbox-thursday" value="OFF" checked><span>OFF</span></label>
+              </div>
+            </div>
+            <div class="sched-row">
+              <span class="sched-day">Friday</span>
+              <div class="sched-opts" data-day="friday">
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-friday" value="AM"><span>AM</span></label>
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-friday" value="PM"><span>PM</span></label>
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-friday" value="Night"><span>Night</span></label>
+                <label class="sched-opt off"><input type="checkbox" name="fi-checkbox-friday" value="OFF" checked><span>OFF</span></label>
+              </div>
+            </div>
+            <div class="sched-row">
+              <span class="sched-day">Saturday</span>
+              <div class="sched-opts" data-day="saturday">
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-saturday" value="AM"><span>AM</span></label>
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-saturday" value="PM"><span>PM</span></label>
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-saturday" value="Night"><span>Night</span></label>
+                <label class="sched-opt off"><input type="checkbox" name="fi-checkbox-saturday" value="OFF" checked><span>OFF</span></label>
+              </div>
+            </div>
+            <div class="sched-row">
+              <span class="sched-day">Sunday</span>
+              <div class="sched-opts" data-day="sunday">
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-sunday" value="AM"><span>AM</span></label>
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-sunday" value="PM"><span>PM</span></label>
+                <label class="sched-opt"><input type="checkbox" name="fi-checkbox-sunday" value="Night"><span>Night</span></label>
+                <label class="sched-opt off"><input type="checkbox" name="fi-checkbox-sunday" value="OFF" checked><span>OFF</span></label>
+              </div>
+            </div>
             </div>
           </div>
         </div>
@@ -492,11 +572,16 @@ footer{background:var(--ink);padding:24px 24px}
     }
   });
 
-  const availGroup = document.getElementById('avail-group');
-  const otherWrap = document.getElementById('other-availability-wrap');
-  availGroup.addEventListener('change', (e) => {
-    otherWrap.style.display = e.target.value === 'other' ? 'block' : 'none';
-    document.getElementById('other-availability').required = e.target.value === 'other';
+  // Weekly availability: OFF is exclusive; AM/PM/Night can be combined; each day keeps at least one choice
+  document.querySelectorAll('.sched-opts').forEach(row=>{
+    const boxes=[...row.querySelectorAll('input')];
+    const off=boxes.find(b=>b.value==='OFF');
+    row.addEventListener('change',e=>{
+      const t=e.target;
+      if(t===off && off.checked){boxes.forEach(b=>{if(b!==off)b.checked=false})}
+      else if(t!==off && t.checked){off.checked=false}
+      if(!boxes.some(b=>b.checked)){off.checked=true}
+    });
   });
 
   const applyForm = document.getElementById('apply-form');
@@ -560,7 +645,7 @@ footer{background:var(--ink);padding:24px 24px}
         successMsg.textContent = '✅ Application sent successfully! The Neighbor Care Homes team will call or email you soon to schedule a conversation.';
         successMsg.style.display = 'block';
         applyForm.reset();
-        document.getElementById('other-availability-wrap').style.display = 'none';
+        document.querySelectorAll('.sched-opts').forEach(r=>r.querySelectorAll('input').forEach(b=>{b.checked=b.value==='OFF'}));
       })
       .catch(error => {
         successMsg.textContent = '⚠️ ' + (error.message || 'Something went wrong. Please try again or call us directly at (801) 369-6018.');
